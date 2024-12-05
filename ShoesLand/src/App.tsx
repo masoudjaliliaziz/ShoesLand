@@ -1,35 +1,41 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { useEffect } from 'react'
+
+
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(1)
+  useEffect(() => {
+    setTimeout(() => {
+      setCount(2);
+    }, 5000);
+  },[]);
+console.log(count)
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  function nextPage (){
+    setCount(count + 1)
+  }
+    return (
+      <>
+        {count==1 && <>
+            <div className="flex justify-center items-between">
+              <img src="img/Vector.png" alt=""  className="bg-black w-[60px] h-[60px] rounded-full p-2"/>
+              <h1 className='text-3xl'>Shoesea</h1>
+            </div>
+            <div className='mt-[80%]'>
+              <img src="img/spinner.png" alt="" className='animate-spin transition-[2s]'/>
+            </div>
+          </>
+          }
+          {count == 2 && 
+          <h1>Hi</h1>
+          }
+      </>
+    )
+
 }
 
-export default App
+export default App;
