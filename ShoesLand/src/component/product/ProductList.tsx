@@ -55,10 +55,10 @@ function ProductList({ products, productSet }: ProductListProps) {
           dispatch({ type: "search", value });
         }}
       />
-      {brands.map((item) => {
+      {brands.map((item, index) => {
         return (
           <button
-            key={item}
+            key={index}
             className="p-3 bg-red-600"
             onClick={() => dispatch({ type: "brand", value: item })}
           >
