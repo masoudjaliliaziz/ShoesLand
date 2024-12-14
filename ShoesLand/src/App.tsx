@@ -1,22 +1,22 @@
-import { useState } from "react";
 import "./App.css";
-import { useEffect } from "react";
 import Onboarding from "./pages/Onboarding";
 import Home from "./pages/Home";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./component/base/Header";
 import { ProductDetail } from "./component/product/ProductDetail";
+import Api from "./component/base/Api";
 
 function App() {
   return (
     // <Onboarding />;
-
-    <Routes>
-      <Route path="/" element={<Header />}>
-        <Route index element={<Home />} />
-        <Route path="product/:id" element={<ProductDetail />} />
-      </Route>
-    </Routes>
+    <Api>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+        </Route>
+      </Routes>
+    </Api>
   );
 }
 

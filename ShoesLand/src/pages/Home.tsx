@@ -1,26 +1,17 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useContext} from "react";
 import ProductList from "../component/product/ProductList";
-import { ProductProps } from "../component/product/ProductCard";
+import { ApiContext } from "../component/base/Api";
 
 function Home() {
-  const [data, setData] = React.useState<ProductProps[]>([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5173/Products")
-      .then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
+  const apiContext = useContext(ApiContext);
   return (
     <div className="">
-      <ProductList products={data} productSet={setData} />
+      {apiContext && (
+        <ProductList
+          products={apiContext.data}
+          productSet={apiContext.setData}
+        />
+      )}
     </div>
   );
 }
