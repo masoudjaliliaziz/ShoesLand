@@ -21,6 +21,7 @@ interface ProductListProps {
 // export const UserContext = createContext("");
 
 function filterReducer(state: FilterState, action: FilterAction) {
+  console.log("action", action)
   const clone = {
     search: "",
     brand: "",
@@ -53,15 +54,21 @@ function ProductList({ dispatchCaller, products, productSet }: ProductListProps)
     wishList: "",
     mostPopular: "",
   });
-
+console.log(dispatchCaller)
   // dispatch(dispatchCaller);
-
+  useEffect(()=>{
+    dispatch(dispatchCaller)
+  }, [dispatchCaller])
+console.log(filter)
   const filteredProducts = products.filter((product) => {
     return (
       (product.brand == filter.brand || filter.brand == "") &&
-      product.title.includes(filter.search)
+      product.title.includes(filter.search) && 
+      // (filter.wishList && user.wishList.includes(product.id))
+      
     );
-  });
+
+  }).sort((a,b)=> filter.mostPopular ? a.order - b.order : 0);
   console.log(filteredProducts);
 
   return (

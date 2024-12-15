@@ -4,7 +4,8 @@ import { ApiContext } from "../base/Api";
 
 function Search() {
   const apiContext = useContext(ApiContext)
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
+  // console.log(search)
   return (
     <div>
       <input type="text" onChange={(e) => setSearch(e.target.value)} />
