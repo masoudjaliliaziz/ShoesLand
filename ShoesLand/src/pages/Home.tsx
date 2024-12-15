@@ -10,6 +10,7 @@ function Home() {
         <ProductList
           products={apiContext.data}
           productSet={apiContext.setData}
+          
         />
       )}
     </div>

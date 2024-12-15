@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./component/base/Header";
 import { ProductDetail } from "./component/product/ProductDetail";
 import Api from "./component/base/Api";
+import Search from "./component/search/Search";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
+          <Route path="search" element={<Search />} />
           <Route path="product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
