@@ -40,6 +40,7 @@ function Search() {
       <div className="flex items-center justify-center mx-3 mt-10 mb-5">
         <div className="relative w-full max-w-md">
           <input
+            autoFocus
             type="text"
             value={search}
             placeholder="Search..."
