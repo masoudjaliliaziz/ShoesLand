@@ -34,9 +34,9 @@ function filterReducer(state: FilterState, action: FilterAction) {
     case "brand":
       return { ...clone, brand: action.value };
     case "wishList":
-      return{ ...clone, wishList: action.value};
+      return { ...clone, wishList: action.value };
     case "mostPopular":
-      return{ ...clone, mostPopular: action.value}
+      return { ...clone, mostPopular: action.value }
   }
 }
 
@@ -54,21 +54,22 @@ function ProductList({ dispatchCaller, products, productSet }: ProductListProps)
     wishList: "",
     mostPopular: "",
   });
-console.log(dispatchCaller)
+  console.log(dispatchCaller)
   // dispatch(dispatchCaller);
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(dispatchCaller)
   }, [dispatchCaller])
-console.log(filter)
+  console.log(filter)
   const filteredProducts = products.filter((product) => {
     return (
       (product.brand == filter.brand || filter.brand == "") &&
-      product.title.includes(filter.search) && 
+      product.title.includes(filter.search)
+      //&& 
       // (filter.wishList && user.wishList.includes(product.id))
-      
+
     );
 
-  }).sort((a,b)=> filter.mostPopular ? a.order - b.order : 0);
+  }).sort((a, b) => filter.mostPopular ? a.order - b.order : 0);
   console.log(filteredProducts);
 
   return (
