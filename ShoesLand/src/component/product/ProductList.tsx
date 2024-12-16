@@ -53,16 +53,24 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     wishList: "",
     mostPopular: "",
   });
-  const [loginUser, setLoginUser] = useState<UserProps>()
-  useEffect(()=>{
-   const userId = window.localStorage.getItem("userId");
-   console.log(userId)
-   if(userId && apiContext){
-    console.log(apiContext.users)
-    console.log(apiContext.users.find((user)=> Number(userId) === user.id))
-     setLoginUser(apiContext.users.find(({id})=> Number(userId) === id))
-   }
-  }, [apiContext])
+  const [loginUser, setLoginUser] = useState<UserProps>();
+
+  useEffect(() => {
+    const userId = window.localStorage.getItem("userId");
+    console.log(userId);
+    if (userId && apiContext) {
+      console.log(apiContext.users);
+      console.log(
+        apiContext.users.find((user) => {
+          console.log("Number(userId)", Number(userId));
+          console.log("user.id", user.id);
+          console.log("Number(userId) == user.id", Number(userId) == user.id);
+          return Number(userId) == user.id;
+        })
+      );
+      setLoginUser(apiContext.users.find(({ id }) => Number(userId) == id));
+    }
+  }, [apiContext]);
 
   console.log(dispatchCaller);
   // dispatch(dispatchCaller);
@@ -70,14 +78,15 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     dispatch(dispatchCaller);
   }, [dispatchCaller]);
   console.log(filter);
-  console.log(loginUser)
+  console.log(loginUser);
   const filteredProducts = products
     .filter((product) => {
+      console.log(typeof product.id);
       return (
         (product.brand == filter.brand || filter.brand == "") &&
-        product.title.includes(filter.search)
-        &&
-        (loginUser?.wishlist.includes(product.id) || filter.wishList == "")
+        product.title.includes(filter.search) &&
+        (loginUser?.wishlist.includes(Number(product.id)) ||
+          filter.wishList == "")
       );
     })
     .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));
