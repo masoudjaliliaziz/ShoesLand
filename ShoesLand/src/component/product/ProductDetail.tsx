@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ApiContext } from "../base/Api";
 
 export function ProductDetail() {
+  const navigate = useNavigate();
   const [count, setCount] = useState(1);
   const apiContext = useContext(ApiContext);
   const colors = [
@@ -22,8 +23,9 @@ export function ProductDetail() {
   return (
     <div className="w-full h-[90%] relative">
       {/* images && backward */}
-      <div className=" w-full">
+      <div className=" w-full ">
         <svg
+          onClick={() => navigate(-1)}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -152,7 +154,10 @@ export function ProductDetail() {
                 </svg>
               </div>
               <p className=" w-2/4 text-center font-bold">{count}</p>
-              <div className=" text-xs cursor-pointer"  onClick={() => setCount((c) => (c +1))}>
+              <div
+                className=" text-xs cursor-pointer"
+                onClick={() => setCount((c) => c + 1)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

@@ -13,7 +13,7 @@
   "Products": [
     {
       "id": 1,
-      "title": "adidas",
+      "title": "adidas 1",
       "price": 245,
       "order": 0,
       "size": [42, 41, 40],
@@ -23,7 +23,7 @@
     },
     {
       "id": 2,
-      "title": "adidas",
+      "title": "adidas 2 ",
       "price": 145,
       "order": 0,
       "size": [44, 42, 40],
@@ -33,7 +33,7 @@
     },
     {
       "id": 3,
-      "title": "adidas",
+      "title": "adidas 3",
       "price": 110,
       "order": 0,
       "size": [44, 43, 40],

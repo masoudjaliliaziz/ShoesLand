@@ -14,7 +14,8 @@ function Search() {
   );
   const [showProductList, setShowProductList] = useState(false);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setShowProductList(false);
     const value = e.target.value;
     setSearch(value);
     if (value && apiContext) {
@@ -44,9 +45,10 @@ function Search() {
             placeholder="Search..."
             onChange={handleInputChange}
             className="w-full pl-12 pr-10 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+            onKeyUp={(e) => e.key == "Enter" && handleSearchClick(search)}
           />
           <button
-            onClick={() =>
+            onClick={(e) =>
               handleSearchClick(search) && setShowProductList(true)
             }
             className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"

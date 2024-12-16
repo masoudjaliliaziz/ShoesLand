@@ -10,7 +10,7 @@ interface FilterState {
   mostPopular: string;
 }
 
-type FilterAction = {
+export type FilterAction = {
   type: "search" | "brand" | "wishList" | "mostPopular";
   value: string;
 };
@@ -44,13 +44,6 @@ function filterReducer(state: FilterState, action: FilterAction) {
 }
 
 function ProductList({ dispatchCaller, products }: ProductListProps) {
-  let brands: string[] = [];
-  for (const i of products) {
-    if (!brands.includes(i.brand)) {
-      brands = [...brands, i.brand];
-    }
-  }
-
   const [filter, dispatch] = useReducer(filterReducer, {
     search: "",
     brand: "",
@@ -90,22 +83,6 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
             See All
           </h1>
-        </div>
-
-        <div className="w-full flex flex-row justify-start items-center gap-1 overflow-x-auto">
-          {brands.map((item, index) => {
-            return (
-              <div>
-                <button
-                  key={index}
-                  className="font-bold leading-5 text-base h-10 flex justify-center items-center px-5 py-2.5 border-2 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white"
-                  onClick={() => dispatch({ type: "brand", value: item })}
-                >
-                  {item}
-                </button>
-              </div>
-            );
-          })}
         </div>
       </div>
       <div className="w-full flex flex-wrap  justify-center items-center gap-4">
