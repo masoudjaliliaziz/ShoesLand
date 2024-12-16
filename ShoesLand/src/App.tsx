@@ -6,7 +6,8 @@ import Header from "./component/base/Header";
 import { ProductDetail } from "./component/product/ProductDetail";
 import Api from "./component/base/Api";
 import Search from "./component/search/Search";
-import MostPopular from "./component/product/MostPopular";
+import MostPopular from "./pages/MostPopular";
+import WishList from "./pages/WishList";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="search" element={<Search />} />
           <Route path="popular" element={<MostPopular />} />
+          <Route path="wishlist" element={<WishList />} />
           <Route path="product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>

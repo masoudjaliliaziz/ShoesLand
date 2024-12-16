@@ -1,6 +1,8 @@
+import { ApiContext } from "../base/Api";
+import { UserProps } from "../base/Interfaces";
 import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
-import React, { useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface FilterState {
@@ -44,12 +46,23 @@ function filterReducer(state: FilterState, action: FilterAction) {
 }
 
 function ProductList({ dispatchCaller, products }: ProductListProps) {
+  const apiContext = useContext(ApiContext);
   const [filter, dispatch] = useReducer(filterReducer, {
     search: "",
     brand: "",
     wishList: "",
     mostPopular: "",
   });
+  const [loginUser, setLoginUser] = useState<UserProps>()
+  useEffect(()=>{
+   const userId = window.localStorage.getItem("userId");
+   console.log(userId)
+   if(userId && apiContext){
+    console.log(apiContext.users)
+    console.log(apiContext.users.find((user)=> Number(userId) === user.id))
+     setLoginUser(apiContext.users.find(({id})=> Number(userId) === id))
+   }
+  }, [apiContext])
 
   console.log(dispatchCaller);
   // dispatch(dispatchCaller);
@@ -57,13 +70,14 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     dispatch(dispatchCaller);
   }, [dispatchCaller]);
   console.log(filter);
+  console.log(loginUser)
   const filteredProducts = products
     .filter((product) => {
       return (
         (product.brand == filter.brand || filter.brand == "") &&
         product.title.includes(filter.search)
-        //&&
-        // (filter.wishList && user.wishList.includes(product.id))
+        &&
+        (loginUser?.wishlist.includes(product.id) || filter.wishList == "")
       );
     })
     .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));

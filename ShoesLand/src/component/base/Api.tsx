@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { useContext, createContext, useEffect } from "react";
 import axios from "axios";
 import { ProductProps } from "../../component/product/ProductCard";
+import { UserProps } from "./Interfaces";
 
 interface Children {
   children: React.ReactNode;
@@ -10,14 +11,23 @@ interface Children {
 export interface TValueContext {
   data: ProductProps[];
   setData: React.Dispatch<React.SetStateAction<ProductProps[]>>;
+  users: UserProps[];
+  setUsers: React.Dispatch<React.SetStateAction<UserProps[]>>;
 }
 
 export const ApiContext = createContext<TValueContext | null>(null);
 
 function Api({ children }: Children) {
   const [data, setData] = React.useState<ProductProps[]>([]);
+  const [users, setUsers] = React.useState<UserProps[]>([])
 
   useEffect(() => {
+    axios
+    .get("http://localhost:5173/users")
+    .then((response)=>{
+      setUsers(response.data);
+      console.log(response)
+    })
     axios
       .get("http://localhost:5173/Products")
       .then((response) => {
@@ -30,7 +40,7 @@ function Api({ children }: Children) {
   }, []);
 
   return (
-    <ApiContext.Provider value={{ data, setData }}>
+    <ApiContext.Provider value={{ data, setData, users, setUsers }}>
       {children}
     </ApiContext.Provider>
   );

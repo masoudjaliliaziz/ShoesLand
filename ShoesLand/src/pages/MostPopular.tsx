@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ProductList from "./ProductList";
-import { ApiContext } from "../base/Api";
+import ProductList from "../component/product/ProductList";
+import { ApiContext } from "../component/base/Api";
 
 function MostPopular() {
   const apiContext = useContext(ApiContext);
