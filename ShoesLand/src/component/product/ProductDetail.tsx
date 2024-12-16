@@ -6,11 +6,12 @@ export function ProductDetail() {
   const [count, setCount] = useState(1);
   const apiContext = useContext(ApiContext);
   const colors = [
-    "bg-rose-500",
-    "bg-emerald-500",
-    "bg-yellow-500",
-    "bg-gray-500",
-    "bg-teal-500",
+    "bg-red-600",
+    "bg-rose-600",
+    "bg-emerald-600",
+    "bg-yellow-600",
+    "bg-gray-600",
+    "bg-teal-600",
   ];
   const { id } = useParams();
   let prodcut;
@@ -119,7 +120,7 @@ export function ProductDetail() {
               <ul className="flex space-x-1">
                 {prodcut?.color.map((colors, index) => (
                   <li
-                    className={`bg-${colors}-500 py-4 px-4 inline-flex rounded-full cursor-pointer transition-all duration-300 hover:bg-slate-400`}
+                    className={`bg-${colors}-600 py-4 px-4 inline-flex rounded-full cursor-pointer transition-all duration-300 hover:bg-slate-400`}
                     key={index}
                   ></li>
                 ))}

@@ -307,6 +307,7 @@
       "price": 164,
       "order": 0,
       "size": [44, 42, 40],
+      "brand": "newbalance",
       "color": ["rose", "emerald", "teal", "gray"],
       "images": "http://localhost:5173/products/newbalance/6.webp"
     },
