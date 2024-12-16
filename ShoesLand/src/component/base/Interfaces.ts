@@ -9,3 +9,9 @@ export interface UserProps {
   orders: ProductProps[];
   wishlist: number[];
 }
+
+export interface LogoProps {
+  id: number;
+  brand: string;
+  images:string
+}
