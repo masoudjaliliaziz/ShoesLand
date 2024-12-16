@@ -14,7 +14,7 @@ function Search() {
   );
   const [showProductList, setShowProductList] = useState(false);
 
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setShowProductList(false);
     const value = e.target.value;
     setSearch(value);

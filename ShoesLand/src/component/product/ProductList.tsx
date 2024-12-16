@@ -66,7 +66,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         // (filter.wishList && user.wishList.includes(product.id))
       );
     })
-    .sort((a, b) => (filter.mostPopular ? a.order - b.order : 0));
+    .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));
 
   console.log(filteredProducts);
 
