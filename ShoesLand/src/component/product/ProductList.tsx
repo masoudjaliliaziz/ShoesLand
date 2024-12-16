@@ -57,6 +57,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     wishList: "",
     mostPopular: "",
   });
+
   console.log(dispatchCaller);
   // dispatch(dispatchCaller);
   useEffect(() => {
@@ -68,11 +69,12 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       return (
         (product.brand == filter.brand || filter.brand == "") &&
         product.title.includes(filter.search)
-        // &&
+        //&&
         // (filter.wishList && user.wishList.includes(product.id))
       );
     })
     .sort((a, b) => (filter.mostPopular ? a.order - b.order : 0));
+
   console.log(filteredProducts);
 
   return (
