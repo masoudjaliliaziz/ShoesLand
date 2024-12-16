@@ -40,7 +40,7 @@ export function ProductDetail() {
           />
         </svg>
         <div>
-          <img src={prodcut?.images} className="h-80 w-full"></img>
+          <img src={prodcut?.images} className="h-80 w-full object-cover"></img>
         </div>
       </div>
       <div className="px-5 pt-4 w-full">

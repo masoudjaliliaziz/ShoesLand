@@ -8,6 +8,7 @@ import Api from "./component/base/Api";
 import Search from "./component/search/Search";
 import MostPopular from "./pages/MostPopular";
 import WishList from "./pages/WishList";
+import Brand from "./pages/Brand";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="popular" element={<MostPopular />} />
           <Route path="wishlist" element={<WishList />} />
+          <Route path="brand/:brand" element={<Brand/>} />
           <Route path="product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>

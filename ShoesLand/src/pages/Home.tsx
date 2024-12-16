@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import ProductList from "../component/product/ProductList";
 import { ApiContext } from "../component/base/Api";
 import { FilterAction } from "../component/product/ProductList";
+import ProductBrand from "../component/product/ProductBrand";
 
 function Home() {
   const apiContext = useContext(ApiContext);
@@ -19,6 +20,9 @@ function Home() {
   });
   return (
     <div className="w-full h-screen px-5">
+      <div className="logoContainer  py-3 flex flex-row justify-center items-center flex-wrap gap-10 mb-4 mt-2.5">
+        <ProductBrand />
+      </div>
       <div className="w-full flex flex-row justify-start items-center gap-1 overflow-x-auto">
         <div>
           <button
