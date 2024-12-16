@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 interface filteredProducts {
   title: string;
   id: number;
+  images: string;
+  price: number;
 }
 function Search() {
   const apiContext = useContext(ApiContext);
@@ -72,13 +74,21 @@ function Search() {
 
           {filteredProducts.length > 0 && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
-              {filteredProducts.map(({ title, id }, index) => (
+              {filteredProducts.map(({ title, id, images, price }, index) => (
                 <Link to={`/product/${id}`}>
                   <li
                     key={index}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex justify-between mx-5"
                   >
-                    {title}
+                    <div className="flex">
+                      <img
+                        src={images}
+                        alt={title}
+                        className="w-8 h-8 rounded-full object-cover mr-3"
+                      />
+                      <span>{title}</span>
+                    </div>
+                    <span>${price}</span>
                   </li>
                 </Link>
               ))}
