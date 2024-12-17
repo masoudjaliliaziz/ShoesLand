@@ -26,6 +26,7 @@ interface ProductListProps {
 // export const UserContext = createContext("");
 
 function filterReducer(state: FilterState, action: FilterAction) {
+  
   console.log("action", action);
   const clone = {
     search: "",
@@ -47,6 +48,14 @@ function filterReducer(state: FilterState, action: FilterAction) {
 
 function ProductList({ dispatchCaller, products }: ProductListProps) {
   const apiContext = useContext(ApiContext);
+  let brands: string[] = [];
+  if (apiContext) {
+    for (const i of apiContext.data) {
+      if (!brands.includes(i.brand)) {
+        brands = [...brands, i.brand];
+      }
+    }
+  }
   const [filter, dispatch] = useReducer(filterReducer, {
     search: "",
     brand: "",
@@ -121,6 +130,36 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           </h1>
         </div>
       </div>
+      <div className="w-full flex flex-row justify-start items-center gap-1 overflow-x-auto px-5">
+        <div>
+          <button
+            key={"all"}
+            className="font-bold leading-5 text-base h-10 flex justify-center items-center px-5 py-2.5 border-2 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white"
+            onClick={() =>
+              
+            }
+          >
+            All
+          </button>
+        </div>
+        {brands.map((item, index) => {
+          return (
+            <div>
+              <button
+                key={index}
+                className="font-bold leading-5 text-base h-10 flex justify-center items-center px-5 py-2.5 border-2 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white"
+                onClick={() =>
+                  setDispatch((pervDispatch) => {
+                    return { ...pervDispatch, value: item };
+                  })
+                }
+              >
+                {item}
+              </button>
+            </div>
+          );
+        })}
+      </div>
       <div className="w-full flex flex-wrap  justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-10">
@@ -150,43 +189,45 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           </Link>
         ))}
       </div>
-      <div className="flex justify-center items-center p-10 my-10">
-        <button
-          className={`px-4 py-2 mx-1 border rounded-full ${
-            currentPage === 1
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-          }`}
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      {paginatedProducts.length != 0 && (
+        <div className="flex justify-center items-center p-10 my-10">
           <button
-            key={page}
             className={`px-4 py-2 mx-1 border rounded-full ${
-              page === currentPage
+              currentPage === 1
                 ? "text-gray-300 cursor-not-allowed "
                 : "text-gray-600 hover:bg-blue-100 font-bold"
             }`}
-            onClick={() => handlePageChange(page)}
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
           >
-            {page}
+            Previous
           </button>
-        ))}
-        <button
-          className={`px-4 py-2 mx-1 border rounded-full ${
-            currentPage === totalPages || totalPages === 0
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-          }`}
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages || totalPages === 0}
-        >
-          Next
-        </button>
-      </div>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              className={`px-4 py-2 mx-1 border rounded-full ${
+                page === currentPage
+                  ? "text-gray-300 cursor-not-allowed "
+                  : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            className={`px-4 py-2 mx-1 border rounded-full ${
+              currentPage === totalPages || totalPages === 0
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages || totalPages === 0}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }
