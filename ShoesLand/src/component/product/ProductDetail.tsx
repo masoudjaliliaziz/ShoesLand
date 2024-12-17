@@ -21,7 +21,7 @@ export function ProductDetail() {
   }
 
   return (
-    <div className="w-full h-[90%] relative">
+    <div className="w-full h-[90%] relative mb-10">
       {/* images && backward */}
       <div className=" w-full ">
         <div>

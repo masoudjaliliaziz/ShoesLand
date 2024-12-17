@@ -2,10 +2,15 @@ import { Link, Outlet } from "react-router-dom";
 
 function Header() {
   return (
-    <div className="">
-      <Outlet />
+    <div className="relative">
+      <div className="px-5">
+        <Outlet />
+      </div>
 
-      <div className="bg-slate-50 fixed bottom-0 w-full left-0 py-2 px-2 flex justify-around">
+      <div
+        className="bg-slate-50 fixed m-auto bottom-0 
+     py-2 px-2 flex justify-around w-[400px]"
+      >
         <Link to={"/"}>
           <div className="flex-col place-items-center ">
             <svg

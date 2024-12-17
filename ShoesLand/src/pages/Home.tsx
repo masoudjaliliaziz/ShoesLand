@@ -3,12 +3,13 @@ import ProductList from "../component/product/ProductList";
 import { ApiContext } from "../component/base/Api";
 import { FilterAction } from "../component/product/ProductList";
 import { Link } from "react-router-dom";
+import ProductBrand from "../component/product/ProductBrand";
 
 function Home() {
   const apiContext = useContext(ApiContext);
 
   return (
-    <div className="w-full h-screen mb-10">
+    <div className="w-full mb-10">
       <Link to="search">
         <>
           <div
@@ -43,6 +44,7 @@ function Home() {
           </div>
         </>
       </Link>
+      <ProductBrand />
 
       {apiContext && (
         <ProductList
