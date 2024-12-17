@@ -25,21 +25,19 @@ const ProductCard: FC<ProductProps> = ({
   return (
     <div key={id} className="flex flex-row flex-wrap ">
       <div className="w-full justify-center items-center gap-4">
-        <div className="cardContainer w-44 h-52  flex flex-col justify-center items-start">
-          <div className="imageContainer w-full h-44 rounded-3xl p-5 bg-[#ECEFF1] flex justify-center items-center cursor-pointer hover:bg-slate-200">
-          <img src={images} alt={title} className= "w-36 h-36"/>
+        <div className="cardContainer w-40 h-48  flex flex-col justify-center items-start">
+          <div className="imageContainer w-full h-44 rounded-3xl p-4 bg-[#ECEFF1] flex justify-center items-center cursor-pointer hover:bg-slate-200">
+            <img src={images} alt={title} className="w-36 h-36" />
           </div>
         </div>
         <div className="detailContainer flex flex-col justify-center items-start gap-2">
           <h1 className="productName font-bold text-2xl leading-6">{title}</h1>
-          <span className="productPrice font-semibold text-base leading-5">${price}.00</span>
+          <span className="productPrice font-semibold text-base leading-5">
+            ${price}.00
+          </span>
         </div>
       </div>
     </div>
-
-
-
-
 
     //WishList
     // <div key={id} className="flex flex-row flex-wrap ">

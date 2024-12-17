@@ -26,7 +26,6 @@ interface ProductListProps {
 // export const UserContext = createContext("");
 
 function filterReducer(state: FilterState, action: FilterAction) {
-  
   console.log("action", action);
   const clone = {
     search: "",
@@ -56,6 +55,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       }
     }
   }
+  console.log("brands", brands);
   const [filter, dispatch] = useReducer(filterReducer, {
     search: "",
     brand: "",
@@ -116,13 +116,13 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
   console.log(filteredProducts);
 
   return (
-    <div className="flex h-screen w-full flex-col" key={11}>
+    <div className="flex h-screen w-full flex-col " key={11}>
       {/* <Search
         testSearch={(value: string) => {
           dispatch({ type: "search", value });
         }}
       /> */}
-      <div className=" mostContainer w-full flex flex-col items-center justify-center gap-5 ">
+      <div className=" mostContainer w-full flex flex-col items-center  gap-5 ">
         <div className="w-full flex flex-row justify-between items-center text-start left-0">
           <h1 className="font-bold leading-5 text-xl">Most Popular</h1>
           <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
@@ -130,14 +130,22 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           </h1>
         </div>
       </div>
-      <div className="w-full flex flex-row justify-start items-center gap-1 overflow-x-auto px-5">
+      <div
+        className="absolute justify-content-start mt-10  scroll-pr-10
+        w-[89%] flex flex-row justify-start items-center gap-1 overflow-x-scroll snap-x 
+         [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
+        
+        "
+      >
         <div>
           <button
             key={"all"}
-            className="font-bold leading-5 text-base h-10 flex justify-center items-center px-5 py-2.5 border-2 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white"
-            onClick={() =>
-              
-            }
+            className="font-bold snap-start leading-5  text-xs h-10 flex 
+             justify-center items-center px-4 py-1.5 border-2 border-[#343A40]
+              rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white
+          
+              "
+            onClick={() => dispatch({ type: "brand", value: "" })}
           >
             All
           </button>
@@ -147,12 +155,11 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
             <div>
               <button
                 key={index}
-                className="font-bold leading-5 text-base h-10 flex justify-center items-center px-5 py-2.5 border-2 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white"
-                onClick={() =>
-                  setDispatch((pervDispatch) => {
-                    return { ...pervDispatch, value: item };
-                  })
-                }
+                className="font-bold snap-start leading-5 h-10  text-xs flex 
+                justify-center items-center px-4 py-1.5 border-2 
+                border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700
+                 hover:text-white"
+                onClick={() => dispatch({ type: "brand", value: item })}
               >
                 {item}
               </button>
@@ -160,7 +167,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           );
         })}
       </div>
-      <div className="w-full flex flex-wrap  justify-center items-center gap-4">
+      <div className="w-full flex flex-wrap  justify-center items-center gap-4 mt-20">
         {paginatedProducts.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-10">
             <div className="text-6xl font-bold text-slate-700">Oops!</div>
@@ -192,7 +199,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       {paginatedProducts.length != 0 && (
         <div className="flex justify-center items-center p-10 my-10">
           <button
-            className={`px-4 py-2 mx-1 border rounded-full ${
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
               currentPage === 1
                 ? "text-gray-300 cursor-not-allowed "
                 : "text-gray-600 hover:bg-blue-100 font-bold"
@@ -205,7 +212,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-4 py-2 mx-1 border rounded-full ${
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
                 page === currentPage
                   ? "text-gray-300 cursor-not-allowed "
                   : "text-gray-600 hover:bg-blue-100 font-bold"
@@ -216,7 +223,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
             </button>
           ))}
           <button
-            className={`px-4 py-2 mx-1 border rounded-full ${
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
               currentPage === totalPages || totalPages === 0
                 ? "text-gray-300 cursor-not-allowed "
                 : "text-gray-600 hover:bg-blue-100 font-bold"

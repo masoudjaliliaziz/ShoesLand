@@ -8,7 +8,7 @@ function Home() {
   const apiContext = useContext(ApiContext);
 
   return (
-    <div className="w-full h-screen px-8">
+    <div className="w-full h-screen px-5">
       <div className="relative mb-5 mt-10 px-0">
         <Link to="search">
           <input
@@ -39,7 +39,7 @@ function Home() {
         <ProductList
           products={apiContext.data}
           productSet={apiContext.setData}
-          dispatchCaller={dispatch}
+          dispatchCaller={{ type: "brand", value: "" }}
         />
       )}
     </div>
