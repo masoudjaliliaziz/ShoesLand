@@ -24,21 +24,6 @@ export function ProductDetail() {
     <div className="w-full h-[90%] relative">
       {/* images && backward */}
       <div className=" w-full ">
-        <svg
-          onClick={() => navigate(-1)}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-5 leading-5 cursor-pointer absolute top-2 left-2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
-          />
-        </svg>
         <div>
           <img src={prodcut?.images} className="h-80 w-full object-cover"></img>
         </div>

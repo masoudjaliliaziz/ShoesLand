@@ -3,7 +3,7 @@ import { UserProps } from "../base/Interfaces";
 import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FilterState {
   search: string;
@@ -49,6 +49,7 @@ function filterReducer(state: FilterState, action: FilterAction) {
 }
 
 function ProductList({ dispatchCaller, products }: ProductListProps) {
+  const navigate = useNavigate();
   const apiContext = useContext(ApiContext);
   const [pageState, setPageState] = useState("");
   let brands: string[] = [];
@@ -115,7 +116,6 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     }
   };
   console.log(pageState);
-
   return (
     <div className="flex w-full flex-col space-y-3 " key={11}>
       {/* <Search
@@ -127,7 +127,26 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         <>
           <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
             <div className="w-full flex flex-row justify-between items-center text-start left-0">
-              <h1 className="font-bold leading-5 text-xl">Most Popular</h1>
+              <div className="font-bold leading-5  flex justify-item-center space-x-1">
+                {pageState == "popular" && (
+                  <svg
+                    onClick={() => navigate(-1)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2.5}
+                    stroke="currentColor"
+                    className="size-7 cursor-pointer"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
+                    />
+                  </svg>
+                )}
+                <span className="text-xl">Most Popular</span>
+              </div>
               <Link to="/popular">
                 <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
                   See All
