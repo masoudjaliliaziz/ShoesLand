@@ -236,7 +236,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         ))}
       </div>
       {paginatedProducts.length != 0 && (
-        <div className="flex justify-center items-center p-10 my-10">
+        <div className="flex justify-center items-center pb-10 mb-[10rem]">
           <button
             className={`px-2 py-1 mx-1 border rounded-full text-xs ${
               currentPage === 1

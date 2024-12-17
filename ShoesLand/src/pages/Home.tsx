@@ -8,7 +8,7 @@ function Home() {
   const apiContext = useContext(ApiContext);
 
   return (
-    <div className="w-full h-screen ">
+    <div className="w-full h-screen mb-10">
       <Link to="search">
         <>
           <div

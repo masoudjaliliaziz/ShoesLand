@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import ProductList from "../product/ProductList";
 import { ApiContext } from "../base/Api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 interface filteredProducts {
   title: string;
   id: number;
@@ -9,6 +9,7 @@ interface filteredProducts {
   price: number;
 }
 function Search() {
+  const navigate = useNavigate();
   const apiContext = useContext(ApiContext);
   const [search, setSearch] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<filteredProducts[]>(
@@ -39,6 +40,29 @@ function Search() {
 
   return (
     <div>
+      <div className="w-full flex flex-row justify-between items-center text-start left-0">
+        <div className="font-bold leading-5  flex justify-item-center space-x-1">
+          <svg
+            onClick={() => navigate(-1)}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="size-7 cursor-pointer"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
+            />
+          </svg>
+          <span className="text-xl">Search</span>
+        </div>
+        <Link to="/popular">
+          <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500"></h1>
+        </Link>
+      </div>
       <div className="flex items-center justify-center mx-3 mt-3 mb-5 h-[]">
         <div className="relative w-full max-w-md">
           <input
