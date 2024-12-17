@@ -14,7 +14,7 @@ export interface ProductProps {
   rate?: number;
 }
 
-interface ProductPropsWithPage extends ProductProps {
+interface ProductPropswithPage extends ProductProps {
   page?: string;
 }
 
