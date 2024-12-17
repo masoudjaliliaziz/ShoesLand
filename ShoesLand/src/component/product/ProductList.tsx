@@ -54,7 +54,8 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     mostPopular: "",
   });
   const [loginUser, setLoginUser] = useState<UserProps>();
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
     console.log(userId);
@@ -90,7 +91,19 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       );
     })
     .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));
+  const totalItems = filteredProducts.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
   console.log(filteredProducts);
 
   return (
@@ -109,11 +122,70 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         </div>
       </div>
       <div className="w-full flex flex-wrap  justify-center items-center gap-4">
-        {filteredProducts.map((item: ProductProps) => (
+        {paginatedProducts.length == 0 && (
+          <div className="flex flex-col items-center justify-center mt-10">
+            <div className="text-6xl font-bold text-slate-700">Oops!</div>
+            <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
+              We couldn’t find any products matching your search.
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-16 h-16 text-gray-300 mt-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
+              />
+            </svg>
+          </div>
+        )}
+        {paginatedProducts.map((item: ProductProps) => (
           <Link to={`/product/${item.id}`}>
             <ProductCard {...item} />
           </Link>
         ))}
+      </div>
+      <div className="flex justify-center items-center p-10 my-10">
+        <button
+          className={`px-4 py-2 mx-1 border rounded-full ${
+            currentPage === 1
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+          }`}
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            className={`px-4 py-2 mx-1 border rounded-full ${
+              page === currentPage
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
+            onClick={() => handlePageChange(page)}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          className={`px-4 py-2 mx-1 border rounded-full ${
+            currentPage === totalPages || totalPages === 0
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+          }`}
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages || totalPages === 0}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
