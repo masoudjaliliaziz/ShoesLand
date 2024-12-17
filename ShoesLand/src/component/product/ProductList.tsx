@@ -10,10 +10,11 @@ interface FilterState {
   brand: string;
   wishList: string;
   mostPopular: string;
+  home: string;
 }
 
 export type FilterAction = {
-  type: "search" | "brand" | "wishList" | "mostPopular";
+  type: "search" | "brand" | "wishList" | "mostPopular" | "home";
   value: string;
 };
 
@@ -26,12 +27,12 @@ interface ProductListProps {
 // export const UserContext = createContext("");
 
 function filterReducer(state: FilterState, action: FilterAction) {
-  console.log("action", action);
   const clone = {
     search: "",
     brand: "",
     wishList: "",
     mostPopular: "",
+    home: "",
   };
   switch (action.type) {
     case "search":
@@ -42,11 +43,14 @@ function filterReducer(state: FilterState, action: FilterAction) {
       return { ...clone, wishList: action.value };
     case "mostPopular":
       return { ...clone, mostPopular: action.value };
+    case "home":
+      return { ...clone, home: action.value };
   }
 }
 
 function ProductList({ dispatchCaller, products }: ProductListProps) {
   const apiContext = useContext(ApiContext);
+  const [pageState, setPageState] = useState("");
   let brands: string[] = [];
   if (apiContext) {
     for (const i of apiContext.data) {
@@ -55,48 +59,45 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       }
     }
   }
-  console.log("brands", brands);
   const [filter, dispatch] = useReducer(filterReducer, {
     search: "",
     brand: "",
     wishList: "",
     mostPopular: "",
+    home: "",
   });
   const [loginUser, setLoginUser] = useState<UserProps>();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
-    console.log(userId);
     if (userId && apiContext) {
-      console.log(apiContext.users);
-      console.log(
-        apiContext.users.find((user) => {
-          console.log("Number(userId)", Number(userId));
-          console.log("user.id", user.id);
-          console.log("Number(userId) == user.id", Number(userId) == user.id);
-          return Number(userId) == user.id;
-        })
-      );
-      setLoginUser(apiContext.users.find(({ id }) => Number(userId) == id));
+      setLoginUser(apiContext.users.find(({ id }) => Number(userId) === id));
     }
   }, [apiContext]);
 
-  console.log(dispatchCaller);
-  // dispatch(dispatchCaller);
   useEffect(() => {
     dispatch(dispatchCaller);
   }, [dispatchCaller]);
-  console.log(filter);
-  console.log(loginUser);
+
+  useEffect(() => {
+    if (filter.search) {
+      setPageState("search");
+    } else if (filter.wishList) {
+      setPageState("wishlist");
+    } else if (filter.home || filter.brand) {
+      setPageState("home");
+    } else if (filter.mostPopular) {
+      setPageState("popular");
+    }
+  }, [filter]);
+
   const filteredProducts = products
     .filter((product) => {
-      console.log(typeof product.id);
       return (
         (product.brand == filter.brand || filter.brand == "") &&
         product.title.includes(filter.search) &&
-        (loginUser?.wishlist.includes(Number(product.id)) ||
-          filter.wishList == "")
+        (loginUser?.wishlist.includes(product.id) || filter.wishList == "")
       );
     })
     .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));
@@ -113,61 +114,68 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       setCurrentPage(page);
     }
   };
-  console.log(filteredProducts);
+  console.log(pageState);
 
   return (
-    <div className="flex h-screen w-full flex-col " key={11}>
+    <div className="flex w-full flex-col space-y-3 " key={11}>
       {/* <Search
         testSearch={(value: string) => {
           dispatch({ type: "search", value });
         }}
       /> */}
-      <div className=" mostContainer w-full flex flex-col items-center  gap-5 ">
-        <div className="w-full flex flex-row justify-between items-center text-start left-0">
-          <h1 className="font-bold leading-5 text-xl">Most Popular</h1>
-          <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
-            See All
-          </h1>
-        </div>
-      </div>
-      <div
-        className="absolute justify-content-start mt-10  scroll-pr-10
-        w-[89%] flex flex-row justify-start items-center gap-1 overflow-x-scroll snap-x 
+      {(pageState == "home" || pageState == "popular") && (
+        <>
+          <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
+            <div className="w-full flex flex-row justify-between items-center text-start left-0">
+              <h1 className="font-bold leading-5 text-xl">Most Popular</h1>
+              <Link to="/popular">
+                <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
+                  See All
+                </h1>
+              </Link>
+            </div>
+          </div>
+
+          <div
+            className="h-10 justify-content-start  scroll-pr-10
+        w-full flex flex-row gap-1 overflow-x-scroll snap-x 
          [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
         
         "
-      >
-        <div>
-          <button
-            key={"all"}
-            className="font-bold snap-start leading-5  text-xs h-10 flex 
+          >
+            <div>
+              <button
+                key={"all"}
+                className="font-bold  snap-start leading-5  text-xs h-10 flex 
              justify-center items-center px-4 py-1.5 border-2 border-[#343A40]
               rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white
           
               "
-            onClick={() => dispatch({ type: "brand", value: "" })}
-          >
-            All
-          </button>
-        </div>
-        {brands.map((item, index) => {
-          return (
-            <div>
-              <button
-                key={index}
-                className="font-bold snap-start leading-5 h-10  text-xs flex 
+                onClick={() => dispatch({ type: "brand", value: "" })}
+              >
+                All
+              </button>
+            </div>
+            {brands.map((item, index) => {
+              return (
+                <div>
+                  <button
+                    key={index}
+                    className="font-bold snap-start leading-5 h-10  text-xs flex 
                 justify-center items-center px-4 py-1.5 border-2 
                 border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700
                  hover:text-white"
-                onClick={() => dispatch({ type: "brand", value: item })}
-              >
-                {item}
-              </button>
-            </div>
-          );
-        })}
-      </div>
-      <div className="w-full flex flex-wrap  justify-center items-center gap-4 mt-20">
+                    onClick={() => dispatch({ type: "brand", value: item })}
+                  >
+                    {item}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+      <div className="w-full flex flex-wrap  justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-10">
             <div className="text-6xl font-bold text-slate-700">Oops!</div>
@@ -190,9 +198,21 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
             </svg>
           </div>
         )}
-        {paginatedProducts.map((item: ProductProps) => (
+        {paginatedProducts.map((item) => (
           <Link to={`/product/${item.id}`}>
-            <ProductCard {...item} />
+            <ProductCard
+              {...{
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                images: item.images,
+                brand: item.brand,
+                size: item.size,
+                color: item.color,
+                order: item.order,
+                page: pageState,
+              }}
+            />
           </Link>
         ))}
       </div>

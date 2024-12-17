@@ -3,15 +3,9 @@ import { Link, Outlet } from "react-router-dom";
 function Header() {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
-
       <Outlet />
+
+      <div className="bg-red-500">footer</div>
     </>
   );
 }

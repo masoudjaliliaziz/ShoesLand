@@ -39,8 +39,8 @@ function Search() {
 
   return (
     <div>
-      <div className="flex items-center justify-center mx-3 mt-10 mb-5">
-        <div className="relative w-full max-w-md">
+      <div className="flex items-center justify-center mx-3 mt-3 mb-5 h-[12.5%]">
+        <div className=" w-full max-w-md">
           <input
             autoFocus
             type="text"
