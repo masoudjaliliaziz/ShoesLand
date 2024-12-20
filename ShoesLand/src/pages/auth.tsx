@@ -26,10 +26,12 @@ export default function Auth() {
         "Username must start with an uppercase letter and contain only alphanumeric characters"
       )
   })
-  const { register, handleSubmit, formState } = useForm<IFormInput>({ defaultValues: { username: 'mahdi' }, resolver: zodResolver(schema) })
+  const { register, handleSubmit, formState, ...other } = useForm<IFormInput>({ defaultValues: { username: 'saeid' }, resolver: zodResolver(schema) })
   console.log(formState)
   console.log(formState.errors)
-  return (
+  console.log(register("username"))
+
+    return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <input placeholder='username' {...register("username",
         { required: true, maxLength: 20 })} />
