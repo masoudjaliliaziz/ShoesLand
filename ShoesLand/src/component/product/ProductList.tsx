@@ -127,7 +127,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         <>
           <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
             <div className="w-full flex flex-row justify-between items-center text-start left-0">
-              <div className="font-bold leading-5  flex justify-item-center space-x-1">
+              <div className="font-bold leading-5 flex justify-item-center space-x-1">
                 {pageState == "popular" && (
                   <svg
                     onClick={() => navigate(-1)}
@@ -145,10 +145,10 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
                     />
                   </svg>
                 )}
-                <span className="text-xl">Most Popular</span>
+                <span className="text-lg">Most Popular</span>
               </div>
               <Link to="/popular">
-                <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500">
+                <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-base hover:text-slate-500">
                   See All
                 </h1>
               </Link>
@@ -157,7 +157,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
 
           <div
             className="h-10 justify-content-start  scroll-pr-10
-        w-full flex flex-row gap-1 overflow-x-scroll snap-x 
+        w-full flex flex-row gap-1 overflow-x-scroll snap-x
          [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
         
         "
@@ -236,7 +236,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         ))}
       </div>
       {paginatedProducts.length != 0 && (
-        <div className="flex justify-center items-center pb-10 mb-[10rem]">
+        <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
             className={`px-2 py-1 mx-1 border rounded-full text-xs ${
               currentPage === 1

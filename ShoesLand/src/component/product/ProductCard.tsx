@@ -52,19 +52,19 @@ const ProductCard = ({
                   d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
                 />
               </svg>
-              <img src={images} alt={title} className="w-36 h-36" />
+              <img src={images} className="w-32 h-32" />
             </div>
           ) : (
             <div
               className="imageContainer w-full h-44 rounded-3xl p-4 bg-[#ECEFF1] 
           flex justify-center items-center cursor-pointer hover:bg-slate-200"
             >
-              <img src={images} alt={title} className="w-36 h-36" />
+              <img src={images} className="w-36 h-36" />
             </div>
           )}
         </div>
-        <div className="detailContainer flex flex-col justify-center items-start gap-2">
-          <h1 className="productName font-bold text-2xl leading-6">{title}</h1>
+        <div className="detailContainer flex flex-col justify-center items-start gap-1">
+          <h1 className="productName font-bold text-xl leading-6">{title}</h1>
           {(page == "wishlist" || page == "search") && (
             <div className="w-full h-1/3  flex flex-row justify-start items-center">
               <div className="flex flex-row justify-center items-center gap-2">
@@ -97,7 +97,7 @@ const ProductCard = ({
               )}
             </div>
           )}
-          <span className="productPrice font-semibold text-base leading-5">
+          <span className="productPrice font-semibold text-sm leading-5">
             ${price}.00
           </span>
         </div>
