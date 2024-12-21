@@ -14,7 +14,7 @@ export interface TValueContext {
   users: UserProps[];
   setUsers: React.Dispatch<React.SetStateAction<UserProps[]>>;
   Logos:LogoProps[];
-  setLogs: React.Dispatch<React.SetStateAction<LogoProps[]>>;
+  setLogos: React.Dispatch<React.SetStateAction<LogoProps[]>>;
 }
 
 export const ApiContext = createContext<TValueContext | null>(null);
@@ -22,13 +22,22 @@ export const ApiContext = createContext<TValueContext | null>(null);
 function Api({ children }: Children) {
   const [data, setData] = React.useState<ProductProps[]>([]);
   const [users, setUsers] = React.useState<UserProps[]>([]);
-  const [Logos, setLogs] = React.useState<LogoProps[]>([])
+  const [Logos, setLogos] = React.useState<LogoProps[]>([]);
+  const [cart, setCart] = React.useState<ProductProps[]>([]);
+
+
 
   useEffect(() => {
+    axios.get("http://localhost:5173/users")
+    .then((response)=>{
+      setCart(response.data);
+        localStorage.setItem("cart", JSON.stringify(cart));
+      })
+
     axios
     .get("http://localhost:5173/productsLogo")
     .then((response)=>{
-      setLogs(response.data);
+      setLogos(response.data);
       console.log(response)
     })
 
@@ -50,7 +59,7 @@ function Api({ children }: Children) {
   }, []);
 
   return (
-    <ApiContext.Provider value={{ data, setData, users, setUsers,Logos,setLogs }}>
+    <ApiContext.Provider value={{ data, setData, users, setUsers,Logos,setLogos }}>
       {children}
     </ApiContext.Provider>
   );
