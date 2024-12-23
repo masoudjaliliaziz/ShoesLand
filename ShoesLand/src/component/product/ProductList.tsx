@@ -73,7 +73,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
     if (userId && apiContext) {
-      setLoginUser(apiContext.users.find(({ id }) => Number(userId) === id));
+      setLoginUser(apiContext.users.find(({ id }) => Number(userId) == id));
     }
   }, [apiContext]);
 
@@ -95,10 +95,12 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
 
   const filteredProducts = products
     .filter((product) => {
+      console.log('iswishlit',
+        (loginUser?.wishlist.includes(Number(product.id)) || filter.wishList == ""), filter.wishList, loginUser?.wishlist)
       return (
         (product.brand == filter.brand || filter.brand == "") &&
         product.title.includes(filter.search) &&
-        (loginUser?.wishlist.includes(product.id) || filter.wishList == "")
+        (loginUser?.wishlist.includes(Number(product.id)) || filter.wishList == "")
       );
     })
     .sort((a, b) => (filter.mostPopular ? b.order - a.order : 0));
@@ -238,11 +240,10 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
       {paginatedProducts.length != 0 && (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === 1
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -251,22 +252,20 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
-                page === currentPage
-                  ? "text-gray-300 cursor-not-allowed "
-                  : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${page === currentPage
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+                }`}
               onClick={() => handlePageChange(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === totalPages || totalPages === 0
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === totalPages || totalPages === 0
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
           >

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function WishList() {
   const apiContext = useContext(ApiContext);
+  console.log(apiContext)
   const navigate = useNavigate();
   return (
     <>
