@@ -194,14 +194,13 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
           </div>
         )}
         {paginatedProducts.map((item) => (
-          <Link to={`/product/${item.id}`}>
-            <ProductCard
-              {...item}
+          <Link key={item.id} to={`/product/${item.id}`}>
+            <ProductCard {...item} page={pageState}
             />
           </Link>
         ))}
       </div>
-      {paginatedProducts.length != 0 && (
+      {paginatedProducts.length && (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
             className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
