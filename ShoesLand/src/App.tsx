@@ -11,24 +11,27 @@ import WishList from "./pages/WishList";
 import Brand from "./pages/Brand";
 import Auth from './pages/auth';
 import SignIn from "./pages/SignIn";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-
+const queryClient = new QueryClient()
 function App() {
   return (
     // <Onboarding />;
     <Api>
-      <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Home />} />
-          <Route path="search" element={<Search />} />
-          <Route path="popular" element={<MostPopular />} />
-          <Route path="wishlist" element={<WishList />} />
-          <Route path="auth" element={<Auth />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="brand/:brand" element={<Brand />} />
-          <Route path="product/:id" element={<ProductDetail />} />
-        </Route>
-      </Routes>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<Header />}>
+            <Route index element={<Home />} />
+            <Route path="search" element={<Search />} />
+            <Route path="popular" element={<MostPopular />} />
+            <Route path="wishlist" element={<WishList />} />
+            <Route path="auth" element={<Auth />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="brand/:brand" element={<Brand />} />
+            <Route path="product/:id" element={<ProductDetail />} />
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </Api>
   );
 }

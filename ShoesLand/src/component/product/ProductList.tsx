@@ -1,3 +1,4 @@
+import { useFetchProducts, useFetchProductsByBrand } from "../../api/queryClinet";
 import { ApiContext } from "../base/Api";
 import { UserProps } from "../base/Interfaces";
 import { ProductProps } from "./ProductCard";
@@ -6,16 +7,16 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface FilterState {
-  search?: string;
-  brand?: string;
-  wishList?: string;
-  mostPopular?: string;
-  home?: string;
+  search?: string | string[];
+  brand?: string[];
+  wishList?: string | string[];
+  mostPopular?: string | string[];
+  home?: string | string[];
 }
 
 export type FilterAction = {
   type: "search" | "brand" | "wishList" | "mostPopular" | "home";
-  value: string;
+  value: string | string[];
 };
 
 interface ProductListProps {
@@ -54,8 +55,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     }
   }
 
-  const [filter, dispatch] = useReducer<(arg0: FilterState, arg1: FilterAction) => FilterState>(filterReducer, {
-  });
+  const [filter, dispatch] = useReducer<(arg0: FilterState, arg1: FilterAction) => FilterState>(filterReducer, {});
   const [loginUser, setLoginUser] = useState<UserProps>();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -70,17 +70,17 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
     dispatch(dispatchCaller);
   }, [dispatchCaller]);
 
-  const filteredProducts = products
-    .filter((product) => {
-      console.log((filter?.brand))
-      return (
-        (product.brand == filter?.brand || filter?.brand == "") &&
-        (filter?.search && product.title.includes(filter?.search)) &&
-        (loginUser?.wishlist.includes(Number(product.id)) || filter?.wishList == "")
-      );
-    })
-    .sort((a, b) => (filter?.mostPopular ? b.order - a.order : 0));
-  const totalItems = filteredProducts.length;
+  console.log(filter)
+
+  if (filter.brand) {
+    const { data, isLoading, error } = useFetchProductsByBrand(filter.brand)
+  }
+  const { data, isLoading, error } = useFetchProducts()
+  if (isLoading) return <div>Loading...</div>;
+  if (error instanceof Error) return <div>Error: {error.message}</div>;
+
+  const filteredProducts = data
+  const totalItems = filteredProducts && filteredProducts.length
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginatedProducts = filteredProducts.slice(
@@ -195,7 +195,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
         )}
         {paginatedProducts.map((item) => (
           <Link key={item.id} to={`/product/${item.id}`}>
-            <ProductCard {...item} page={pageState}
+            <ProductCard {...item}
             />
           </Link>
         ))}
