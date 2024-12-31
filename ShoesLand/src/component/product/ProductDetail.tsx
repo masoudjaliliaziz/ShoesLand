@@ -1,12 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { WishlistIcon } from '../product/Wishlist'
-import { useFetchProductById } from "../../api/queryClinet";
 import { ProductProps } from "./ProductCard";
+import { productHooks } from "../../api/queryClinet";
 
 export function ProductDetail() {
   const navigate = useNavigate();
-  const userId = window.localStorage.getItem('userId')
   const [count, setCount] = useState(1);
   const colors = [
     "bg-red-600",
@@ -17,7 +16,7 @@ export function ProductDetail() {
     "bg-teal-600",
   ];
   const { id } = useParams();
-  const { data, isLoading, error } = useFetchProductById(Number(id))
+  const { data, isLoading, error } = productHooks.useFetchProductById(Number(id))
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
   console.log(data)
@@ -63,9 +62,7 @@ export function ProductDetail() {
               </div>
             </div>
             <div className="heart w-1/12 hover:text-pink-600 active:text-pink-600 flex flex-row justify-start items-center h-2/3">
-              {userId &&
-                <WishlistIcon productId={Number(id)} userId={Number(userId)} />
-              }
+              <WishlistIcon productId={Number(id)} isInWishlist={product.isFavorite} />
 
             </div>
           </div>

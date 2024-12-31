@@ -1,59 +1,26 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { wishlistHooks } from "../../api/queryClinet";
 
-export const WishlistIcon = ({ productId, userId }: { productId: number; userId: number }) => {
-  const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5173/users/${userId}`);
-        const user = response.data;
+export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; isInWishlist: boolean }) => {
+  const { mutate: toggleWishlist, isPending } = wishlistHooks.useAddRemoveWishlist();
 
-        if (!user) {
-          alert("User not found!");
-          return;
-        }
-
-        setIsInWishlist(user.wishlist.includes(productId));
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        alert("Failed to fetch user data.");
+  const handleToggle = () => {
+    toggleWishlist(
+      { productId },
+      {
+        onSuccess: () => {
+          console.log('Wishlist updated successfully');
+        },
+        onError: (err) => {
+          console.error('Failed to update wishlist', err);
+        },
       }
-    };
-
-    fetchData();
-  }, [userId, productId]);
-
-  const handleAddToWishlist = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5173/users/${userId}`);
-      const user = response.data;
-
-      if (!user) {
-        alert("User not found!");
-        return;
-      }
-
-      if (isInWishlist) {
-        const updatedWishlist = user.wishlist.filter((id: number) => id !== productId);
-        await axios.put(`http://localhost:5173/users/${userId}`, { ...user, wishlist: updatedWishlist });
-        setIsInWishlist(false);
-        alert("Product removed from wishlist!");
-      } else {
-        const updatedWishlist = [...user.wishlist, productId];
-        await axios.put(`http://localhost:5173/users/${userId}`, { ...user, wishlist: updatedWishlist });
-        setIsInWishlist(true);
-        alert("Product added to wishlist!");
-      }
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
-      alert("Failed to update wishlist.");
-    }
+    );
   };
+
 
   return (
     <div
-      onClick={handleAddToWishlist}
+      onClick={handleToggle}
       style={{ cursor: "pointer" }}
     >
       <svg
