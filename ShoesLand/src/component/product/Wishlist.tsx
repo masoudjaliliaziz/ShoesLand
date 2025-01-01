@@ -1,10 +1,12 @@
-import { wishlistHooks } from "../../api/queryClinet";
+import { useMutation } from "@tanstack/react-query";
+import { authHooks, cartHooks, wishlistHooks } from "../../api/queryClinet";
+import axiosClient from "../../api/axiosClient";
 
 export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; isInWishlist: boolean }) => {
-  const { mutate: toggleWishlist, isPending } = wishlistHooks.useAddRemoveWishlist();
+  const { mutate } = wishlistHooks.useAddRemoveWishlist();
 
   const handleToggle = () => {
-    toggleWishlist(
+    mutate(
       { productId },
       {
         onSuccess: () => {
@@ -16,6 +18,7 @@ export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; i
       }
     );
   };
+
 
 
   return (

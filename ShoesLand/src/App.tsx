@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Header from "./component/base/Header";
 import { ProductDetail } from "./component/product/ProductDetail";
-import Api from "./component/base/Api";
 import Search from "./component/search/Search";
 import MostPopular from "./pages/MostPopular";
 import WishList from "./pages/WishList";
@@ -17,22 +16,20 @@ const queryClient = new QueryClient()
 function App() {
   return (
     // <Onboarding />;
-    <Api>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/" element={<Header />}>
-            <Route index element={<Home />} />
-            <Route path="search" element={<Search />} />
-            <Route path="popular" element={<MostPopular />} />
-            <Route path="wishlist" element={<WishList />} />
-            <Route path="auth" element={<Auth />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="brand/:brand" element={<Brand />} />
-            <Route path="product/:id" element={<ProductDetail />} />
-          </Route>
-        </Routes>
-      </QueryClientProvider>
-    </Api>
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+          <Route path="search" element={<Search />} />
+          <Route path="popular" element={<MostPopular />} />
+          <Route path="wishlist" element={<WishList />} />
+          <Route path="auth" element={<Auth />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="brand/:brand" element={<Brand />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+        </Route>
+      </Routes>
+    </QueryClientProvider>
   );
 }
 

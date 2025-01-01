@@ -1,40 +1,33 @@
-import { useContext, useState } from "react";
+
+import { useState } from "react";
 import ProductList from "../product/ProductList";
-import { ApiContext } from "../base/Api";
 import { Link, useNavigate } from "react-router-dom";
-interface filteredProducts {
+import { productHooks } from "../../api/queryClinet";
+
+interface FilteredProduct {
   title: string;
   id: number;
   images: string;
   price: number;
 }
+
 function Search() {
   const navigate = useNavigate();
-  const apiContext = useContext(ApiContext);
   const [search, setSearch] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState<filteredProducts[]>(
-    []
-  );
   const [showProductList, setShowProductList] = useState(false);
 
+  // Use the custom hook to fetch data based on the `search` input
+  const { data: filteredProducts = [], isLoading, error } =
+    productHooks.useSearchProducts(search);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShowProductList(false);
     const value = e.target.value;
     setSearch(value);
-    if (value && apiContext) {
-      const filtered: filteredProducts[] = apiContext.data.filter(
-        (filteredItem) =>
-          filteredItem.title.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts([]);
-    }
+    setShowProductList(true);
   };
 
   const handleSearchClick = (title: string) => {
     setShowProductList(true);
-    setFilteredProducts([]);
     return true;
   };
 
@@ -72,11 +65,11 @@ function Search() {
             placeholder="Search..."
             onChange={handleInputChange}
             className="w-full pl-12 pr-10 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
-            onKeyUp={(e) => e.key == "Enter" && handleSearchClick(search)}
+            onKeyUp={(e) => e.key === "Enter" && handleSearchClick(search) && setShowProductList(false)}
           />
           <button
             onClick={(e) =>
-              handleSearchClick(search) && setShowProductList(true)
+              handleSearchClick(search) && setShowProductList(false)
             }
             className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"
           >
@@ -96,21 +89,22 @@ function Search() {
             </svg>
           </button>
 
-          {filteredProducts.length > 0 && (
+          {isLoading && <div>Loading...</div>}
+          {error instanceof Error && <div>Error: {error.message}</div>}
+          {showProductList && filteredProducts.length > 0 && !isLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
-              {filteredProducts.map(({ title, id, images, price }, index) => (
-                <Link to={`/product/${id}`}>
+              {filteredProducts.map(({ name, id, images, price }, index) => (
+                <Link to={`/product/${id}`} key={id}>
                   <li
-                    key={index}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex justify-between mx-5"
                   >
                     <div className="flex">
                       <img
-                        src={images}
-                        alt={title}
+                        src={images[0]}
+                        alt={name}
                         className="w-8 h-8 rounded-full object-cover mr-3"
                       />
-                      <span>{title}</span>
+                      <span>{name}</span>
                     </div>
                     <span>${price}</span>
                   </li>
@@ -121,12 +115,8 @@ function Search() {
         </div>
       </div>
 
-      {showProductList && apiContext && (
-        <ProductList
-          products={apiContext.data}
-          productSet={apiContext.setData}
-          dispatchCaller={{ type: "search", value: search }}
-        />
+      {!showProductList && (
+        <ProductList dispatchCaller={{ type: "search", value: search }} />
       )}
     </div>
   );

@@ -1,5 +1,4 @@
-import { productHooks } from "../../api/queryClinet";
-import { ApiContext } from "../base/Api";
+import { productHooks, wishlistHooks } from "../../api/queryClinet";
 import { UserProps } from "../base/Interfaces";
 import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
@@ -7,8 +6,8 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface FilterState {
-  search?: string | string[];
-  brand?: string[];
+  search?: any;
+  brand?: any;
   wishList?: string | string[];
   mostPopular?: string | string[];
   home?: string | string[];
@@ -20,8 +19,6 @@ export type FilterAction = {
 };
 
 interface ProductListProps {
-  products: ProductProps[];
-  productSet: React.Dispatch<React.SetStateAction<ProductProps[]>>;
   dispatchCaller: FilterAction;
 }
 
@@ -43,28 +40,13 @@ function filterReducer(state: FilterState, action: FilterAction) {
   }
 }
 
-function ProductList({ dispatchCaller, products }: ProductListProps) {
+function ProductList({ dispatchCaller }: ProductListProps) {
   const navigate = useNavigate();
-  const apiContext = useContext(ApiContext);
   let brands: string[] = [];
-  if (apiContext) {
-    for (const i of apiContext.data) {
-      if (!brands.includes(i.brand)) {
-        brands = [...brands, i.brand];
-      }
-    }
-  }
-
-  const [filter, dispatch] = useReducer<(arg0: FilterState, arg1: FilterAction) => FilterState>(filterReducer, {});
-  const [loginUser, setLoginUser] = useState<UserProps>();
+  const [filter, dispatch] = useReducer<(arg0: FilterState,
+    arg1: FilterAction) => FilterState>(filterReducer, {});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
-  useEffect(() => {
-    const userId = window.localStorage.getItem("userId");
-    if (userId && apiContext) {
-      setLoginUser(apiContext.users.find(({ id }) => Number(userId) == id));
-    }
-  }, [apiContext]);
 
   useEffect(() => {
     dispatch(dispatchCaller);
@@ -72,13 +54,24 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
 
   console.log(filter)
 
+  let hookResult;
+
   if (filter.brand) {
-    const { data, isLoading, error } = productHooks.useFetchProductsByBrand(filter.brand)
+    hookResult = productHooks.useFetchProductsByBrand(filter.brand);
+  } else if (filter.wishList) {
+    hookResult = wishlistHooks.useFetchWishlist();
+  } else if (filter.search) {
+    hookResult = productHooks.useSearchProducts(filter.search);
+  } else if (filter.mostPopular) {
+    hookResult = productHooks.useFetchPopularProducts();
+  } else {
+    hookResult = productHooks.useFetchProducts();
   }
-  const { data, isLoading, error } = productHooks.useFetchProducts()
+
+  const { data, isLoading, error } = hookResult;
+
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
-
   const filteredProducts = data
   const totalItems = filteredProducts && filteredProducts.length
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -193,7 +186,7 @@ function ProductList({ dispatchCaller, products }: ProductListProps) {
             </svg>
           </div>
         )}
-        {paginatedProducts.map((item) => (
+        {paginatedProducts.map((item: ProductProps) => (
           <Link key={item.id} to={`/product/${item.id}`}>
             <ProductCard {...item}
             />

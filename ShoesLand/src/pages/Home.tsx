@@ -1,12 +1,10 @@
 import { useContext, useState } from "react";
 import ProductList from "../component/product/ProductList";
-import { ApiContext } from "../component/base/Api";
 import { FilterAction } from "../component/product/ProductList";
 import { Link } from "react-router-dom";
 import ProductBrand from "../component/product/ProductBrand";
 
 function Home() {
-  const apiContext = useContext(ApiContext);
 
   return (
     <div className="w-full mb-10">
@@ -46,13 +44,9 @@ function Home() {
       </Link>
       <ProductBrand />
 
-      {apiContext && (
-        <ProductList
-          products={apiContext.data}
-          productSet={apiContext.setData}
-          dispatchCaller={{ type: "home", value: "true" }}
-        />
-      )}
+      <ProductList
+        dispatchCaller={{ type: "home", value: "true" }}
+      />
     </div>
   );
 }

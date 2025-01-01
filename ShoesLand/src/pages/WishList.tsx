@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
-import { ApiContext } from "../component/base/Api";
 import ProductList from "../component/product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
 
 function WishList() {
-  const apiContext = useContext(ApiContext);
-  console.log(apiContext)
   const navigate = useNavigate();
   return (
     <>
@@ -32,13 +29,9 @@ function WishList() {
           <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500"></h1>
         </Link>
       </div>
-      {apiContext && (
-        <ProductList
-          products={apiContext.data}
-          productSet={apiContext.setData}
-          dispatchCaller={{ type: "wishList", value: "true" }}
-        />
-      )}
+      <ProductList
+        dispatchCaller={{ type: "wishList", value: "true" }}
+      />
     </>
   );
 }

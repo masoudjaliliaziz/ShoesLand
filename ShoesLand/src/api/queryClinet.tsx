@@ -33,7 +33,6 @@ export const useFetch = ({ key, url }: { key: string; url: string; }) => {
   });
 };
 
-
 export const usePost = (url: string) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -86,6 +85,7 @@ export const productHooks = {
   useFetchPopularProducts: () =>
     useFetch({ key: "popular-products", url: "/api/products?is_popular=true" }),
   useFetchProductsByBrand: (brands: string[]) => {
+
     const formattedBrands = brands.join(",");
     return useFetch({
       key: `products-by-brand-${formattedBrands}`,

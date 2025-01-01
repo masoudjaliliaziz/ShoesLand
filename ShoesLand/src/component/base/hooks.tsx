@@ -16,15 +16,34 @@ function useLocalStorage<T>(defaultValue: T, key: string): PersistedState<T> {
 
 export { useLocalStorage };
 
+
+
+
+
+
+
+
+
 function useCart() {
+
+
+
+
+  const { mutate: addToCartMutate } = cartHooks.useAddToCartItem();
+  const { mutate: updateCartMutate } = cartHooks.useUpdateCartItemCount();
+  const { data: userData, isLoading: userLoading, isError, isSuccess } = authHooks.useWhoAmI();
+  const { data: cartData, isLoading: cartLoading, } = cartHooks.useFetchCart();
   const [value, setValue] = useLocalStorage([], "cart");
+
+
+
+
   const getCart = () => {
-    const { data, isLoading, isError, isSuccess } = authHooks.useWhoAmI();
-    if (isLoading) return <div>Loading...</div>;
+    if (userLoading || cartLoading) return null
     if (isError) {
       return value;
     } else if (isSuccess) {
-      return cartHooks.useFetchCart();
+      return cartData
     }
   };
   const addToCart = ({
@@ -38,11 +57,8 @@ function useCart() {
     size: number;
     count: number;
   }) => {
-    const { mutate } = cartHooks.useAddToCartItem();
-
-    const { data, isLoading, isError, isSuccess } = authHooks.useWhoAmI();
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) {
+    if (userLoading || cartLoading) return null
+    if (!userData) {
       setValue((state) => {
         return state.map((item) => {
           if (item.productId == productId) {
@@ -52,8 +68,8 @@ function useCart() {
           }
         });
       });
-    } else if (isSuccess) {
-      mutate(
+    } else {
+      addToCartMutate(
         {
           productId,
           color,
@@ -72,36 +88,8 @@ function useCart() {
     }
   };
   const removeFromCart = ({ productId }) => {
-    const { data, isLoading, isError, isSuccess } = authHooks.useWhoAmI();
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) {
-      setValue((prevCart) => {
-        return prevCart.map((item) =>
-          item.productId !== productId ? item : null
-        );
-      });
-    } else if (isSuccess) {
-      const { mutate } = cartHooks.useUpdateCartItemCount();
-      mutate(
-        {
-          productId,
-          count: 0,
-        },
-        {
-          onSuccess: () => {
-            console.log("cart updated successfully");
-          },
-          onError: (err) => {
-            console.error("Failed to update cart", err);
-          },
-        }
-      );
-    }
-  };
-  const EditCart = ({ productId, count }) => {
-    const { data, isLoading, isError, isSuccess } = authHooks.useWhoAmI();
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) {
+    if (userLoading || cartLoading) return null
+    if (!userData) {
       setValue((prevCart) => {
         return prevCart.map((item) =>
           item.productId === productId && item.count > 1
@@ -109,9 +97,8 @@ function useCart() {
             : item
         );
       });
-    } else if (isSuccess) {
-      const { mutate } = cartHooks.useUpdateCartItemCount();
-      mutate(
+    } else {
+      updateCartMutate(
         {
           productId,
           count,
@@ -127,7 +114,7 @@ function useCart() {
       );
     }
   };
-  return { getCart, addToCart, removeFromCart, EditCart };
+  return { getCart, addToCart, removeFromCart };
 }
 
 export default useCart;

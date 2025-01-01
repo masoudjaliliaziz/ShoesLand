@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import ProductList from "../component/product/ProductList";
-import { ApiContext } from "../component/base/Api";
 import { useParams } from "react-router-dom";
 
 function Brand() {
@@ -9,13 +8,9 @@ function Brand() {
 
   return (
     <>
-      {apiContext && brand && (
-        <ProductList
-          products={apiContext.data}
-          productSet={apiContext.setData}
-          dispatchCaller={{ type: "brand", value: brand.toLowerCase() }}
-        />
-      )}
+      <ProductList
+        dispatchCaller={{ type: "brand", value: brand.toLowerCase() }}
+      />
     </>
   );
 }
