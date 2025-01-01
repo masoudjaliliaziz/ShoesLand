@@ -2,7 +2,7 @@
 import { useState } from "react";
 import ProductList from "../product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
-import { productHooks } from "../../api/queryClinet";
+import { historySearchHooks, productHooks } from "../../api/queryClinet";
 
 interface FilteredProduct {
   title: string;
@@ -15,9 +15,10 @@ function Search() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [showProductList, setShowProductList] = useState(false);
+  const { data: searchData, isLoading: searchLoading } = historySearchHooks.useFetchHistorySearch()
 
   // Use the custom hook to fetch data based on the `search` input
-  const { data: filteredProducts = [], isLoading, error } =
+  const { data: filteredProducts = [], isLoading: productLoading, error } =
     productHooks.useSearchProducts(search);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,9 +90,9 @@ function Search() {
             </svg>
           </button>
 
-          {isLoading && <div>Loading...</div>}
+          {productLoading && <div>Loading...</div>}
           {error instanceof Error && <div>Error: {error.message}</div>}
-          {showProductList && filteredProducts.length > 0 && !isLoading && (
+          {showProductList && filteredProducts.length > 0 && !productLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {filteredProducts.map(({ name, id, images, price }, index) => (
                 <Link to={`/product/${id}`} key={id}>

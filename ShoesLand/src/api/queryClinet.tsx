@@ -1,73 +1,81 @@
 import { useQuery, useMutation, useQueryClient, QueryKey } from "@tanstack/react-query";
-import axiosClient from "./axiosClient";
+import { axiosClient, authAxiosClient } from "./axiosClient";
 
-
-
-const fetchData = async (url: string) => {
-  console.log('querykey', url)
-  const { data } = await axiosClient.get(url);
-  console.log(data)
+const fetchData = async (url: string, authRequired: boolean = false) => {
+  const client = authRequired ? authAxiosClient : axiosClient;
+  const { data } = await client.get(url);
   return data;
 };
 
-const postData = async ({ url, body }: { url: string; body: any }) => {
-  const { data } = await axiosClient.post(url, body);
+const postData = async (
+  { url, body }: { url: string; body: any },
+  authRequired: boolean = false
+) => {
+  const client = authRequired ? authAxiosClient : axiosClient;
+  const { data } = await client.post(url, body);
   return data;
 };
 
-const putData = async ({ url, body }: { url: string; body: any }) => {
-  const { data } = await axiosClient.put(url, body);
+const putData = async (
+  { url, body }: { url: string; body: any },
+  authRequired: boolean = false
+) => {
+  const client = authRequired ? authAxiosClient : axiosClient;
+  const { data } = await client.put(url, body);
   return data;
 };
 
-const deleteData = async (url: string) => {
-  const { data } = await axiosClient.delete(url);
+const deleteData = async (url: string, authRequired: boolean = false) => {
+  const client = authRequired ? authAxiosClient : axiosClient;
+  const { data } = await client.delete(url);
   return data;
 };
 
-export const useFetch = ({ key, url }: { key: string; url: string; }) => {
-  console.log(url)
+export const useFetch = ({
+  key,
+  url,
+  authRequired = false,
+}: {
+  key: string;
+  url: string;
+  authRequired?: boolean;
+}) => {
   return useQuery({
     queryKey: [key, url],
-    queryFn: async () => await fetchData(url)
+    queryFn: async () => await fetchData(url, authRequired),
   });
 };
 
-export const usePost = (url: string) => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    {
-      mutationFn: async (body: any) => {
-        console.log(body)
-        return await postData({ url, body })
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    });
-};
-
-export const usePut = (url: string) => {
+export const usePost = (url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: any) => putData({ url, body }),
+    mutationFn: async (body: any) => await postData({ url, body }, authRequired),
     onSuccess: () => {
-      queryClient.invalidateQueries()
+      queryClient.invalidateQueries();
     },
   });
 };
 
-export const useDelete = (url: string) => {
+export const usePut = (url: string, authRequired = false) => {
   const queryClient = useQueryClient();
-  return useMutation(
-
-    {
-      mutationFn: async () => await deleteData(url),
-      onSuccess: () =>
-        queryClient.invalidateQueries()
+  return useMutation({
+    mutationFn: (body: any) => putData({ url, body }, authRequired),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
     },
-  );
+  });
 };
+
+export const useDelete = (url: string, authRequired = false) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async () => await deleteData(url, authRequired),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+};
+
 
 export const authHooks = {
   useLogin: () => usePost("/auth/login"),
@@ -114,7 +122,7 @@ export const productHooks = {
 };
 
 export const wishlistHooks = {
-  useFetchWishlist: () => useFetch({ key: "wishlist", url: "/api/wishlist" }),
+  useFetchWishlist: () => useFetch({ key: "wishlist", url: "/api/wishlist", authRequired: true }),
   useAddRemoveWishlist: () => usePost("/api/wishlist"),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
@@ -124,10 +132,10 @@ export const wishlistHooks = {
 };
 
 export const historySearchHooks = {
-  useFetchHistorySearch: () => useFetch({ key: "history-search", url: "/api/search" }),
-  useAddHistorySearch: () => usePost("/api/search"),
-  useRemoveHistorySearch: () => useDelete("/api/search"),
-  useRemoveAllHistorySearch: () => useDelete("/api/search"),
+  useFetchHistorySearch: () => useFetch({ key: "history-search", url: "/api/search", authRequired: true }),
+  useAddHistorySearch: () => usePost("/api/search", true),
+  useRemoveHistorySearch: () => useDelete("/api/search", true),
+  useRemoveAllHistorySearch: () => useDelete("/api/search", true),
 };
 
 export const cartHooks = {
