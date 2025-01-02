@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { authHooks, cartHooks, wishlistHooks } from "../../api/queryClinet";
 import axiosClient from "../../api/axiosClient";
-import Heart from "../../assets/Heart";
+import Heart from "../../assets/Heart.svg";
 
 export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; isInWishlist: boolean }) => {
   const { mutate } = wishlistHooks.useAddRemoveWishlist();
@@ -27,7 +27,7 @@ export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; i
       onClick={handleToggle}
       style={{ cursor: "pointer" }}
     >
-      <Heart />
+      <img src={Heart} alt='heart' />
     </div>
   );
 };

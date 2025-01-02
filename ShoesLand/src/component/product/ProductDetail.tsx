@@ -4,7 +4,7 @@ import { WishlistIcon } from '../product/Wishlist'
 import { ProductProps } from "./ProductCard";
 import { productHooks } from "../../api/queryClinet";
 import useCart from "../base/hooks";
-import Star from '../../assets/Star'
+import star from '../../assets/star.svg'
 import AddToCart from "../../assets/AddToCart";
 import Decrease from "../../assets/Decrease";
 import Increase from "../../assets/Increase";
@@ -72,11 +72,11 @@ export function ProductDetail() {
               <div className="flex flex-row space-x-5 w-full justify-start">
                 <div className="w-1/4  bg-slate-200 rounded-lg flex justify-center items-center px-1 py-1">
                   <p className="font-bold text-xs text-slate-700">
-                    {product?.order} sold
+                    {product?.sold_quantity} sold
                   </p>
                 </div>
                 <div className="pl-3 flex flex-row justify-center items-center gap-2">
-                  <Star />
+                  <img src={star} alt='start' />
                   <p className="font-semibold text-[14px] text-slate-700">
                     {product.rating}({product.sold_quantity})
                   </p>
