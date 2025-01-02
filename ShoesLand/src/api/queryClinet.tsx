@@ -25,7 +25,7 @@ const putData = async (
   return data;
 };
 
-const deleteData = async (url: string, authRequired: boolean = false) => {
+export const deleteData = async (url: string, authRequired: boolean = false) => {
   const client = authRequired ? authAxiosClient : axiosClient;
   const { data } = await client.delete(url);
   return data;
@@ -88,6 +88,7 @@ export const authHooks = {
 
 export const productHooks = {
   useFetchProducts: () => useFetch({ key: "products", url: "/api/products" }),
+  useFetchBrands: () => useFetch({ key: "brands", url: "/api/brands" }),
   useFetchProductById: (id: number) =>
     useFetch({ key: `product-${id}`, url: `/api/products/${id}` }),
   useFetchPopularProducts: () =>
@@ -123,11 +124,12 @@ export const productHooks = {
 
 export const wishlistHooks = {
   useFetchWishlist: () => useFetch({ key: "wishlist", url: "/api/wishlist", authRequired: true }),
-  useAddRemoveWishlist: () => usePost("/api/wishlist"),
+  useAddRemoveWishlist: () => usePost("/api/wishlist", true),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
       key: `wishlist-search-${searchTerm}`,
       url: `/api/wishlist?search=${searchTerm}`,
+      authRequired: true
     }),
 };
 
@@ -144,3 +146,6 @@ export const cartHooks = {
   useUpdateCartItemCount: () => usePut("/api/cart"),
   useRemoveCartItem: () => useDelete("/api/cart"),
 };
+
+
+

@@ -1,6 +1,6 @@
 import { authHooks, cartHooks, productHooks } from "../../api/queryClinet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-
+import { CartItem, EditCartParams, AddToCartParams, RemoveFromCartParams } from './Interfaces.ts'
 type PersistedState<T> = [T, Dispatch<SetStateAction<T>>];
 
 function useLocalStorage<T>(defaultValue: T, key: string): PersistedState<T> {
@@ -23,50 +23,52 @@ export { useLocalStorage };
 
 
 
-
 function useCart() {
-
-
-
-
   const { mutate: addToCartMutate } = cartHooks.useAddToCartItem();
   const { mutate: updateCartMutate } = cartHooks.useUpdateCartItemCount();
-  const { data: userData, isLoading: userLoading, isError, isSuccess } = authHooks.useWhoAmI();
-  const { data: cartData, isLoading: cartLoading, } = cartHooks.useFetchCart();
-  const [value, setValue] = useLocalStorage([], "cart");
+  const { data: userData, isLoading: userLoading, isError, isSuccess } =
+    authHooks.useWhoAmI();
+  const { data: cartData, isLoading: cartLoading } = cartHooks.useFetchCart();
+  const [value, setValue] = useLocalStorage<CartItem[]>([], "cart");
 
-
-
-
-  const getCart = () => {
-    if (userLoading || cartLoading) return null
+  const getCart = (): CartItem[] | null => {
+    if (userLoading || cartLoading) return null;
     if (isError) {
       return value;
     } else if (isSuccess) {
-      return cartData
+      return cartData as CartItem[];
     }
+    return null;
   };
+
   const addToCart = ({
     productId,
     color,
     size,
     count,
-  }: {
-    productId: number;
-    color: string;
-    size: number;
-    count: number;
-  }) => {
-    if (userLoading || cartLoading) return null
+  }: AddToCartParams): void => {
+    if (userLoading || cartLoading) return;
     if (!userData) {
       setValue((state) => {
-        return state.map((item) => {
-          if (item.productId == productId) {
-            return { ...item, count: count };
-          } else {
-            return item;
-          }
-        });
+        const existingItemIndex = state.findIndex(
+          (item) => item.productId === productId
+        );
+        if (existingItemIndex !== -1) {
+          const updatedState = [...state];
+          updatedState[existingItemIndex].count += count;
+          return updatedState;
+        }
+        return [
+          ...state,
+          {
+            name: "Unknown",
+            count,
+            color,
+            size,
+            images: [],
+            productId,
+          },
+        ];
       });
     } else {
       addToCartMutate(
@@ -78,7 +80,7 @@ function useCart() {
         },
         {
           onSuccess: () => {
-            console.log("cart updated successfully");
+            console.log("Cart updated successfully");
           },
           onError: (err) => {
             console.error("Failed to update cart", err);
@@ -87,16 +89,39 @@ function useCart() {
       );
     }
   };
-  const removeFromCart = ({ productId }) => {
-    if (userLoading || cartLoading) return null
+
+  const removeFromCart = ({ productId }: RemoveFromCartParams): void => {
+    if (userLoading || cartLoading) return;
     if (!userData) {
-      setValue((prevCart) => {
-        return prevCart.map((item) =>
-          item.productId === productId && item.count > 1
-            ? { ...item, count: count }
-            : item
-        );
-      });
+      setValue((prevCart) =>
+        prevCart.filter((item) => item.productId !== productId)
+      );
+    } else {
+      updateCartMutate(
+        {
+          productId,
+          count: 0,
+        },
+        {
+          onSuccess: () => {
+            console.log("Cart updated successfully");
+          },
+          onError: (err) => {
+            console.error("Failed to update cart", err);
+          },
+        }
+      );
+    }
+  };
+
+  const editCart = ({ productId, count }: EditCartParams): void => {
+    if (userLoading || cartLoading) return;
+    if (!userData) {
+      setValue((prevCart) =>
+        prevCart.map((item) =>
+          item.productId === productId ? { ...item, count } : item
+        )
+      );
     } else {
       updateCartMutate(
         {
@@ -105,7 +130,7 @@ function useCart() {
         },
         {
           onSuccess: () => {
-            console.log("cart updated successfully");
+            console.log("Cart updated successfully");
           },
           onError: (err) => {
             console.error("Failed to update cart", err);
@@ -114,7 +139,8 @@ function useCart() {
       );
     }
   };
-  return { getCart, addToCart, removeFromCart };
+
+  return { getCart, addToCart, removeFromCart, editCart };
 }
 
 export default useCart;

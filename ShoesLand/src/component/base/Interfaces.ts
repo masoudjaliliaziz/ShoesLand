@@ -13,5 +13,30 @@ export interface UserProps {
 export interface LogoProps {
   id: number;
   brand: string;
-  images:string
+  images: string
+}
+
+export interface CartItem {
+  name: string;
+  count: number;
+  color: string;
+  size: number;
+  images: string[];
+  productId: number;
+}
+
+export interface AddToCartParams {
+  productId: number;
+  color: string;
+  size: number;
+  count: number;
+}
+
+export interface EditCartParams {
+  productId: number;
+  count: number;
+}
+
+export interface RemoveFromCartParams {
+  productId: number;
 }

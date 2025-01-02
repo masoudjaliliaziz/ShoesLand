@@ -1,8 +1,9 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductList from "../product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
-import { historySearchHooks, productHooks } from "../../api/queryClinet";
+import { authHooks, deleteData, historySearchHooks, productHooks, useDelete } from "../../api/queryClinet";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 interface FilteredProduct {
   title: string;
@@ -12,14 +13,15 @@ interface FilteredProduct {
 }
 
 function Search() {
+
+
+  const queryClient = useQueryClient()
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [showProductList, setShowProductList] = useState(false);
-  const { data: searchData, isLoading: searchLoading } = historySearchHooks.useFetchHistorySearch()
-
-  // Use the custom hook to fetch data based on the `search` input
-  const { data: filteredProducts = [], isLoading: productLoading, error } =
-    productHooks.useSearchProducts(search);
+  const { data: searchData, isLoading: searchLoading, error } = historySearchHooks.useFetchHistorySearch()
+  const { mutate: addSearchMutate } = historySearchHooks.useAddHistorySearch()
+  const { data: filteredProducts = [], isLoading: productLoading } = productHooks.useSearchProducts(search);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,7 +29,11 @@ function Search() {
     setShowProductList(true);
   };
 
-  const handleSearchClick = (title: string) => {
+  const handleSearchClick = (text: string) => {
+    addSearchMutate({
+      text
+    })
+
     setShowProductList(true);
     return true;
   };
@@ -70,6 +76,7 @@ function Search() {
           />
           <button
             onClick={(e) =>
+
               handleSearchClick(search) && setShowProductList(false)
             }
             className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"
@@ -90,36 +97,40 @@ function Search() {
             </svg>
           </button>
 
-          {productLoading && <div>Loading...</div>}
+          {searchLoading && <div>Loading...</div>}
           {error instanceof Error && <div>Error: {error.message}</div>}
-          {showProductList && filteredProducts.length > 0 && !productLoading && (
+          {showProductList && filteredProducts.length > 0 && !searchLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
-              {filteredProducts.map(({ name, id, images, price }, index) => (
-                <Link to={`/product/${id}`} key={id}>
-                  <li
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 flex justify-between mx-5"
-                  >
-                    <div className="flex">
-                      <img
-                        src={images[0]}
-                        alt={name}
-                        className="w-8 h-8 rounded-full object-cover mr-3"
-                      />
-                      <span>{name}</span>
-                    </div>
-                    <span>${price}</span>
-                  </li>
-                </Link>
+              {searchData.map((data) => (
+                <div key={data.userId}>
+                  <p onClick={() => {
+
+                    setSearch(data.text)
+                    handleSearchClick(data.text)
+                    setShowProductList(false)
+                  }
+                  }>
+                    {data.text}
+                  </p>
+                  <button onClick={async () => {
+                    await deleteData(`/api/search/${data.text}`, true)
+                    queryClient.invalidateQueries()
+                  }}>x</button>
+
+                </div>
+
               ))}
             </ul>
           )}
         </div>
       </div>
 
-      {!showProductList && (
-        <ProductList dispatchCaller={{ type: "search", value: search }} />
-      )}
-    </div>
+      {
+        !showProductList && (
+          <ProductList dispatchCaller={{ type: "search", value: search }} />
+        )
+      }
+    </div >
   );
 }
 
