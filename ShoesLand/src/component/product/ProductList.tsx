@@ -1,5 +1,6 @@
 import { productHooks, wishlistHooks } from "../../api/queryClinet";
 import { UserProps } from "../base/Interfaces";
+import { BrandNav } from "./BrandNav";
 import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
 import React, { useContext, useEffect, useReducer, useState } from "react";
@@ -29,8 +30,18 @@ function filterReducer(state: FilterState, action: FilterAction) {
   switch (action.type) {
     case "search":
       return { search: action.value };
-    case "brand":
-      return { brand: action.value };
+    case "brand": {
+      if (action.value) {
+        const currentBrands = state.brand || [];
+        const updatedBrands = currentBrands.includes(action.value)
+          ? currentBrands.filter((brand: string) => brand !== action.value)
+          : [...currentBrands, action.value];
+        return { brand: updatedBrands }
+      }
+      else {
+        return { brand: [] }
+      }
+    }
     case "wishList":
       return { wishList: action.value };
     case "mostPopular":
@@ -89,80 +100,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
   };
   return (
     <div className="flex w-full flex-col space-y-3 " key={11}>
-      {/*
- {(pageState == "home" || pageState == "popular") && (
-        <>
-          <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
-            <div className="w-full flex flex-row justify-between items-center text-start left-0">
-              <div className="font-bold leading-5 flex justify-item-center space-x-1">
-                {pageState == "popular" && (
-                  <svg
-                    onClick={() => navigate(-1)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                    stroke="currentColor"
-                    className="size-7 cursor-pointer"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
-                    />
-                  </svg>
-                )}
-                <span className="text-lg">Most Popular</span>
-              </div>
-              <Link to="/popular">
-                <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-base hover:text-slate-500">
-                  See All
-                </h1>
-              </Link>
-            </div>
-          </div>
-
-          <div
-            className="h-10 justify-content-start  scroll-pr-10
-        w-full flex flex-row gap-1 overflow-x-scroll snap-x
-         [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
-        
-        "
-          >
-            <div>
-              <button
-                key={"all"}
-                className="font-bold  snap-start leading-5  text-xs h-10 flex 
-             justify-center items-center px-4 py-1.5 border-2 border-[#343A40]
-              rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white
-          
-              "
-                onClick={() => dispatch({ type: "brand", value: "" })}
-              >
-                All
-              </button>
-            </div>
-            {brands.map((item, index) => {
-              return (
-                <div>
-                  <button
-                    key={index}
-                    className="font-bold snap-start leading-5 h-10  text-xs flex 
-                justify-center items-center px-4 py-1.5 border-2 
-                border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700
-                 hover:text-white"
-                    onClick={() => dispatch({ type: "brand", value: item })}
-                  >
-                    {item}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
-      
-      */}
+      <BrandNav filter={filter} dispatch={dispatch} />
       <div className="w-full flex flex-wrap  justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-10">
