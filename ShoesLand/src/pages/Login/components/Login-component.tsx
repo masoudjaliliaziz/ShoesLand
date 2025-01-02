@@ -1,6 +1,7 @@
 import { FC, ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
+import { authHooks } from "../../../api/queryClinet";
 
 interface ILoginFormData {
   username: string;
@@ -8,6 +9,8 @@ interface ILoginFormData {
 }
 
 export const LoginForm: FC = (): ReactElement => {
+
+  const { mutate } = authHooks.useLogin()
   const {
     register,
     handleSubmit,
@@ -16,7 +19,9 @@ export const LoginForm: FC = (): ReactElement => {
   } = useForm<ILoginFormData>();
   return (
     <form onSubmit={(e) => {
-
+      mutate({
+        username: '', password: ''
+      })
       e.preventDefault();
     }} className="border rounded">
       <div>
