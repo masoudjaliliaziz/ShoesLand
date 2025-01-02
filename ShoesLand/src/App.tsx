@@ -11,6 +11,7 @@ import WishList from "./pages/WishList";
 import Brand from "./pages/Brand";
 import Auth from './pages/auth';
 import SignIn from "./pages/SignIn";
+import { LoginPage } from "./pages/Login/LoginPage";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="brand/:brand" element={<Brand />} />
           <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
       </Routes>
     </Api>
