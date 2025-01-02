@@ -23,6 +23,11 @@ function Search() {
   const { mutate: addSearchMutate } = historySearchHooks.useAddHistorySearch()
   const { data: filteredProducts = [], isLoading: productLoading } = productHooks.useSearchProducts(search);
 
+  const handleDelete = async (text: string) => {
+    deleteData(`/api/search/${text}`, true).catch((e) => { addSearchMutate({ text }) })
+    queryClient.invalidateQueries()
+    //console.log(responce) 
+  }
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
@@ -112,10 +117,7 @@ function Search() {
                   }>
                     {data.text}
                   </p>
-                  <button onClick={async () => {
-                    await deleteData(`/api/search/${data.text}`, true)
-                    queryClient.invalidateQueries()
-                  }}>x</button>
+                  <button onClick={() => handleDelete(data.text)}>x</button>
 
                 </div>
 

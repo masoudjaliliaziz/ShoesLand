@@ -98,10 +98,15 @@ export default function SingIN() {
               />
             </svg>
 
-            <input placeholder="Username" {...register }/>
+            <input placeholder="Username" {...register("username",
+              {required: true, maxLength:20}
+            ) }/>
           </div>
           {/* emailfield */}
-
+          <div>
+            
+          </div>
+            <input />
           {/* firstname */}
           <div> 
             <svg

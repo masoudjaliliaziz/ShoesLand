@@ -14,6 +14,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Cart from "./pages/Cart";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 const queryClient = new QueryClient()
+import { LoginPage } from "./pages/Login/LoginPage";
+
+
 function App() {
   return (
     // <Onboarding />;
@@ -29,6 +32,7 @@ function App() {
           <Route path="brand/:brand" element={<Brand />} />
           <Route path="cart/" element={<Cart />} />
           <Route path="product/:id" element={<ProductDetail />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />

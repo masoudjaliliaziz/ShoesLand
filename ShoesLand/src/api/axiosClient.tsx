@@ -45,7 +45,7 @@ authAxiosClient.interceptors.request.use((config) => {
   const state = store.getState() as { auth: AuthState };
   console.log(state)
   //const token = state.auth?.token;
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ'
+  const token = ''
 
   if (token) {
     console.log(token)

@@ -27,8 +27,8 @@ const putData = async (
 
 export const deleteData = async (url: string, authRequired: boolean = false) => {
   const client = authRequired ? authAxiosClient : axiosClient;
-  const { data } = await client.delete(url);
-  return data;
+  return client.delete(url);
+
 };
 
 export const useFetch = ({

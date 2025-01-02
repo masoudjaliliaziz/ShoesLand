@@ -17,12 +17,6 @@ function useLocalStorage<T>(defaultValue: T, key: string): PersistedState<T> {
 export { useLocalStorage };
 
 
-
-
-
-
-
-
 function useCart() {
   const { mutate: addToCartMutate } = cartHooks.useAddToCartItem();
   const { mutate: updateCartMutate } = cartHooks.useUpdateCartItemCount();
@@ -61,7 +55,7 @@ function useCart() {
         return [
           ...state,
           {
-            name: "Unknown",
+            name: "",
             count,
             color,
             size,
@@ -138,6 +132,48 @@ function useCart() {
         }
       );
     }
+  };
+  const mergeCartOnLogin = () => {
+    if (!userData || !cartData) return;
+
+    const localCart = value;
+    const apiCart = cartData as CartItem[];
+    const mergedCart: CartItem[] = [...apiCart];
+
+    localCart.forEach((localItem) => {
+      const apiItemIndex = mergedCart.findIndex(
+        (apiItem) =>
+          apiItem.productId === localItem.productId &&
+          apiItem.color === localItem.color &&
+          apiItem.size === localItem.size
+      );
+
+      if (apiItemIndex !== -1) {
+        mergedCart[apiItemIndex].count = localItem.count;
+      } else {
+        mergedCart.push(localItem);
+      }
+    });
+
+    setValue([]);
+    mergedCart.forEach((item) => {
+      addToCartMutate(
+        {
+          productId: item.productId,
+          color: item.color,
+          size: item.size,
+          count: item.count,
+        },
+        {
+          onSuccess: () => {
+            console.log(`Merged item ${item.productId} to API cart`);
+          },
+          onError: (err) => {
+            console.error(`Failed to merge item ${item.productId}`, err);
+          },
+        }
+      );
+    });
   };
 
   return { getCart, addToCart, removeFromCart, editCart };
