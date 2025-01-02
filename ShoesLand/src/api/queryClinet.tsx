@@ -147,5 +147,12 @@ export const cartHooks = {
   useRemoveCartItem: () => useDelete("/api/cart", true),
 };
 
+export const addressHooks = {
+  useFetchAddress: () => useFetch({ key: "address", url: "/api/address", authRequired: true }),
+  useAddToAddress: () => usePost("/api/address", true),
+  useUpdateAddress: () => usePut("/api/address", true),
+  useRemoveAddress: () => useDelete("/api/cart", true),
+};
+
 
 

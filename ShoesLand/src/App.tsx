@@ -19,11 +19,11 @@ import { LoginPage } from "./pages/Login/LoginPage";
 
 function App() {
   return (
-    // <Onboarding />;
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
+          <Route path='on' element={<Onboarding />} />
           <Route path="search" element={<Search />} />
           <Route path="popular" element={<MostPopular />} />
           <Route path="wishlist" element={<WishList />} />

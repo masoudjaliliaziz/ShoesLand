@@ -15,8 +15,9 @@ export const LoginForm: FC = (): ReactElement => {
     formState: { errors },
   } = useForm<ILoginFormData>();
   return (
-    <form onSubmit={(e)=>{
-        e.preventDefault();
+    <form onSubmit={(e) => {
+
+      e.preventDefault();
     }} className="border rounded">
       <div>
         <label htmlFor="username">Username:</label>
@@ -27,9 +28,9 @@ export const LoginForm: FC = (): ReactElement => {
             required: {
               value: true,
               message: "Username is required",
-            }, minLength:{
-                value: 3,
-                message: "Username must be at least 3 characters long",
+            }, minLength: {
+              value: 3,
+              message: "Username must be at least 3 characters long",
             }
           })}
         />
@@ -40,20 +41,20 @@ export const LoginForm: FC = (): ReactElement => {
         <input
           type="password"
           id="password"
-          {...register("password",
-            required:{
+          {...register("password", {
+            required: {
               value: true,
               message: "Password is required",
             },
-            minLength:{
+            minLength: {
               value: 8,
               message: "Password must be at least 8 char",
             },
-            maxLength:{
+            maxLength: {
               value: 16,
               message: "Password must be at most 16 char",
             }
-          )}
+          })}
           name="password"
         />
         <p className="text-red-300">{errors.password?.message}</p>

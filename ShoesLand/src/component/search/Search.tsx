@@ -4,7 +4,8 @@ import ProductList from "../product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
 import { authHooks, deleteData, historySearchHooks, productHooks, useDelete } from "../../api/queryClinet";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-
+import Backward from '../../assets/Backward.svg'
+import SearchIcon from '../../assets/SearchIcon.svg'
 interface FilteredProduct {
   title: string;
   id: number;
@@ -47,21 +48,7 @@ function Search() {
     <div>
       <div className="w-full flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
-          <svg
-            onClick={() => navigate(-1)}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2.5}
-            stroke="currentColor"
-            className="size-7 cursor-pointer"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
-            />
-          </svg>
+          <img src={Backward} alt='back' className='w-7' onClick={() => navigate(-1)} />
           <span className="text-xl">Search</span>
         </div>
         <Link to="/popular">
@@ -85,21 +72,7 @@ function Search() {
               handleSearchClick(search) && setShowProductList(false)
             }
             className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2.0"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
+          ><img src={SearchIcon} alt='search' className='w-6 h-6' />
           </button>
 
           {searchLoading && <div>Loading...</div>}

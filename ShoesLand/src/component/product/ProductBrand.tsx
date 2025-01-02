@@ -8,9 +8,9 @@ function ProductBrand() {
   return (
     <div className="flex flex-wrap w-ful space-x-4 pb-4 justify-items-center content-center items-center justify-center">
       {!isError &&
-        data.map((logo) => {
+        data.map((logo, index) => {
           return (
-            <div key={logo.id}>
+            <div key={index}>
               <Link to={`/brand/${logo.name}`}>
                 <div className="w-16 h-24 flex flex-col justify-evenly items-center cursor-pointer">
                   <div className="w-16 h-16  rounded-full bg-[#EAEAEA] flex justify-center items-center">

@@ -62,9 +62,9 @@ export function BrandNav({ filter, dispatch }) {
             All
           </button>
         </div>
-        {data.map((item) => {
+        {data.map((item, index) => {
           return (
-            <div key={item.id}>
+            <div key={index}>
               <button
                 className="font-bold snap-start leading-5 h-10  text-xs flex 
                 justify-center items-center px-4 py-1.5 border-2 

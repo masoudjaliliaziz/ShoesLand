@@ -20,8 +20,7 @@ export { useLocalStorage };
 function useCart() {
   const { mutate: addToCartMutate } = cartHooks.useAddToCartItem();
   const { mutate: updateCartMutate } = cartHooks.useUpdateCartItemCount();
-  const { data: userData, isLoading: userLoading, isError, isSuccess } =
-    authHooks.useWhoAmI();
+  const { data: userData, isLoading: userLoading, isError, isSuccess } = authHooks.useWhoAmI();
   const { data: cartData, isLoading: cartLoading } = cartHooks.useFetchCart();
   const [value, setValue] = useLocalStorage<CartItem[]>([], "cart");
 
@@ -176,7 +175,7 @@ function useCart() {
     });
   };
 
-  return { getCart, addToCart, removeFromCart, editCart };
+  return { getCart, addToCart, removeFromCart, editCart, mergeCartOnLogin };
 }
 
 export default useCart;

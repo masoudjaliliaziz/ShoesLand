@@ -24,8 +24,6 @@ const authSlice = createSlice({
 export const { setToken, clearToken } = authSlice.actions;
 
 
-Cookies.set('refreshToken', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NDc5MCwiZXhwIjoxNzM1Nzc2NTkwfQ.GL7XtPr0f9Y-EqFBZcUddbXXtsqXGnR5tApit4XVBJc", { path: '/' })
-
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
@@ -45,7 +43,7 @@ authAxiosClient.interceptors.request.use((config) => {
   const state = store.getState() as { auth: AuthState };
   console.log(state)
   //const token = state.auth?.token;
-  const token = ''
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ'
 
   if (token) {
     console.log(token)
