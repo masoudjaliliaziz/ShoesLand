@@ -11,7 +11,8 @@ import Brand from "./pages/Brand";
 import Auth from './pages/auth';
 import SignIn from "./pages/SignIn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import Cart from "./pages/Cart";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 const queryClient = new QueryClient()
 function App() {
   return (
@@ -26,9 +27,11 @@ function App() {
           <Route path="auth" element={<Auth />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="brand/:brand" element={<Brand />} />
+          <Route path="cart/" element={<Cart />} />
           <Route path="product/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

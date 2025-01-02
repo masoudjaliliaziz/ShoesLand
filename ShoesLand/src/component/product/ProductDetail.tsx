@@ -3,10 +3,13 @@ import { useState } from "react";
 import { WishlistIcon } from '../product/Wishlist'
 import { ProductProps } from "./ProductCard";
 import { productHooks } from "../../api/queryClinet";
+import useCart from "../base/hooks";
 
 export function ProductDetail() {
-  const navigate = useNavigate();
+  const { addToCart } = useCart()
   const [count, setCount] = useState(1);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const colors = [
     "bg-red-600",
     "bg-rose-600",
@@ -15,12 +18,40 @@ export function ProductDetail() {
     "bg-gray-600",
     "bg-teal-600",
   ];
+
   const { id } = useParams();
   const { data, isLoading, error } = productHooks.useFetchProductById(Number(id))
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
-  console.log(data)
+
   const product: ProductProps = data
+
+
+  const handleAddToCart = () => {
+    if (!selectedColor) {
+      alert("Please select a color.");
+      return;
+    }
+    if (!selectedSize) {
+      alert("Please select a size.");
+      return;
+    }
+    console.log(
+      {
+        productId: Number(id),
+        color: selectedColor,
+        size: selectedSize,
+        count: count,
+      }
+    )
+    addToCart({
+      productId: Number(id),
+      color: selectedColor,
+      size: selectedSize,
+      count: count,
+    });
+    alert("Item added to cart!");
+  };
   return (
     <div className="w-full h-[90%] relative mb-10">
       {/* images && backward */}
@@ -30,7 +61,8 @@ export function ProductDetail() {
         </div>
       </div>
       <div className="px-5 pt-4 w-full">
-        <div className=" h-1/4 relative mb-3 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
+        <div className=" h-1/4 relative mb-3 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
+          after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-row w-full justify-evently">
             <div className="flex flex-col space-y-3 w-full">
               <h1 className="font-bold text-3xl w-full ">{product?.name}</h1>
@@ -83,6 +115,8 @@ export function ProductDetail() {
               <ul className="flex space-x-1">
                 {product?.sizes.map((sizes, index) => (
                   <li
+
+                    onClick={() => setSelectedSize(sizes)}
                     className="py-2 px-2 leading-none font-semibold text-xs rounded-full inline-flex border-2 border-slate-800 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500"
                     key={index}
                   >
@@ -96,6 +130,7 @@ export function ProductDetail() {
               <ul className="flex space-x-1">
                 {product?.colors.map((colors, index) => (
                   <li
+                    onClick={() => setSelectedColor(colors)}
                     className={`bg-${colors}-600 py-4 px-4 inline-flex rounded-full cursor-pointer transition-all duration-300 hover:bg-slate-400`}
                     key={index}
                   ></li>
@@ -150,7 +185,9 @@ export function ProductDetail() {
             </div>
           </div>
         </div >
-        <div className="flex w-full h-20 justify-between items-center">
+        <div className="flex w-full h-20 justify-between items-center"
+          onClick={handleAddToCart}
+        >
           <div className="flex flex-col justify-center w-1/3 h-full">
             <h5 className="font-bold text-slate-500 text-xs">Total price</h5>
             <h5 className="font-bold text-xl">

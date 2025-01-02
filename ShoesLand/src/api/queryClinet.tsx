@@ -82,7 +82,7 @@ export const authHooks = {
   useSignup: () => usePost("/auth/register"),
   useForgotPassword: () => usePost("/auth/forgot-password"),
   useResetPassword: () => usePost("/auth/reset-password"),
-  useWhoAmI: () => useFetch({ key: "whoami", url: "/auth/whoami" }),
+  useWhoAmI: () => useFetch({ key: "whoami", url: "/auth/whoami", authRequired: true }),
   useRefreshToken: () => usePost("/auth/refresh"),
 };
 
@@ -141,10 +141,10 @@ export const historySearchHooks = {
 };
 
 export const cartHooks = {
-  useFetchCart: () => useFetch({ key: "cart", url: "/api/cart" }),
-  useAddToCartItem: () => usePost("/api/cart"),
-  useUpdateCartItemCount: () => usePut("/api/cart"),
-  useRemoveCartItem: () => useDelete("/api/cart"),
+  useFetchCart: () => useFetch({ key: "cart", url: "/api/cart", authRequired: true }),
+  useAddToCartItem: () => usePost("/api/cart", true),
+  useUpdateCartItemCount: () => usePut("/api/cart", true),
+  useRemoveCartItem: () => useDelete("/api/cart", true),
 };
 
 
