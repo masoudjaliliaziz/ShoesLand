@@ -15,10 +15,15 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose }) => {
   const { data: addresses } = addressHooks.useFetchAddress();
   const { mutate } = addressHooks.useAddToAddress();
   const handleSelect = (address: Address) => {
-    // todo: Logic to select address
-    mutate({ name: address.name });
-    console.log("Selected Address:", address);
-    onClose();
+    mutate(
+      { name: address.name },
+      {
+        onSuccess: () => {
+          console.log("Selected Address:", address);
+          onClose();
+        },
+      }
+    );
   };
 
   return (
