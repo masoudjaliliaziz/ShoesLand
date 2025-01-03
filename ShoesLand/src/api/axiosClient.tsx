@@ -26,7 +26,7 @@ authAxiosClient.interceptors.request.use((config) => {
   let token = selectToken;
   console.log("token", token);
   token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg3NTE3OCwiZXhwIjoxNzM1ODc4MTc4fQ.lfuSjkCetUrjyhK0zfadhlUZqA-SBRCzGdVb5Cp9ao4";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg4NDc3NywiZXhwIjoxNzM1ODg3Nzc3fQ.m-5sUrmIVGckKT1miGPR5WYCPuXm5N42dF2rSoVcrdM";
 
   if (token) {
     console.log(token);

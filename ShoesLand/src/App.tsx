@@ -20,6 +20,7 @@ import CheckoutPage from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import { Provider } from "react-redux";
 import { store } from "./config/store";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
             <Route path="auth" element={<Auth />} />
             <Route path="signin" element={<SignInPage />} />
             <Route path="brand/:brand" element={<Brand />} />
-            <Route path="cart/" element={<Cart />} />
             <Route path="payment/" element={<Payment />} />
+            <Route path="cart/" element={<Cart />} />
+            <Route path="orders/" element={<Orders />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
           </Route>

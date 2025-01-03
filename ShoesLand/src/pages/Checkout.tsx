@@ -45,19 +45,14 @@ const CheckoutPage = () => {
       <div>
         <h2>Shipping Address</h2>
         {selectedAddress ? (
-          <div
-            onClick={() => setIsSelectingAddress(true)}
-            style={{ cursor: "pointer" }}
-          >
+          <div onClick={() => setIsSelectingAddress(true)}>
             <p>{selectedAddress.address}</p>
             <p>
               {selectedAddress.name}, {selectedAddress.address}
             </p>
           </div>
         ) : (
-          <button onClick={() => setIsSelectingAddress(true)}>
-            Select Address
-          </button>
+          <button>Select Address</button>
         )}
       </div>
 
