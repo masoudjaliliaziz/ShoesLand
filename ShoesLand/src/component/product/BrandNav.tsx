@@ -37,7 +37,7 @@ export function BrandNav({ filter, dispatch }) {
           <button
             key={"all"}
             className="font-semibold snap-start leading-5 text-base h-8 flex 
-             justify-center items-center px-3 py-1.5 border-2 border-[#343A40]
+             justify-center items-center px-3 py-1.5 border-2 border-[#474d53]
               rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white
           
               "
@@ -51,7 +51,7 @@ export function BrandNav({ filter, dispatch }) {
             <div key={index}>
               <button
                 className={clsx(
-                  "font-semibold snap-start leading-5 h-8 text-base flex justify-center items-center px-3 py-1.5 border-2 border-[#343A40] rounded-3xl cursor-pointer",
+                  "font-semibold snap-start leading-5 h-8 text-base flex justify-center items-center px-3 py-1.5 border-2 border-[#474d53] rounded-3xl cursor-pointer",
                   filter.brand?.includes(item.name)
                     ? "bg-slate-700 text-white"
                     : "bg-transparent text-slate-700"
