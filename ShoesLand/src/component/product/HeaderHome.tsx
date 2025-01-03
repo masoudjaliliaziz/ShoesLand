@@ -1,5 +1,5 @@
 import bell from "../../assets/bell.svg";
-import heartwhite from "../../assets/HeartWhite.svg";
+import heartwhite from "../../assets/HeartNone.svg";
 import user from "../../assets/user.svg";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,7 @@ function HeaderHome() {
           </div>
         </div>
         <div>
-          <button className="flex ">
+          <button className="flex space-x-1">
             <Link to={"/#"}>
               <img src={bell} className="size-7 hover:stroke-orange-300" />
             </Link>

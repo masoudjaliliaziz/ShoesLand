@@ -9,7 +9,7 @@ import AddToCart from "../../assets/AddToCart";
 import Decrease from "../../assets/Decrease.svg";
 import Increase from "../../assets/Increase.svg";
 import Backward from "../../assets/Backward.svg";
-import Heart from "../../assets/Heart.svg";
+import Heart from "../../assets/HeartNone.svg";
 
 export function ProductDetail() {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ export function ProductDetail() {
       </div>
       <div className="px-5 w-full">
         <div
-          className=" h-1/4 relative 1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
+          className=" h-1/4 relative 1 after:absolute pt-2 pb-3 after:w-full after:h-full  after:top-0 after:left-0
           after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none"
         >
           <div className="flex flex-row w-full justify-evently">
@@ -98,7 +98,7 @@ export function ProductDetail() {
               </div>
             </div>
             <div className="heart w-1/12 hover:fill-pink-500 active:text-pink-500 flex flex-row justify-start items-center h-2/3">
-            <img src={Heart} alt="star" className="size-6 hover:text-pink-500 active:text-pink-500"/>
+            <img src={Heart} alt="star" className="border border-slate-800 size-6 hover:text-pink-500 active:text-pink-500"/>
               <WishlistIcon
                 productId={Number(id)}
                 isInWishlist={product.isFavorite}
@@ -107,7 +107,7 @@ export function ProductDetail() {
           </div>
         </div>
 
-        <div className="w-full h-1/4 relative mb-1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
+        <div className="w-full h-1/4 relative mb-1 after:absolute pb-4 pt-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-col justify-between pb-3 h-2/4 ">
             <h1 className="font-bold text-base">Description</h1>
             <p className="font-semibold text-xs text-slate-700">
@@ -117,7 +117,7 @@ export function ProductDetail() {
             </p>
           </div>
           <div className="flex flex-row justify-between space-y-1 items-center">
-            <div className="flex space-x-2 justify-center items-center">
+            <div className="flex space-x-1 justify-center items-center">
               <h3 className="font-bold text-base">Size</h3>
               <ul className="flex space-x-1">
                 {product?.sizes.map((sizes, index) => (
@@ -131,7 +131,7 @@ export function ProductDetail() {
                 ))}
               </ul>
             </div>
-            <div className="flex space-x-2 justify-center items-center">
+            <div className="flex space-x-1 justify-center items-center">
               <h3 className="font-bold text-base">Color</h3>
               <ul className="flex space-x-1">
                 {product?.colors.map((colors, index) => (
@@ -144,11 +144,11 @@ export function ProductDetail() {
               </ul>
             </div>
           </div>
-          <div className="flex flex-row space-x-2 justify-start items-center text-center mt-3">
+          <div className=" flex flex-row space-x-2 justify-start items-center text-center mt-3">
             <div>
-              <h3 className="font-bold mt-2 text-center">Quantity</h3>
+              <h3 className="font-bold text-base text-center">Quantity</h3>
             </div>
-            <div className="w-1/3 h-6 rounded-2xl bg-slate-300 flex justify-center items-center px-2 py-[4.5px]">
+            <div className="w-1/4 h-6 space-x-4 rounded-2xl bg-slate-300 flex justify-center items-center px-2 py-[4.5px]">
               <button
                 className="text-xs cursor-pointer"
                 onClick={() => setCount((c) => (c !== 1 ? c - 1 : 1))}
@@ -166,7 +166,7 @@ export function ProductDetail() {
           </div>
         </div>
         <div
-          className="flex w-full h-12  justify-between items-center"
+          className="flex w-full h-16 justify-between items-center"
           onClick={handleAddToCart}
         >
           <div className="flex flex-col justify-center w-1/3 h-full">

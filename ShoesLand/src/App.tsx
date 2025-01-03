@@ -41,8 +41,8 @@ function App() {
             <Route path="orders/" element={<Orders />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
-          </Route>
           <Route path="product/:id" element={<ProductDetail />} />
+          </Route>
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

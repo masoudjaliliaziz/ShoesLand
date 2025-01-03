@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 function Footer() {
   return (
     <div className="relative">
-      <div className="px-5">
+      <div>
         <Outlet />
       </div>
 
