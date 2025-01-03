@@ -23,6 +23,17 @@ httpPrivate.interceptors.request.use(function(config)){
     return config
 }
 
+httpPrivate.interceptors.response.use(
+    response => response,
+    async error => {
+        if (error.response.status === 401) {
+
+            return axios(error.config);
+        }
+        return Promise.reject(error);
+    }
+)
+
 const HTTP = {
     get:http.get,
     post:http.post,

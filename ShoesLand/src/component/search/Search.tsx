@@ -75,6 +75,7 @@ function Search() {
           ><img src={SearchIcon} alt='search' className='w-6 h-6' />
           </button>
 
+
           {searchLoading && <div>Loading...</div>}
           {error instanceof Error && <div>Error: {error.message}</div>}
           {showProductList && filteredProducts.length > 0 && !searchLoading && (

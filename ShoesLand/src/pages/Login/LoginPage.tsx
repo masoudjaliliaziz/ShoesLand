@@ -3,6 +3,6 @@ import { LoginForm } from "./components/Login-component";
 
 
 
-export const LoginPage: FC=():ReactElement=>{
+export const LoginPage: FC = (): ReactElement => {
     return <LoginForm />
 }
