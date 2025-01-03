@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { store } from "../config/store";
-import { AuthState, clearToken, setToken } from "../config/slice";
+import { AuthState, clearToken, selectToken, setToken } from "../config/slice";
 
 export const axiosClient = axios.create({
   baseURL: "http://localhost:8000",
@@ -17,12 +17,13 @@ export const axiosClient = axios.create({
 
 export const authAxiosClient = axios.create({
   baseURL: "http://localhost:8000",
+  withCredentials: true,
 });
 
 authAxiosClient.interceptors.request.use((config) => {
   const state = store.getState() as { auth: AuthState };
   console.log(state);
-  let token = state.auth?.token;
+  let token = selectToken;
   console.log("token", token);
   token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg3NTE3OCwiZXhwIjoxNzM1ODc4MTc4fQ.lfuSjkCetUrjyhK0zfadhlUZqA-SBRCzGdVb5Cp9ao4";
