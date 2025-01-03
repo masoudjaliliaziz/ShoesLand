@@ -8,12 +8,15 @@ export function BrandNav({ filter, dispatch }) {
   if (isLoading) return <div>loading...</div>;
   console.log(data);
   console.log(dispatch);
+  console.log(filter);
   return (
     <>
       <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
         <div className="w-full flex flex-row justify-between items-center text-start left-0">
           <div className="font-bold leading-5 flex justify-item-center space-x-1">
-            <span className="text-xl font-semibold leading-6">Most Popular</span>
+            <span className="text-xl font-semibold leading-6">
+              Most Popular
+            </span>
           </div>
           <Link to="/popular">
             <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-base hover:text-slate-500">
@@ -49,13 +52,12 @@ export function BrandNav({ filter, dispatch }) {
               <button
                 className={clsx(
                   "font-semibold snap-start leading-5 h-10 text-base flex justify-center items-center px-4 py-1.5 border-2 border-[#343A40] rounded-3xl cursor-pointer",
-                  filter.data?.include(item)
+                  filter.brand?.includes(item.name)
                     ? "bg-slate-700 text-white"
                     : "bg-transparent text-slate-700"
-                  )}
-                  
-                  onClick={() => dispatch({ type: "brand", value: item.name })}
-                  >
+                )}
+                onClick={() => dispatch({ type: "brand", value: item.name })}
+              >
                 {item.name}
               </button>
             </div>
