@@ -15,7 +15,7 @@ import Cart from "./pages/Cart";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const queryClient = new QueryClient();
 import { LoginPage } from "./pages/Login/LoginPage";
-import CheckoutPage from "./component/Checkout";
+import CheckoutPage from "./pages/Checkout";
 
 function App() {
   return (

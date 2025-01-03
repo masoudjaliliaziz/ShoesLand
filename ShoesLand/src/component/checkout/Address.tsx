@@ -2,10 +2,9 @@ import React from "react";
 import { addressHooks } from "../../api/queryClinet";
 
 type Address = {
-  id: number;
+  name: string;
   address: string;
-  city: string;
-  zipCode: string;
+  isSelected: boolean;
 };
 
 type AddressSelectionProps = {
@@ -14,9 +13,10 @@ type AddressSelectionProps = {
 
 const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose }) => {
   const { data: addresses } = addressHooks.useFetchAddress();
-
+  const { mutate } = addressHooks.useAddToAddress();
   const handleSelect = (address: Address) => {
     // todo: Logic to select address
+    mutate({ name: address.name });
     console.log("Selected Address:", address);
     onClose();
   };
@@ -25,15 +25,16 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose }) => {
     <div className="address-selection">
       <h2>Select Address</h2>
       <ul>
-        {addresses?.map((address: Address) => (
+        {addresses?.map((address: Address, index) => (
           <li
-            key={address.id}
+            key={index}
             onClick={() => handleSelect(address)}
             style={{ cursor: "pointer" }}
           >
             <p>{address.address}</p>
             <p>
-              {address.city}, {address.zipCode}
+              {address.name}, {address.address},{" "}
+              {address.isSelected && "deafult"}
             </p>
           </li>
         ))}

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { addressHooks, cartHooks } from "../api/queryClinet";
-import AddressSelection from "./checkout/Address";
-import OrderSummary from "./checkout/OrderSummary";
-import PromoCode from "./checkout/Promo";
-import ShippingSelection from "./checkout/Shipping";
-import OrderItems from "./checkout/OrderItems";
+import AddressSelection from "../component/checkout/Address";
+import OrderSummary from "../component/checkout/OrderSummary";
+import PromoCode from "../component/checkout/Promo";
+import ShippingSelection from "../component/checkout/Shipping";
+import OrderItems from "../component/checkout/OrderItems";
 
 const CheckoutPage = () => {
   const [shippingMethod, setShippingMethod] = useState(null);
@@ -50,7 +50,7 @@ const CheckoutPage = () => {
           >
             <p>{selectedAddress.address}</p>
             <p>
-              {selectedAddress.city}, {selectedAddress.zipCode}
+              {selectedAddress.name}, {selectedAddress.address}
             </p>
           </div>
         ) : (
