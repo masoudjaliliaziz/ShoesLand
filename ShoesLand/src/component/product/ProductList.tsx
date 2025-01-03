@@ -80,9 +80,10 @@ function ProductList({ dispatchCaller }: ProductListProps) {
 
   const { data, isLoading, error } = hookResult;
 
+  let filteredProducts;
   if (isLoading) return <div>Loading...</div>;
-  if (error instanceof Error) return <div>Error: {error.message}</div>;
-  const filteredProducts = data;
+  if (error instanceof Error) filteredProducts = [];
+  else filteredProducts = data;
   const totalItems = filteredProducts && filteredProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -102,8 +103,8 @@ function ProductList({ dispatchCaller }: ProductListProps) {
       <BrandNav filter={filter} dispatch={dispatch} />
       <div className="w-full grid grid-cols-2 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
-          <div>
-            <div className="w-full flex flex-col items-center justify-center mt-10">
+          <div className="col-span-2">
+            <div className="col-span-2 w-full flex flex-col items-center justify-center mt-10">
               <div className="text-6xl font-bold text-slate-700">Oops!</div>
               <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
                 We couldn’t find any products matching your search.
