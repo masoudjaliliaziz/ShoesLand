@@ -8,31 +8,8 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-
-interface AuthState {
-  token: string | null;
-}
-
-const authSlice = createSlice({
-  name: "auth",
-  initialState: { token: null } as AuthState,
-  reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
-    },
-    clearToken: (state) => {
-      state.token = null;
-    },
-  },
-});
-
-export const { setToken, clearToken } = authSlice.actions;
-
-const store = configureStore({
-  reducer: {
-    auth: authSlice.reducer,
-  },
-});
+import { store } from "../config/store";
+import { AuthState, clearToken, setToken } from "../config/slice";
 
 export const axiosClient = axios.create({
   baseURL: "http://localhost:8000",
@@ -43,14 +20,12 @@ export const authAxiosClient = axios.create({
 });
 
 authAxiosClient.interceptors.request.use((config) => {
-  setToken(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ"
-  );
   const state = store.getState() as { auth: AuthState };
   console.log(state);
-  //const token = state.auth?.token;
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg2NDEzNCwiZXhwIjoxNzM1ODY3MTM0fQ.GY_lYhfG4PZ3EMpxEai1StpXz7ZuYZSEKxdraE1goOY";
+  let token = state.auth?.token;
+  console.log("token", token);
+  token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg3NTE3OCwiZXhwIjoxNzM1ODc4MTc4fQ.lfuSjkCetUrjyhK0zfadhlUZqA-SBRCzGdVb5Cp9ao4";
 
   if (token) {
     console.log(token);

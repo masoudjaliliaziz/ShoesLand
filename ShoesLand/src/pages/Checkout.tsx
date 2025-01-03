@@ -5,10 +5,13 @@ import OrderSummary from "../component/checkout/OrderSummary";
 import PromoCode from "../component/checkout/Promo";
 import ShippingSelection from "../component/checkout/Shipping";
 import OrderItems from "../component/checkout/OrderItems";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectDiscount } from "../config/slice";
 
 const CheckoutPage = () => {
   const [shippingMethod, setShippingMethod] = useState(null);
-  const [selectedDiscount, setSelectedDiscount] = useState(null);
+  const selectedDiscount = useSelector(selectDiscount);
   const [isSelectingAddress, setIsSelectingAddress] = useState(false);
   const [isSelectingShipping, setIsSelectingShipping] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -24,9 +27,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     const amount =
       cartItems?.reduce((sum, item) => sum + item.total_price, 0) || 0;
-    const discount = selectedDiscount
-      ? (amount * selectedDiscount.discount) / 100
-      : 0;
+    const discount = selectedDiscount ? (amount * selectedDiscount) / 100 : 0;
     const total = amount + shippingCost - discount;
 
     setTotalAmount(amount);
@@ -104,10 +105,7 @@ const CheckoutPage = () => {
       )}
 
       {/* Discount Input */}
-      <PromoCode
-        selectedDiscount={selectedDiscount}
-        setSelectedDiscount={setSelectedDiscount}
-      />
+      <PromoCode />
 
       {/* Order Summary */}
       <OrderSummary
@@ -118,9 +116,9 @@ const CheckoutPage = () => {
       />
 
       {/* Continue to Payment Button */}
-      <button onClick={() => alert("Proceeding to payment...")}>
-        Continue to Payment
-      </button>
+      <Link to={"/payment"}>
+        <button>Continue to Payment</button>
+      </Link>
     </div>
   );
 };

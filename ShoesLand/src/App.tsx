@@ -17,30 +17,35 @@ const queryClient = new QueryClient();
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignInPage } from "./pages/Sign-in/SingnInPage";
 import CheckoutPage from "./pages/Checkout";
+import Payment from "./pages/Payment";
+import { Provider } from "react-redux";
+import { store } from "./config/store";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Home />} />
-          <Route path="on" element={<Onboarding />} />
-          <Route path="on" element={<Onboarding />} />
-          <Route path="search" element={<Search />} />
-          <Route path="popular" element={<MostPopular />} />
-          <Route path="wishlist" element={<WishList />} />
-          <Route path="auth" element={<Auth />} />
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="brand/:brand" element={<Brand />} />
-          <Route path="cart/" element={<Cart />} />
-
-          <Route path="login" element={<LoginPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
-        </Route>
-        <Route path="product/:id" element={<ProductDetail />} />
-      </Routes>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<Header />}>
+            <Route index element={<Home />} />
+            <Route path="on" element={<Onboarding />} />
+            <Route path="on" element={<Onboarding />} />
+            <Route path="search" element={<Search />} />
+            <Route path="popular" element={<MostPopular />} />
+            <Route path="wishlist" element={<WishList />} />
+            <Route path="auth" element={<Auth />} />
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="brand/:brand" element={<Brand />} />
+            <Route path="cart/" element={<Cart />} />
+            <Route path="payment/" element={<Payment />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="checkout" element={<CheckoutPage />} />
+          </Route>
+          <Route path="product/:id" element={<ProductDetail />} />
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
