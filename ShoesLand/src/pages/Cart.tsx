@@ -1,7 +1,6 @@
-
 import React from "react";
 import { CartItem as CartItemType } from "./../component/base/Interfaces";
-import useCart from './../component/base/hooks'
+import useCart from "./../component/base/hooks";
 import CartItem from "./../component/CartItem";
 
 const Cart: React.FC = () => {
