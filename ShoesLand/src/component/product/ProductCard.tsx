@@ -42,8 +42,8 @@ const ProductCard = ({
   show_more,
 }: ProductPropsWithPage): ReactElement => {
   return (
-    <div key={id} className="h-56 flex flex-row flex-wrap ">
-      <div className="w-full justify-center items-center gap-4">
+    <div key={id} className="w-40 h-56 flex flex-row justify-start">
+      <div className="w-full flex flex-col justify-center items-center gap-1">
         <div
           className="cardContainer w-36 h-40 flex flex-col 
           justify-center items-start"
@@ -55,22 +55,22 @@ const ProductCard = ({
           >
             <img
               src={Heart}
-              className="w-8 h-8 transition-all duration-300 size-9 p-1 absolute 
-              top-3 right-3 bg-slate-800 rounded-full "
+              className="w-6 h-6 transition-all duration-300 size-9 p-1 absolute 
+              top-4 right-4 bg-slate-800 rounded-full hover:bg-rose-700"
             />
 
-            <img src={images[0]} className="w-32 h-32" />
+            <img src={images[0]} className="w-32 h-32 mx-auto" />
           </div>
         </div>
-        <div className="detailContainer flex flex-col justify-center items-start gap-1">
-          <h1 className="productName font-bold max-w-[180px] text-sx leading-6 truncate">
+        <div className="detailContainer overflow-hidden w-36 px-2 flex flex-col justify-center items-start gap-1">
+          <h1 className="productName font-medium md:font-bold max-w-[180px] text-sm md:text-sx leading-6 truncate">
             {name}
           </h1>
           <div className="w-full h-1/4 flex flex-row justify-start items-center">
             {
               <>
                 <div className="flex flex-row justify-center items-center">
-                  <img src={star} className="w-5" />
+                  <img src={star} className="w-4" />
                 </div>
                 <div className="relative mr-3 after:absolute  after:w-full after:h-full  after:top-0 after:left-1.5 after:border-r-2 after:border-r-solid after:border-r-slate-400 after:pointer-events-none">
                   <p className="font-semibold text-sm text-slate-700">
@@ -80,7 +80,7 @@ const ProductCard = ({
               </>
             }
             <div className="w-1/2 bg-slate-200 rounded-lg flex justify-center items-centers py-1">
-              <p className="font-semibold text-xs text-slate-700">5254 sold</p>
+              <p className=" font-semibold text-xs text-slate-700">5254 sold</p>
             </div>
           </div>
           <span className="productPrice font-semibold text-sm leading-5">

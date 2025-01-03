@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { productHooks } from "../../api/queryClinet";
 import more from "../../../public/logo/more.png";
@@ -8,11 +7,14 @@ function ProductBrand() {
   if (isLoading) return <div>loading...</div>;
   return (
     <div className="">
-      <div className="flex flex-wrap w-[90%] mx-auto space-x-4 justify-items-center content-center items-center justify-center">
+      <div className=" grid grid-cols-4 w-[90%] mx-auto justify-items-center content-center items-center justify-center">
         {!isError &&
           data.map((logo, index) => {
             return (
-              <div key={index} className="">
+              <div
+                key={index}
+                className="flex flex-col justify-center items-center"
+              >
                 <Link to={`/brand/${logo.name}`}>
                   <div className="w-16 h-[70px] flex flex-col justify-between items-center cursor-pointer mb-5">
                     <div className="w-12 h-12 rounded-full bg-[#EAEAEA] flex justify-center items-center">

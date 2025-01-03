@@ -77,7 +77,7 @@ export function ProductDetail() {
       </div>
       <div className="px-5 w-full">
         <div
-          className=" h-1/4 relative mb-3 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
+          className=" h-1/4 relative 1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
           after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none"
         >
           <div className="flex flex-row w-full justify-evently">
@@ -107,7 +107,7 @@ export function ProductDetail() {
           </div>
         </div>
 
-        <div className="w-full h-1/4 relative mb-3 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
+        <div className="w-full h-1/4 relative mb-1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-col justify-between pb-3 h-2/4 ">
             <h1 className="font-bold text-base">Description</h1>
             <p className="font-semibold text-xs text-slate-700">
@@ -166,7 +166,7 @@ export function ProductDetail() {
           </div>
         </div>
         <div
-          className="flex w-full h-20 justify-between items-center"
+          className="flex w-full h-12  justify-between items-center"
           onClick={handleAddToCart}
         >
           <div className="flex flex-col justify-center w-1/3 h-full">

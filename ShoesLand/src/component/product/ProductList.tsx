@@ -26,7 +26,6 @@ interface ProductListProps {
 // export const UserContext = createContext("");
 
 function filterReducer(state: FilterState, action: FilterAction) {
-
   switch (action.type) {
     case "search":
       return { search: action.value };
@@ -36,10 +35,9 @@ function filterReducer(state: FilterState, action: FilterAction) {
         const updatedBrands = currentBrands.includes(action.value)
           ? currentBrands.filter((brand: string) => brand !== action.value)
           : [...currentBrands, action.value];
-        return { brand: updatedBrands }
-      }
-      else {
-        return { brand: [] }
+        return { brand: updatedBrands };
+      } else {
+        return { brand: [] };
       }
     }
     case "wishList":
@@ -54,8 +52,9 @@ function filterReducer(state: FilterState, action: FilterAction) {
 function ProductList({ dispatchCaller }: ProductListProps) {
   const navigate = useNavigate();
   let brands: string[] = [];
-  const [filter, dispatch] = useReducer<(arg0: FilterState,
-    arg1: FilterAction) => FilterState>(filterReducer, {});
+  const [filter, dispatch] = useReducer<
+    (arg0: FilterState, arg1: FilterAction) => FilterState
+  >(filterReducer, {});
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
@@ -63,7 +62,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
     dispatch(dispatchCaller);
   }, [dispatchCaller]);
 
-  console.log(filter)
+  console.log(filter);
 
   let hookResult;
 
@@ -83,8 +82,8 @@ function ProductList({ dispatchCaller }: ProductListProps) {
 
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
-  const filteredProducts = data
-  const totalItems = filteredProducts && filteredProducts.length
+  const filteredProducts = data;
+  const totalItems = filteredProducts && filteredProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginatedProducts = filteredProducts.slice(
@@ -92,7 +91,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
     currentPage * itemsPerPage
   );
 
-  console.log(paginatedProducts)
+  console.log(paginatedProducts);
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -101,43 +100,45 @@ function ProductList({ dispatchCaller }: ProductListProps) {
   return (
     <div className="flex w-full flex-col space-y-3 " key={11}>
       <BrandNav filter={filter} dispatch={dispatch} />
-      <div className="w-full flex flex-wrap  justify-center items-center gap-4">
+      <div className="w-full grid grid-cols-2 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
-          <div className="flex flex-col items-center justify-center mt-10">
-            <div className="text-6xl font-bold text-slate-700">Oops!</div>
-            <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
-              We couldn’t find any products matching your search.
-            </p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-16 h-16 text-gray-300 mt-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
-              />
-            </svg>
+          <div>
+            <div className="w-full flex flex-col items-center justify-center mt-10">
+              <div className="text-6xl font-bold text-slate-700">Oops!</div>
+              <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
+                We couldn’t find any products matching your search.
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-16 h-16 text-gray-300 mt-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
+                />
+              </svg>
+            </div>
           </div>
         )}
         {paginatedProducts.map((item: ProductProps) => (
           <Link key={item.id} to={`/product/${item.id}`}>
-            <ProductCard {...item}
-            />
+            <ProductCard {...item} />
           </Link>
         ))}
       </div>
       {paginatedProducts.length && (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
+              currentPage === 1
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -146,20 +147,22 @@ function ProductList({ dispatchCaller }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${page === currentPage
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-                }`}
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
+                page === currentPage
+                  ? "text-gray-300 cursor-not-allowed "
+                  : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
               onClick={() => handlePageChange(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === totalPages || totalPages === 0
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
+              currentPage === totalPages || totalPages === 0
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
           >
