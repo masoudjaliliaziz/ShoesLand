@@ -50,7 +50,7 @@ authAxiosClient.interceptors.request.use((config) => {
   console.log(state);
   //const token = state.auth?.token;
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg1NjM2NzYwMywidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg2MjU2MSwiZXhwIjoxNzM1ODY1NTYxfQ.XgY1ePRd_h-mknjnCiFxrUeu-T02RzDijK9kBR_0ygM";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg2NDEzNCwiZXhwIjoxNzM1ODY3MTM0fQ.GY_lYhfG4PZ3EMpxEai1StpXz7ZuYZSEKxdraE1goOY";
 
   if (token) {
     console.log(token);
