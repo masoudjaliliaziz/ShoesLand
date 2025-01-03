@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient, QueryKey } from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryKey,
+} from "@tanstack/react-query";
 import { axiosClient, authAxiosClient } from "./axiosClient";
 
 const fetchData = async (url: string, authRequired: boolean = false) => {
@@ -25,10 +30,12 @@ const putData = async (
   return data;
 };
 
-export const deleteData = async (url: string, authRequired: boolean = false) => {
+export const deleteData = async (
+  url: string,
+  authRequired: boolean = false
+) => {
   const client = authRequired ? authAxiosClient : axiosClient;
   return client.delete(url);
-
 };
 
 export const useFetch = ({
@@ -49,7 +56,8 @@ export const useFetch = ({
 export const usePost = (url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (body: any) => await postData({ url, body }, authRequired),
+    mutationFn: async (body: any) =>
+      await postData({ url, body }, authRequired),
     onSuccess: () => {
       queryClient.invalidateQueries();
     },
@@ -76,13 +84,13 @@ export const useDelete = (url: string, authRequired = false) => {
   });
 };
 
-
 export const authHooks = {
   useLogin: () => usePost("/auth/login"),
   useSignup: () => usePost("/auth/register"),
   useForgotPassword: () => usePost("/auth/forgot-password"),
   useResetPassword: () => usePost("/auth/reset-password"),
-  useWhoAmI: () => useFetch({ key: "whoami", url: "/auth/whoami", authRequired: true }),
+  useWhoAmI: () =>
+    useFetch({ key: "whoami", url: "/auth/whoami", authRequired: true }),
   useRefreshToken: () => usePost("/auth/refresh"),
 };
 
@@ -94,7 +102,6 @@ export const productHooks = {
   useFetchPopularProducts: () =>
     useFetch({ key: "popular-products", url: "/api/products?is_popular=true" }),
   useFetchProductsByBrand: (brands: string[]) => {
-
     const formattedBrands = brands.join(",");
     return useFetch({
       key: `products-by-brand-${formattedBrands}`,
@@ -123,40 +130,51 @@ export const productHooks = {
 };
 
 export const wishlistHooks = {
-  useFetchWishlist: () => useFetch({ key: "wishlist", url: "/api/wishlist", authRequired: true }),
+  useFetchWishlist: () =>
+    useFetch({ key: "wishlist", url: "/api/wishlist", authRequired: true }),
   useAddRemoveWishlist: () => usePost("/api/wishlist", true),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
       key: `wishlist-search-${searchTerm}`,
       url: `/api/wishlist?search=${searchTerm}`,
-      authRequired: true
+      authRequired: true,
     }),
 };
 
 export const historySearchHooks = {
-  useFetchHistorySearch: () => useFetch({ key: "history-search", url: "/api/search", authRequired: true }),
+  useFetchHistorySearch: () =>
+    useFetch({ key: "history-search", url: "/api/search", authRequired: true }),
   useAddHistorySearch: () => usePost("/api/search", true),
   useRemoveHistorySearch: () => useDelete("/api/search", true),
   useRemoveAllHistorySearch: () => useDelete("/api/search", true),
 };
 
 export const cartHooks = {
-  useFetchCart: () => useFetch({ key: "cart", url: "/api/cart", authRequired: true }),
+  useFetchCart: () =>
+    useFetch({ key: "cart", url: "/api/cart", authRequired: true }),
   useAddToCartItem: () => usePost("/api/cart", true),
   useUpdateCartItemCount: () => usePut("/api/cart", true),
   useRemoveCartItem: () => useDelete("/api/cart", true),
 };
 
 export const addressHooks = {
-  useFetchAddress: () => useFetch({ key: "address", url: "/api/address", authRequired: true }),
-  useFetchSelectedAddress: () => useFetch({ key: 'selected-address', url: '/api/address?isSelected=true', authRequired: true }),
+  useFetchAddress: () =>
+    useFetch({ key: "address", url: "/api/address", authRequired: true }),
+  useFetchSelectedAddress: () =>
+    useFetch({
+      key: "selected-address",
+      url: "/api/address?isSelected=true",
+      authRequired: true,
+    }),
   useAddToAddress: () => usePost("/api/address", true),
   useUpdateAddress: () => usePut("/api/address", true),
   useRemoveAddress: () => useDelete("/api/cart", true),
 };
 
 export const orderHooks = {
-  useDiscount: (code: string) => useFetch({ key: 'discount', url: `/api/discount/${code}` })
-}
-
-
+  useDiscount: (code: string) =>
+    useFetch({ key: "discount", url: `/api/discount/${code}` }),
+  useFetchOrder: () =>
+    useFetch({ key: "order", url: "/api/orders", authRequired: true }),
+  useCreateOrder: () => usePost("/api/orders", true),
+};
