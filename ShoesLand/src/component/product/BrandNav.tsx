@@ -1,38 +1,19 @@
-import { Link } from 'react-router-dom'
-import { productHooks } from '../../api/queryClinet';
-
+import { Link } from "react-router-dom";
+import { productHooks } from "../../api/queryClinet";
+import clsx from "clsx";
 
 export function BrandNav({ filter, dispatch }) {
+  const { data, isLoading } = productHooks.useFetchBrands();
 
-  const { data, isLoading } = productHooks.useFetchBrands()
-
-  if (isLoading) return <div>loading...</div>
-  console.log(data)
-  console.log(dispatch)
+  if (isLoading) return <div>loading...</div>;
+  console.log(data);
+  console.log(dispatch);
   return (
-
     <>
       <div className=" mostContainer w-full flex flex-col items-center  gap-5 h-1/6">
         <div className="w-full flex flex-row justify-between items-center text-start left-0">
           <div className="font-bold leading-5 flex justify-item-center space-x-1">
-            {/* pageState == "popular" && (
-              <svg
-                onClick={() => navigate(-1)}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2.5}
-                stroke="currentColor"
-                className="size-7 cursor-pointer"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
-                />
-              </svg>
-            )*/}
-            <span className="text-lg">Most Popular</span>
+            <span className="text-xl font-semibold leading-6">Most Popular</span>
           </div>
           <Link to="/popular">
             <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-base hover:text-slate-500">
@@ -52,7 +33,7 @@ export function BrandNav({ filter, dispatch }) {
         <div>
           <button
             key={"all"}
-            className="font-bold  snap-start leading-5  text-xs h-10 flex 
+            className="font-semibold snap-start leading-5 h-10 text-base h-10 flex 
              justify-center items-center px-4 py-1.5 border-2 border-[#343A40]
               rounded-3xl cursor-pointer hover:bg-slate-700 hover:text-white
           
@@ -66,12 +47,15 @@ export function BrandNav({ filter, dispatch }) {
           return (
             <div key={index}>
               <button
-                className="font-bold snap-start leading-5 h-10  text-xs flex 
-                justify-center items-center px-4 py-1.5 border-2 
-                border-[#343A40] rounded-3xl cursor-pointer hover:bg-slate-700
-                 hover:text-white"
-                onClick={() => dispatch({ type: "brand", value: item.name })}
-              >
+                className={clsx(
+                  "font-semibold snap-start leading-5 h-10 text-base flex justify-center items-center px-4 py-1.5 border-2 border-[#343A40] rounded-3xl cursor-pointer",
+                  filter.data?.include(item)
+                    ? "bg-slate-700 text-white"
+                    : "bg-transparent text-slate-700"
+                  )}
+                  
+                  onClick={() => dispatch({ type: "brand", value: item.name })}
+                  >
                 {item.name}
               </button>
             </div>
@@ -79,8 +63,5 @@ export function BrandNav({ filter, dispatch }) {
         })}
       </div>
     </>
-
-
-
-  )
+  );
 }
