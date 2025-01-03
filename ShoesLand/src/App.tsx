@@ -8,14 +8,14 @@ import Search from "./component/search/Search";
 import MostPopular from "./pages/MostPopular";
 import WishList from "./pages/WishList";
 import Brand from "./pages/Brand";
-import Auth from './pages/auth';
+import Auth from "./pages/auth";
 import SignIn from "./pages/SignIn";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Cart from "./pages/Cart";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-const queryClient = new QueryClient()
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 import { LoginPage } from "./pages/Login/LoginPage";
-
+import CheckoutPage from "./component/Checkout";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Header />}>
           <Route index element={<Home />} />
-          <Route path='on' element={<Onboarding />} />
+          <Route path="on" element={<Onboarding />} />
           <Route path="search" element={<Search />} />
           <Route path="popular" element={<MostPopular />} />
           <Route path="wishlist" element={<WishList />} />
@@ -31,9 +31,11 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="brand/:brand" element={<Brand />} />
           <Route path="cart/" element={<Cart />} />
-          <Route path="product/:id" element={<ProductDetail />} />
+
           <Route path="login" element={<LoginPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
         </Route>
+        <Route path="product/:id" element={<ProductDetail />} />
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

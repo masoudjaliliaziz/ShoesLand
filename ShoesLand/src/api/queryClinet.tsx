@@ -149,10 +149,14 @@ export const cartHooks = {
 
 export const addressHooks = {
   useFetchAddress: () => useFetch({ key: "address", url: "/api/address", authRequired: true }),
+  useFetchSelectedAddress: () => useFetch({ key: 'selected-address', url: '/api/address?isSelected=true', authRequired: true }),
   useAddToAddress: () => usePost("/api/address", true),
   useUpdateAddress: () => usePut("/api/address", true),
   useRemoveAddress: () => useDelete("/api/cart", true),
 };
 
+export const orderHooks = {
+  useDiscount: (code: string) => useFetch({ key: 'discount', url: `/api/discount/${code}` })
+}
 
 

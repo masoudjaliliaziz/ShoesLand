@@ -1,15 +1,20 @@
-import axios from 'axios';
-import { useQuery, useMutation, useQueryClient, QueryKey } from '@tanstack/react-query';
-import { useSelector, useDispatch } from 'react-redux';
-import { createSlice, configureStore, PayloadAction } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie'
+import axios from "axios";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryKey,
+} from "@tanstack/react-query";
+import { useSelector, useDispatch } from "react-redux";
+import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface AuthState {
   token: string | null;
 }
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: { token: null } as AuthState,
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
@@ -23,7 +28,6 @@ const authSlice = createSlice({
 
 export const { setToken, clearToken } = authSlice.actions;
 
-
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
@@ -31,27 +35,29 @@ const store = configureStore({
 });
 
 export const axiosClient = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: "http://localhost:8000",
 });
 
 export const authAxiosClient = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: "http://localhost:8000",
 });
 
 authAxiosClient.interceptors.request.use((config) => {
-  setToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ')
+  setToken(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ"
+  );
   const state = store.getState() as { auth: AuthState };
-  console.log(state)
+  console.log(state);
   //const token = state.auth?.token;
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTc1NjI1NTg5MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTc3NTg3NSwiZXhwIjoyMjM1Nzc2MTc1fQ.k32ef9V2u4SN6ZmsoejlOXzoVyDn59KroBazQFCYUeQ'
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg1NjM2NzYwMywidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg2MjU2MSwiZXhwIjoxNzM1ODY1NTYxfQ.XgY1ePRd_h-mknjnCiFxrUeu-T02RzDijK9kBR_0ygM";
 
   if (token) {
-    console.log(token)
+    console.log(token);
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
-
 
 authAxiosClient.interceptors.response.use(
   (response) => response,
@@ -60,7 +66,7 @@ authAxiosClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await authAxiosClient.post('/auth/refresh');
+        const { data } = await authAxiosClient.post("/auth/refresh");
         store.dispatch(setToken(data.accessToken));
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return authAxiosClient(originalRequest);
@@ -72,6 +78,3 @@ authAxiosClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-
-
