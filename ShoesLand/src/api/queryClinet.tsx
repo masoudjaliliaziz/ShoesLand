@@ -39,142 +39,183 @@ export const deleteData = async (
 };
 
 export const useFetch = ({
-  key,
+  categoryKey,
+  queryKey,
   url,
   authRequired = false,
 }: {
-  key: string;
+  categoryKey: string;
+  queryKey: string;
   url: string;
   authRequired?: boolean;
 }) => {
   return useQuery({
-    queryKey: [key, url],
+    queryKey: [categoryKey, queryKey, url],
     queryFn: async () => await fetchData(url, authRequired),
+    retry: 1
   });
 };
 
-export const usePost = (url: string, authRequired = false) => {
+
+export const usePost = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (body: any) =>
       await postData({ url, body }, authRequired),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: [categoryKey] });
     },
   });
 };
 
-export const usePut = (url: string, authRequired = false) => {
+export const usePut = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: any) => putData({ url, body }, authRequired),
+    mutationFn: async (body: any) =>
+      await putData({ url, body }, authRequired),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: [categoryKey] });
     },
   });
 };
 
-export const useDelete = (url: string, authRequired = false) => {
+export const useDelete = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async () => await deleteData(url, authRequired),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: [categoryKey] });
     },
   });
 };
 
 export const authHooks = {
-  useLogin: () => usePost("/auth/login"),
-  useSignup: () => usePost("/auth/register"),
-  useForgotPassword: () => usePost("/auth/forgot-password"),
-  useResetPassword: () => usePost("/auth/reset-password"),
+  useLogin: () => usePost("auth", "/auth/login"),
+  useSignup: () => usePost("auth", "/auth/register"),
+  useForgotPassword: () => usePost("auth", "/auth/forgot-password"),
+  useResetPassword: () => usePost("auth", "/auth/reset-password"),
   useWhoAmI: () =>
-    useFetch({ key: "whoami", url: "/auth/whoami", authRequired: true }),
-  useRefreshToken: () => usePost("/auth/refresh"),
+    useFetch({
+      categoryKey: "auth",
+      queryKey: "whoami",
+      url: "/auth/whoami",
+      authRequired: true,
+    }),
+  useRefreshToken: () => usePost("auth", "/auth/refresh"),
 };
-
 export const productHooks = {
-  useFetchProducts: () => useFetch({ key: "products", url: "/api/products" }),
-  useFetchBrands: () => useFetch({ key: "brands", url: "/api/brands" }),
+  useFetchProducts: () =>
+    useFetch({
+      categoryKey: "product",
+      queryKey: "all",
+      url: "/api/products",
+    }),
+  useFetchBrands: () =>
+    useFetch({
+      categoryKey: "product",
+      queryKey: "brands",
+      url: "/api/brands",
+    }),
   useFetchProductById: (id: number) =>
-    useFetch({ key: `product-${id}`, url: `/api/products/${id}` }),
+    useFetch({
+      categoryKey: "product",
+      queryKey: `product-${id}`,
+      url: `/api/products/${id}`,
+    }),
   useFetchPopularProducts: () =>
-    useFetch({ key: "popular-products", url: "/api/products?is_popular=true" }),
-  useFetchProductsByBrand: (brands: string[]) => {
-    const formattedBrands = brands.join(",");
-    return useFetch({
-      key: `products-by-brand-${formattedBrands}`,
-      url: `/api/products?brands=${formattedBrands}`,
-    });
-  },
-  useFetchProductsByColor: (colors: string[]) => {
-    const formattedColors = colors.join(",");
-    return useFetch({
-      key: `products-by-color-${formattedColors}`,
-      url: `/api/products?colors=${formattedColors}`,
-    });
-  },
-  useFetchProductsBySize: (sizes: number[]) => {
-    const formattedSizes = sizes.join(",");
-    return useFetch({
-      key: `products-by-size-${formattedSizes}`,
-      url: `/api/products?sizes=${formattedSizes}`,
-    });
-  },
+    useFetch({
+      categoryKey: "product",
+      queryKey: "popular-products",
+      url: "/api/products?is_popular=true",
+    }),
   useSearchProducts: (searchTerm: string) =>
     useFetch({
-      key: `search-products-${searchTerm}`,
+      categoryKey: "product",
+      queryKey: `search-${searchTerm}`,
       url: `/api/products?search=${searchTerm}`,
     }),
+  useAddProduct: () => usePost("product", "/api/products"),
+  useUpdateProduct: (id: number) =>
+    usePut("product", `/api/products/${id}`),
+  useDeleteProduct: (id: number) =>
+    useDelete("product", `/api/products/${id}`),
 };
-
 export const wishlistHooks = {
   useFetchWishlist: () =>
-    useFetch({ key: "wishlist", url: "/api/wishlist", authRequired: true }),
-  useAddRemoveWishlist: () => usePost("/api/wishlist", true),
+    useFetch({
+      categoryKey: "wishlist",
+      queryKey: "all",
+      url: "/api/wishlist",
+      authRequired: true,
+    }),
+  useAddRemoveWishlist: () => usePost("wishlist", "/api/wishlist", true),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
-      key: `wishlist-search-${searchTerm}`,
+      categoryKey: "wishlist",
+      queryKey: `search-${searchTerm}`,
       url: `/api/wishlist?search=${searchTerm}`,
       authRequired: true,
     }),
 };
-
 export const historySearchHooks = {
   useFetchHistorySearch: () =>
-    useFetch({ key: "history-search", url: "/api/search", authRequired: true }),
-  useAddHistorySearch: () => usePost("/api/search", true),
-  useRemoveHistorySearch: () => useDelete("/api/search", true),
-  useRemoveAllHistorySearch: () => useDelete("/api/search", true),
+    useFetch({
+      categoryKey: "history-search",
+      queryKey: "all",
+      url: "/api/search",
+      authRequired: true,
+    }),
+  useAddHistorySearch: () => usePost("history-search", "/api/search", true),
+  useRemoveHistorySearch: () => useDelete("history-search", "/api/search", true),
+  useRemoveAllHistorySearch: () =>
+    useDelete("history-search", "/api/search", true),
 };
-
 export const cartHooks = {
   useFetchCart: () =>
-    useFetch({ key: "cart", url: "/api/cart", authRequired: true }),
-  useAddToCartItem: () => usePost("/api/cart", true),
-  useUpdateCartItemCount: () => usePut("/api/cart", true),
-  useRemoveCartItem: () => useDelete("/api/cart", true),
+    useFetch({
+      categoryKey: "cart",
+      queryKey: "all",
+      url: "/api/cart",
+      authRequired: true,
+    }),
+  useAddToCartItem: () => usePost("cart", "/api/cart", true),
+  useUpdateCartItemCount: () => usePut("cart", "/api/cart", true),
+  useRemoveCartItem: () => useDelete("cart", "/api/cart", true),
 };
-
 export const addressHooks = {
   useFetchAddress: () =>
-    useFetch({ key: "address", url: "/api/address", authRequired: true }),
+    useFetch({
+      categoryKey: "address",
+      queryKey: "all",
+      url: "/api/address",
+      authRequired: true,
+    }),
   useFetchSelectedAddress: () =>
     useFetch({
-      key: "selected-address",
+      categoryKey: "address",
+      queryKey: "selected",
       url: "/api/address?isSelected=true",
       authRequired: true,
     }),
-  useAddToAddress: () => usePost("/api/address", true),
-  useUpdateAddress: () => usePut("/api/address", true),
-  useRemoveAddress: () => useDelete("/api/cart", true),
+  useAddToAddress: () => usePost("address", "/api/address", true),
+  useUpdateAddress: () => usePut("address", "/api/address", true),
+  useRemoveAddress: (id: number) =>
+    useDelete("address", `/api/address/${id}`, true),
 };
-
 export const orderHooks = {
   useDiscount: (code: string) =>
-    useFetch({ key: "discount", url: `/api/discount/${code}` }),
+    useFetch({
+      categoryKey: "order",
+      queryKey: `discount-${code}`,
+      url: `/api/discount/${code}`,
+    }),
   useFetchOrder: () =>
-    useFetch({ key: "order", url: "/api/orders", authRequired: true }),
-  useCreateOrder: () => usePost("/api/orders", true),
+    useFetch({
+      categoryKey: "order",
+      queryKey: "all",
+      url: "/api/orders",
+      authRequired: true,
+    }),
+  useCreateOrder: () => usePost("order", "/api/orders", true),
 };
+

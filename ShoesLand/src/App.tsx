@@ -18,34 +18,38 @@ import { SignInPage } from "./pages/Sign-in/SingnInPage";
 import CheckoutPage from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import { Provider } from "react-redux";
-import { store } from "./config/store";
+import { persistor, store } from "./config/store";
 import Orders from "./pages/Orders";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/" element={<Header />}>
-            <Route index element={<Home />} />
-            <Route path="on" element={<Onboarding />} />
-            <Route path="on" element={<Onboarding />} />
-            <Route path="search" element={<Search />} />
-            <Route path="popular" element={<MostPopular />} />
-            <Route path="wishlist" element={<WishList />} />
-            <Route path="auth" element={<Auth />} />
-            <Route path="signin" element={<SignInPage />} />
-            <Route path="brand/:brand" element={<Brand />} />
-            <Route path="payment/" element={<Payment />} />
-            <Route path="cart/" element={<Cart />} />
-            <Route path="orders/" element={<Orders />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="checkout" element={<CheckoutPage />} />
-          <Route path="product/:id" element={<ProductDetail />} />
-          </Route>
-        </Routes>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+
+      <PersistGate loading={<div>loading...</div>} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route path="/" element={<Header />}>
+              <Route index element={<Home />} />
+              <Route path="on" element={<Onboarding />} />
+              <Route path="on" element={<Onboarding />} />
+              <Route path="search" element={<Search />} />
+              <Route path="popular" element={<MostPopular />} />
+              <Route path="wishlist" element={<WishList />} />
+              <Route path="auth" element={<Auth />} />
+              <Route path="signin" element={<SignInPage />} />
+              <Route path="brand/:brand" element={<Brand />} />
+              <Route path="payment/" element={<Payment />} />
+              <Route path="cart/" element={<Cart />} />
+              <Route path="orders/" element={<Orders />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="checkout" element={<CheckoutPage />} />
+            </Route>
+            <Route path="product/:id" element={<ProductDetail />} />
+          </Routes>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </PersistGate>
     </Provider>
   );
 }
