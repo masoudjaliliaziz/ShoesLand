@@ -5,6 +5,8 @@ import { authHooks } from "../../../api/queryClinet";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../../config/slice";
 
+import Cookies from "js-cookie"
+
 interface ILoginFormData {
   username: string;
   password: string;
@@ -24,7 +26,8 @@ export const LoginForm: FC = (): ReactElement => {
             console.log("ok");
             dispatch(setToken(response.accessToken));
 
-            // navigate("/dashboard");
+            console.log(Cookies.get())
+            // navigate("/");
           } else {
             console.error("Failed to login, no accessToken in response");
           }

@@ -7,30 +7,31 @@ import {
 } from "@tanstack/react-query";
 import { useSelector, useDispatch } from "react-redux";
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"
+
 import { store } from "../config/store";
-import { AuthState, clearToken, selectToken, setToken } from "../config/slice";
+import { AuthState, clearToken, selectToken as token, setToken } from "../config/slice";
 
 export const axiosClient = axios.create({
-  baseURL: "http://localhost:8000",
-});
-
-export const authAxiosClient = axios.create({
   baseURL: "http://localhost:8000",
   withCredentials: true,
 });
 
+export const authAxiosClient = axios.create({
+  baseURL: "http://localhost:8000",
+});
+
+
 authAxiosClient.interceptors.request.use((config) => {
   const state = store.getState() as { auth: AuthState };
-  console.log(state);
-  let token = selectToken;
-  console.log("token", token);
-  token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTczNTg2NDA5NzQ1MiwidXNlcm5hbWUiOiJ5b3Vzb2Zhc2FkaSIsImlhdCI6MTczNTg4NDc3NywiZXhwIjoxNzM1ODg3Nzc3fQ.m-5sUrmIVGckKT1miGPR5WYCPuXm5N42dF2rSoVcrdM";
+  //console.log(Cookies.get())
+  //console.log(state);
+  //console.log("token", token(state));
+
 
   if (token) {
-    console.log(token);
-    config.headers.Authorization = `Bearer ${token}`;
+    //console.log(token);
+    config.headers.Authorization = `Bearer ${token(state)}`;
   }
   return config;
 });
@@ -38,11 +39,12 @@ authAxiosClient.interceptors.request.use((config) => {
 authAxiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
+    //console.log(Cookies.get())
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await authAxiosClient.post("/auth/refresh");
+        const { data } = await axiosClient.post("/auth/refresh");
         store.dispatch(setToken(data.accessToken));
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return authAxiosClient(originalRequest);
