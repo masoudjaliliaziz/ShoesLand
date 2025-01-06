@@ -8,6 +8,8 @@ import OrderItems from "../component/checkout/OrderItems";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectDiscount } from "../config/slice";
+import backward from "../assets/Backward.svg";
+import more from "../assets/more.svg"
 
 const CheckoutPage = () => {
   const [shippingMethod, setShippingMethod] = useState(null);
@@ -38,11 +40,14 @@ const CheckoutPage = () => {
     return <div>loading...</div>;
   }
   return (
-    <div className="header ">
-      <div>
-        <div>
+    <div className="checkout">
+
+      <div className="header flex items-center justify-between py-4 font-semibold text-lg">
+        <div className="flex items-center">
+          <img src={backward} alt="backward" className="w-7" />
           <h1>Checkout</h1>
         </div>
+        <img src={more} className="w-6" />
       </div>
 
       {/* Selected Address */}
