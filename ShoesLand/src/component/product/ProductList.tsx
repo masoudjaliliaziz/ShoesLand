@@ -135,11 +135,10 @@ function ProductList({ dispatchCaller }: ProductListProps) {
       {paginatedProducts.length && (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === 1
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -148,22 +147,20 @@ function ProductList({ dispatchCaller }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
-                page === currentPage
-                  ? "text-gray-300 cursor-not-allowed "
-                  : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${page === currentPage
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+                }`}
               onClick={() => handlePageChange(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === totalPages || totalPages === 0
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === totalPages || totalPages === 0
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
           >
