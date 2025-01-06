@@ -61,7 +61,7 @@ export function ProductDetail() {
   return (
     <div className="w-full h-[95%] relative mb-10">
       {/* images && backward */}
-      <div className="h-[270px] w-full ">
+      <div className="h-64 mb-6 w-full ">
         <div>
           <img
             src={product?.images[0]}
@@ -77,7 +77,7 @@ export function ProductDetail() {
       </div>
       <div className="px-5 w-full">
         <div
-          className=" h-1/4 relative 1 after:absolute pt-2 pb-3 after:w-full after:h-full  after:top-0 after:left-0
+          className=" h-1/4 relative 1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
           after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none"
         >
           <div className="flex flex-row w-full justify-evently">
@@ -153,14 +153,14 @@ export function ProductDetail() {
                 className="text-xs cursor-pointer"
                 onClick={() => setCount((c) => (c !== 1 ? c - 1 : 1))}
               >
-                <img src={Decrease} className="w-5" />
+                <img src={Decrease} className="w-16" />
               </button>
               <p className=" w-2/4 text-center font-bold">{count}</p>
               <button
                 className=" text-xs cursor-pointer"
                 onClick={() => setCount((c) => c + 1)}
               >
-                <img src={Increase} className="w-5" /> 
+                <img src={Increase} className="w-20" /> 
               </button>
             </div>
           </div>
