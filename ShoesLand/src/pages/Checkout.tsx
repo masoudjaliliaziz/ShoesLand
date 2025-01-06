@@ -38,8 +38,12 @@ const CheckoutPage = () => {
     return <div>loading...</div>;
   }
   return (
-    <div className="checkout">
-      <h1>Checkout</h1>
+    <div className="header ">
+      <div>
+        <div>
+          <h1>Checkout</h1>
+        </div>
+      </div>
 
       {/* Selected Address */}
       <div>
