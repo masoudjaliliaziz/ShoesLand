@@ -5,13 +5,13 @@ import { authHooks } from "../../../api/queryClinet";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../../config/slice";
 import backward from "../../../assets/Backward.svg";
-import email from "../../../assets/Email.svg";
+import Username from "../../../assets/Username.svg";
 import pass from "../../../assets/pass.svg";
 import eyeSlash from "../../../assets/EyeSlash.svg";
 import Cookies from "js-cookie";
 
 interface ILoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -64,26 +64,26 @@ export const LoginForm: FC = (): ReactElement => {
       <form onSubmit={handleSubmit(onSubmit)} className="">
         <div className="flex gap-2 items-center w-full bg-gray-100 py-1 px-2 rounded flex-col">
           <div className="flex items-center space-x-1 w-full">
-            <img src={email} alt="email" className="size-4 color-[#6C757D]" />
+            <img src={Username} alt="Username" className="size-4 color-[#6C757D]" />
             <input
               className="bg-transparent w-[90%] outline-none autofill:bg-none"
-              placeholder="Email"
+              placeholder="Username"
               type="text"
-              id="email"
-              {...register("email", {
+              id="username"
+              {...register("username", {
                 required: {
                   value: true,
-                  message: "Email is required",
+                  message: "Username is required",
                 },
                 minLength: {
                   value: 3,
-                  message: "Email must be at least 3 characters long",
+                  message: "Username must be at least 3 characters long",
                 },
               })}
             />
           </div>
         </div>
-        <p className="text-rose-500 font-semibold text-sm px-3">{errors.email?.message}</p>
+        <p className="text-rose-500 font-semibold text-sm px-3">{errors.username?.message}</p>
         <div className="flex gap-2 items-center bg-gray-100 py-1 px-2 rounded flex-col">
           <div className="flex items-center space-x-1 w-full">
             <img src={pass} alt="pass" className="size-4 color-[#6C757D]" />
@@ -125,7 +125,9 @@ export const LoginForm: FC = (): ReactElement => {
         </div>
         <div className="absolute bottom-3 flex flex-col justify-center items-center space-y-2">
           <div className="flex justify-center items-center">
-            <button className="bg-gray-600 cursor-pointer text-sm font-semibold w-[350px] py-2 text-white rounded-2xl">
+            <button 
+            
+            className="bg-gray-600 cursor-pointer text-sm font-semibold w-[350px] py-2 text-white rounded-2xl">
               Sign In
             </button>
           </div>
