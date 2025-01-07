@@ -4,6 +4,7 @@ type ShippingOption = {
   id: number;
   name: string;
   cost: number;
+  Description: string;
 };
 
 type ShippingSelectionProps = {

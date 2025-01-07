@@ -8,8 +8,17 @@ import OrderItems from "../component/checkout/OrderItems";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectDiscount } from "../config/slice";
+import backward from "../assets/Backward.svg";
+import more from "../assets/more.svg";
+import { useNavigate } from "react-router-dom";
+import EditePen from "../assets/Edit.svg";
+import Location from "../assets/Location.svg";
+import chevronRight from "../assets/chevronRight.svg";
+import Truck from "../assets/truck.svg";
+import nextCheckout from "../assets/nextCheckout.svg";
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const [shippingMethod, setShippingMethod] = useState(null);
   const selectedDiscount = useSelector(selectDiscount);
   const [isSelectingAddress, setIsSelectingAddress] = useState(false);
@@ -38,22 +47,53 @@ const CheckoutPage = () => {
     return <div>loading...</div>;
   }
   return (
-    <div className="checkout">
-      <h1>Checkout</h1>
+    <div className="checkout px-5 pb-1">
+      <div className="header flex items-center justify-between py-4 font-semibold text-lg">
+        <div className="flex items-center">
+          <button onClick={() => navigate(-1)}>
+            <img src={backward} alt="backward" className="w-7" />
+          </button>
+          <h1 className="font-semibold">Checkout</h1>
+        </div>
+        <button>
+          <img src={more} className="w-6" />
+        </button>
+      </div>
 
       {/* Selected Address */}
-      <div>
-        <h2>Shipping Address</h2>
-        {selectedAddress ? (
-          <div onClick={() => setIsSelectingAddress(true)}>
-            <p>{selectedAddress.address}</p>
-            <p>
-              {selectedAddress.name}, {selectedAddress.address}
-            </p>
+      <div className="w-full flex flex-col relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+        <h2 className="font-semibold text-base leading-7">Shipping Address</h2>
+        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow">
+          <div className="flex flex-row items-center space-x-2">
+            <div className="locationIcon">
+              <div className="bg-gray-200 rounded-full w-9 p-1.5 items-center">
+                <img
+                  src={Location}
+                  alt="location"
+                  className="size-6 rounded-full bg-slate-800 p-1"
+                />
+              </div>
+            </div>
+            <div className="felx flex-col space-y-0">
+              <h3 className="font-semibold text-base leading-none">Home</h3>
+              <span className="font-semibold text-xs leading-none text-gray-500">
+                61480 sunbrook pork, pc 5679
+              </span>
+            </div>
           </div>
-        ) : (
-          <button>Select Address</button>
-        )}
+          {selectedAddress ? (
+            <div onClick={() => setIsSelectingAddress(true)} className="">
+              <p>{selectedAddress.address}</p>
+              <p>
+                {selectedAddress.name}, {selectedAddress.address}
+              </p>
+            </div>
+          ) : (
+            <button>
+              <img src={EditePen} alt="EditLocation" className="size-6" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Only render AddressSelection if needed */}
@@ -65,8 +105,10 @@ const CheckoutPage = () => {
       <OrderItems orderItems={cartItems} />
 
       {/* Shipping Methods */}
-      <div>
-        <h2>Shipping</h2>
+      <div className=" relative after:absolute pb-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+        <h2 className="py-2 font-semibold text-base leading-7">
+          Choose Shipping
+        </h2>
         {shippingMethod ? (
           <div
             onClick={() => setIsSelectingShipping(true)}
@@ -77,13 +119,25 @@ const CheckoutPage = () => {
             </p>
           </div>
         ) : (
-          <button onClick={() => setIsSelectingShipping(true)}>
-            Select Shipping
-          </button>
+          <div className="flex flex-row items-center justify-between mb-2 bg-white shadow-sm shadow-slate-300 px-2 py-3 rounded-xl">
+            <div className="flex flex-row items-center space-x-2">
+              <img src={Truck} className="w-6" />
+              <span className="font-semibold text-sm text-black">
+                Choose Shipping Type
+              </span>
+            </div>
+            <div className="w-5 h-5">
+              <Link to={"/ChooseShipping"}>
+                <button onClick={() => setIsSelectingShipping(true)}>
+                  <img src={chevronRight} className="w-5" />
+                </button>
+              </Link>
+            </div>
+          </div>
         )}
       </div>
-
-      {/* Only render ShippingSelection if needed */}
+      {/* 
+     
       {isSelectingShipping && (
         <ShippingSelection
           options={[
@@ -97,7 +151,7 @@ const CheckoutPage = () => {
           }}
           onClose={() => setIsSelectingShipping(false)}
         />
-      )}
+      )} */}
 
       {/* Discount Input */}
       <PromoCode />
@@ -111,9 +165,14 @@ const CheckoutPage = () => {
       />
 
       {/* Continue to Payment Button */}
-      <Link to={"/payment"}>
-        <button>Continue to Payment</button>
-      </Link>
+      <div className="py-3 bg-slate-950 text-slate-50 shadow-sm shadow-slate-500 items-center justify-center rounded-3xl my-3">
+        <Link to={"/payment"}>
+          <button className="flex flex-row space-x-3 justify-center items-center mx-auto">
+            <span className="font-semibold text-base ">Continue to Payment</span>
+            <img src={nextCheckout} className="w-4" />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
