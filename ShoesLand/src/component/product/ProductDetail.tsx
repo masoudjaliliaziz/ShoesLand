@@ -77,7 +77,7 @@ export function ProductDetail() {
       </div>
       <div className="px-5 w-full">
         <div
-          className=" h-1/4 relative 1 after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
+          className=" h-1/4 relative after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
           after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none"
         >
           <div className="flex flex-row w-full justify-evently">
@@ -148,19 +148,19 @@ export function ProductDetail() {
             <div>
               <h3 className="font-bold text-base text-center">Quantity</h3>
             </div>
-            <div className="w-1/4 h-6 space-x-4 rounded-2xl bg-slate-300 flex justify-center items-center px-2 py-[4.5px]">
+            <div className="w-1/4 h-6 rounded-2xl bg-slate-300 flex justify-between items-center px-2 py-[4.5px]">
               <button
                 className="text-xs cursor-pointer"
                 onClick={() => setCount((c) => (c !== 1 ? c - 1 : 1))}
               >
-                <img src={Decrease} className="w-16" />
+                <img src={Decrease} className="w-5 pr-1" />
               </button>
-              <p className=" w-2/4 text-center font-bold">{count}</p>
+              <p className="w-5 text-center font-bold">{count}</p>
               <button
                 className=" text-xs cursor-pointer"
                 onClick={() => setCount((c) => c + 1)}
               >
-                <img src={Increase} className="w-20" /> 
+                <img src={Increase} className="w-5 pl-1" /> 
               </button>
             </div>
           </div>

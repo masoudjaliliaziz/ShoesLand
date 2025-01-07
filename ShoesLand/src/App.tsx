@@ -21,11 +21,11 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./config/store";
 import Orders from "./pages/Orders";
 import { PersistGate } from "redux-persist/integration/react";
+import ChooseShipping from "./component/checkout/ChooseShipping";
 
 function App() {
   return (
     <Provider store={store}>
-
       <PersistGate loading={<div>loading...</div>} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
           <Routes>
@@ -41,11 +41,12 @@ function App() {
               <Route path="payment/" element={<Payment />} />
               <Route path="cart/" element={<Cart />} />
               <Route path="orders/" element={<Orders />} />
-            <Route path="product/:id" element={<ProductDetail />} />
+              <Route path="product/:id" element={<ProductDetail />} />
             </Route>
-              <Route path="login" element={<LoginPage />} />
-              <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="signin" element={<SignInPage />} />
+            <Route path="ChooseShipping" element={<ChooseShipping />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="checkout" element={<CheckoutPage />} />
+            <Route path="signin" element={<SignInPage />} />
           </Routes>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

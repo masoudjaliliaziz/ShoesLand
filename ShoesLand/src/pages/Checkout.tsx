@@ -13,11 +13,8 @@ import more from "../assets/more.svg";
 import { useNavigate } from "react-router-dom";
 import EditePen from "../assets/Edit.svg";
 import Location from "../assets/Location.svg";
-
-
-
-
-
+import chevronRight from "../assets/chevronRight.svg";
+import Truck from "../assets/truck.svg";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -57,23 +54,30 @@ const CheckoutPage = () => {
           </button>
           <h1 className="font-bold">Checkout</h1>
         </div>
-        <img src={more} className="w-6" />
+        <button>
+          <img src={more} className="w-6" />
+        </button>
       </div>
 
       {/* Selected Address */}
-      <div className="w-full flex flex-col">
-        <h2 className="font-semibold text-sm">Shipping Address</h2>
-        <div className="w-[90%] bg-pink-500 ">
-          <div>
+      <div className="w-full flex flex-col relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+        <h2 className="font-semibold text-base leading-7">Shipping Address</h2>
+        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow">
+          <div className="flex flex-row items-center space-x-2">
             <div className="locationIcon">
-             <div>
-            
-             </div>
-              <img src={Location} alt="location" className="size-6" />
+              <div className="bg-gray-200 rounded-full w-9 p-1.5 items-center">
+                <img
+                  src={Location}
+                  alt="location"
+                  className="size-6 rounded-full bg-slate-800 p-1"
+                />
+              </div>
             </div>
-            <div>
-              <h3>Home</h3>
-              <span>61480 sunbrook pork, pc 5679</span>
+            <div className="felx flex-col space-y-0">
+              <h3 className="font-semibold text-base leading-none">Home</h3>
+              <span className="font-semibold text-xs leading-none text-gray-500">
+                61480 sunbrook pork, pc 5679
+              </span>
             </div>
           </div>
           {selectedAddress ? (
@@ -84,7 +88,9 @@ const CheckoutPage = () => {
               </p>
             </div>
           ) : (
-            <img src={EditePen} alt="EditLocation" className="size-6" />
+            <button>
+              <img src={EditePen} alt="EditLocation" className="size-6" />
+            </button>
           )}
         </div>
       </div>
@@ -98,8 +104,10 @@ const CheckoutPage = () => {
       <OrderItems orderItems={cartItems} />
 
       {/* Shipping Methods */}
-      <div>
-        <h2>Shipping</h2>
+      <div className=" relative after:absolute pb-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+        <h2 className="py-2 font-semibold text-base leading-7">
+          Choose Shipping
+        </h2>
         {shippingMethod ? (
           <div
             onClick={() => setIsSelectingShipping(true)}
@@ -110,13 +118,25 @@ const CheckoutPage = () => {
             </p>
           </div>
         ) : (
-          <button onClick={() => setIsSelectingShipping(true)}>
-            Select Shipping
-          </button>
+          <div className="flex flex-row items-center justify-between mb-2 bg-white shadow-sm shadow-slate-300 px-2 py-3 rounded-xl">
+            <div className="flex flex-row items-center space-x-2">
+              <img src={Truck} className="w-6" />
+              <span className="font-semibold text-sm text-black">
+                Choose Shipping Type
+              </span>
+            </div>
+            <div className="w-5 h-5">
+              <Link to={"/ChooseShipping"}>
+                <button onClick={() => setIsSelectingShipping(true)}>
+                  <img src={chevronRight} className="w-5" />
+                </button>
+              </Link>
+            </div>
+          </div>
         )}
       </div>
-
-      {/* Only render ShippingSelection if needed */}
+      {/* 
+     
       {isSelectingShipping && (
         <ShippingSelection
           options={[
@@ -130,7 +150,7 @@ const CheckoutPage = () => {
           }}
           onClose={() => setIsSelectingShipping(false)}
         />
-      )}
+      )} */}
 
       {/* Discount Input */}
       <PromoCode />
