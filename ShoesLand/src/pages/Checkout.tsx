@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import EditePen from "../assets/Edit.svg";
 import Location from "../assets/Location.svg";
 import chevronRight from "../assets/chevronRight.svg";
-import Truck from "../assets/truck.svg";
+import Truck from "../assets/Truck.svg";
 import nextCheckout from "../assets/nextCheckout.svg";
 
 const CheckoutPage = () => {
