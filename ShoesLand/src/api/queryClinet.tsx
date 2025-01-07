@@ -128,6 +128,16 @@ export const productHooks = {
       queryKey: "popular-products",
       url: "/api/products?is_popular=true",
     }),
+  useFetchProductByBrand: (brands: string[]) => {
+    const brandTerms = brands.join()
+    console.log(brandTerms)
+    return useFetch({
+      categoryKey: 'product',
+      queryKey: "product-brand",
+      url: `/api/products/?brands=${brandTerms}`
+
+    })
+  },
   useSearchProducts: (searchTerm: string) =>
     useFetch({
       categoryKey: "product",

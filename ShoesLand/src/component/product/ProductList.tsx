@@ -67,7 +67,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
   let hookResult;
 
   if (filter.brand) {
-    hookResult = productHooks.useFetchProductsByBrand(filter.brand);
+    hookResult = productHooks.useFetchProductByBrand(filter.brand);
   } else if (filter.wishList) {
     hookResult = wishlistHooks.useFetchWishlist();
   } else if (filter.search) {
