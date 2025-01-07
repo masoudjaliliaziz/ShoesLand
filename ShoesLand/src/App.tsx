@@ -41,10 +41,10 @@ function App() {
               <Route path="payment/" element={<Payment />} />
               <Route path="cart/" element={<Cart />} />
               <Route path="orders/" element={<Orders />} />
-              <Route path="checkout" element={<CheckoutPage />} />
             <Route path="product/:id" element={<ProductDetail />} />
             </Route>
               <Route path="login" element={<LoginPage />} />
+              <Route path="checkout" element={<CheckoutPage />} />
               <Route path="signin" element={<SignInPage />} />
           </Routes>
           <ReactQueryDevtools initialIsOpen={false} />

@@ -9,9 +9,18 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectDiscount } from "../config/slice";
 import backward from "../assets/Backward.svg";
-import more from "../assets/more.svg"
+import more from "../assets/more.svg";
+import { useNavigate } from "react-router-dom";
+import EditePen from "../assets/Edit.svg";
+import Location from "../assets/Location.svg";
+
+
+
+
+
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
   const [shippingMethod, setShippingMethod] = useState(null);
   const selectedDiscount = useSelector(selectDiscount);
   const [isSelectingAddress, setIsSelectingAddress] = useState(false);
@@ -40,29 +49,44 @@ const CheckoutPage = () => {
     return <div>loading...</div>;
   }
   return (
-    <div className="checkout">
-
+    <div className="checkout px-5">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
-          <img src={backward} alt="backward" className="w-7" />
-          <h1>Checkout</h1>
+          <button onClick={() => navigate(-1)}>
+            <img src={backward} alt="backward" className="w-7" />
+          </button>
+          <h1 className="font-bold">Checkout</h1>
         </div>
         <img src={more} className="w-6" />
       </div>
 
       {/* Selected Address */}
-      <div>
-        <h2>Shipping Address</h2>
-        {selectedAddress ? (
-          <div onClick={() => setIsSelectingAddress(true)}>
-            <p>{selectedAddress.address}</p>
-            <p>
-              {selectedAddress.name}, {selectedAddress.address}
-            </p>
+      <div className="w-full flex flex-col">
+        <h2 className="font-semibold text-sm">Shipping Address</h2>
+        <div className="w-[90%] bg-pink-500 ">
+          <div>
+            <div className="locationIcon">
+             <div>
+            
+             </div>
+              <img src={Location} alt="location" className="size-6" />
+            </div>
+            <div>
+              <h3>Home</h3>
+              <span>61480 sunbrook pork, pc 5679</span>
+            </div>
           </div>
-        ) : (
-          <button>Select Address</button>
-        )}
+          {selectedAddress ? (
+            <div onClick={() => setIsSelectingAddress(true)} className="">
+              <p>{selectedAddress.address}</p>
+              <p>
+                {selectedAddress.name}, {selectedAddress.address}
+              </p>
+            </div>
+          ) : (
+            <img src={EditePen} alt="EditLocation" className="size-6" />
+          )}
+        </div>
       </div>
 
       {/* Only render AddressSelection if needed */}
