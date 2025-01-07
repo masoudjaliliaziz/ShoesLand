@@ -53,7 +53,7 @@ const CheckoutPage = () => {
           <button onClick={() => navigate(-1)}>
             <img src={backward} alt="backward" className="w-7" />
           </button>
-          <h1 className="font-bold">Checkout</h1>
+          <h1 className="font-semibold">Checkout</h1>
         </div>
         <button>
           <img src={more} className="w-6" />
@@ -165,10 +165,10 @@ const CheckoutPage = () => {
       />
 
       {/* Continue to Payment Button */}
-      <div className="py-3 bg-slate-950 text-slate-50 items-center justify-center rounded-3xl my-3">
+      <div className="py-3 bg-slate-950 text-slate-50 shadow-sm shadow-slate-500 items-center justify-center rounded-3xl my-3">
         <Link to={"/payment"}>
           <button className="flex flex-row space-x-3 justify-center items-center mx-auto">
-            <span className="font-semibold text-base">Continue to Payment</span>
+            <span className="font-semibold text-base ">Continue to Payment</span>
             <img src={nextCheckout} className="w-4" />
           </button>
         </Link>
