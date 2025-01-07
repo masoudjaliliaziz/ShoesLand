@@ -15,6 +15,7 @@ import EditePen from "../assets/Edit.svg";
 import Location from "../assets/Location.svg";
 import chevronRight from "../assets/chevronRight.svg";
 import Truck from "../assets/truck.svg";
+import nextCheckout from "../assets/nextCheckout.svg";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const CheckoutPage = () => {
     return <div>loading...</div>;
   }
   return (
-    <div className="checkout px-5">
+    <div className="checkout px-5 pb-1">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => navigate(-1)}>
@@ -164,9 +165,14 @@ const CheckoutPage = () => {
       />
 
       {/* Continue to Payment Button */}
-      <Link to={"/payment"}>
-        <button>Continue to Payment</button>
-      </Link>
+      <div className="py-3 bg-slate-950 text-slate-50 items-center justify-center rounded-3xl my-3">
+        <Link to={"/payment"}>
+          <button className="flex flex-row space-x-3 justify-center items-center mx-auto">
+            <span className="font-semibold text-base">Continue to Payment</span>
+            <img src={nextCheckout} className="w-4" />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
