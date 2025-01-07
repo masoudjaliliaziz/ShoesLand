@@ -31,7 +31,7 @@ const PromoCode = () => {
   };
 
   return (
-    <div className="promo-code py-2 relative after:absolute pb-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+    <div className="promo-code py-2">
       <h2 className="font-semibold text-base leading-7">Promo Code</h2>
       {selectedDiscount ? (
         <div>

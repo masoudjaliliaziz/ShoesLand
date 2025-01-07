@@ -21,7 +21,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
   }
 
   return (
-    <div className="order-items flex flex-col py-1  relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+    <div className="order-items flex flex-col py-1 relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
       <h2 className="py-2 font-semibold text-base leading-7">Order List</h2>
       <div className="">
         <ul>
@@ -48,7 +48,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                           size <small>=</small> {item.size}
                         </span>
                       </div>
-                      <span >${item.total_price}.00</span>
+                      <span>${item.total_price}.00</span>
                     </div>
                   </div>
                   <span className="bg-gray-200 px-2 py-0 rounded-full h-1/8 absolute bottom-2 right-2 font-semibold text-sm">
