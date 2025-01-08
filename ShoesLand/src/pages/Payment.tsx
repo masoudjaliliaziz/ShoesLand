@@ -92,15 +92,17 @@ const Payment: React.FC = () => {
           <h3>You have selected: {selectedPaymentMethod}</h3>
         </div>
       )} */}
-      <div className=" fixed bottom-4 w-[420px] mx-auto">
-        <div className="h-1/2 bg-slate-950 font-semibold text-base py-2 text-center text-white w-[85%] rounded-3xl">
-          {selectedPaymentMethod && (
-            <span className="font-semibold text-sm text-white py-2">
-              <button onClick={handleCreateOrder}>Confrim Payment</button>
-            </span>
-          )}
+      <button onClick={handleCreateOrder}>
+        <div className=" fixed bottom-4 w-[420px] mx-auto">
+          <div className="h-1/2 bg-slate-950 font-semibold text-base py-2 text-center text-white w-[85%] rounded-3xl">
+            {selectedPaymentMethod && (
+              <span className="font-semibold text-sm text-white py-2">
+                Confrim Payment
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
