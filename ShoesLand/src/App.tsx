@@ -38,11 +38,11 @@ function App() {
               <Route path="wishlist" element={<WishList />} />
               <Route path="auth" element={<Auth />} />
               <Route path="brand/:brand" element={<Brand />} />
-              <Route path="payment/" element={<Payment />} />
               <Route path="cart/" element={<Cart />} />
               <Route path="orders/" element={<Orders />} />
               <Route path="product/:id" element={<ProductDetail />} />
             </Route>
+            <Route path="payment/" element={<Payment />} />
             <Route path="ChooseShipping" element={<ChooseShipping />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
