@@ -1,9 +1,11 @@
+import { authHooks } from "../../api/queryClinet";
 import bell from "../../assets/bell.svg";
 import heartwhite from "../../assets/HeartNone.svg";
 import user from "../../assets/user.svg";
 import { Link } from "react-router-dom";
 
 function HeaderHome() {
+  const { data } = authHooks.useWhoAmI()
   return (
     <div>
       <div className="flex justify-between py-2 px-2 items-center">
@@ -13,7 +15,7 @@ function HeaderHome() {
           </div>
           <div className="flex flex-col text-sm font-serif">
             <span className="text-slate-600">Good Morning 👋</span>
-            <span className="font-bold">name</span>
+            <span className="font-bold">{data.username}</span>
           </div>
         </div>
         <div>

@@ -3,24 +3,34 @@ import ShippingSelection from "../../component/checkout/Shipping";
 import { useNavigate } from "react-router-dom";
 import backward from "../../assets/Backward.svg";
 
-const ChooseShipping = () => {
+type ShippingOption = {
+  id: number;
+  name: string;
+  cost: number;
+  Description?: string;
+};
+
+
+type ShippingSelectionProps = {
+  onSelect: (option: ShippingOption) => void;
+  onClose: () => void
+};
+
+const ChooseShipping = ({ onSelect, onClose }: ShippingSelectionProps) => {
   const navigate = useNavigate();
-  const [shippingMethod, setShippingMethod] = useState(null);
-  const [isSelectingShipping, setIsSelectingShipping] = useState(false);
-  const [shippingCost, setShippingCost] = useState(0);
 
   return (
     <div className="ChooseShipping px-5">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
-          <button onClick={() => navigate(-1)}>
+          <button onClick={() => onClose()}>
             <img src={backward} alt="backward" className="w-7" />
           </button>
           <h1 className="font-semibold">Choose Shipping</h1>
         </div>
       </div>
       {/* Only render ShippingSelection if needed */}
-      {isSelectingShipping && (
+      {(
         <ShippingSelection
           options={[
             {
@@ -49,11 +59,9 @@ const ChooseShipping = () => {
             },
           ]}
           onSelect={(method) => {
-            setShippingMethod(method);
-            setShippingCost(method.cost);
-            setIsSelectingShipping(false);
+            onSelect(method)
           }}
-          onClose={() => setIsSelectingShipping(false)}
+          onClose={() => navigate('/checkout')}
         />
       )}
     </div>

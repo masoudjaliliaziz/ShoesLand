@@ -37,10 +37,11 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                   <div className=" flex flex-col text-sm font-semibold ">
                     <span className="text-base leading-none">{item.name}</span>
                     <div className="pt-1.5">
-                      <div className="flex flex-row h-4 items-center my-2 ">
-                        <div className="relative pr-1 mr-4 after:absolute  after:w-full after:h-3  after:top-1  after:left-1.5 after:border-r-2 after:border-r-solid after:border-r-slate-300 after:pointer-events-none">
+                      <div className="text-xs font-normal flex flex-row h-4 justify-item-start items-start my-2 ">
+                        <div className="relative 
+                          pr-1 mr-4 after:absolute flex  after:w-full after:h-3  after:left-1.5 after:border-r-2 after:border-r-solid after:border-r-slate-300 after:pointer-events-none justify-items-center">
                           <div
-                            className={`bg-${item.color}-500 py-1.5 px-1.5 inline-flex rounded-full items-center`}
+                            className={`bg-${item.color}-500 h-3 w-3 mr-1 place-self-center inline-flex rounded-full items-center`}
                           ></div>
                           <span className=""> {item.color}</span>
                         </div>
@@ -51,10 +52,12 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                       <span>${item.total_price}.00</span>
                     </div>
                   </div>
-                  <span className="bg-gray-200 px-2 py-0 rounded-full h-1/8 absolute bottom-2 right-2 font-semibold text-sm">
-                    {item.count}
-                  </span>
                 </div>
+                <span
+                  className="bg-gray-100 px-3 py-1 rounded-full h-7 w-7 absolute bottom-3 right-3 font-semibold text-xs flex items-center justify-center"
+                >
+                  {item.count}
+                </span>
               </li>
             </div>
           ))}

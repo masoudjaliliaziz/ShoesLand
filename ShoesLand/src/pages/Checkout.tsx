@@ -16,6 +16,7 @@ import Location from "../assets/Location.svg";
 import chevronRight from "../assets/chevronRight.svg";
 import Truck from "../assets/Truck.svg";
 import nextCheckout from "../assets/nextCheckout.svg";
+import ChooseShipping from "../component/checkout/ChooseShipping";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const CheckoutPage = () => {
 
   const { data: selectedAddress, isLoading: selectedAddressLoading } =
     addressHooks.useFetchSelectedAddress();
+  console.log(selectedAddress)
   const { data: cartItems, isLoading: cartItemLoading } =
     cartHooks.useFetchCart();
 
@@ -46,6 +48,29 @@ const CheckoutPage = () => {
   if (selectedAddressLoading || cartItemLoading) {
     return <div>loading...</div>;
   }
+  console.log(cartItems)
+  if (isSelectingShipping) return (
+    <ChooseShipping
+      onSelect={(method) => {
+        setShippingMethod(method);
+        setShippingCost(method.cost);
+        setIsSelectingShipping(false);
+
+      }
+      }
+      onClose={() => {
+        setIsSelectingShipping(false)
+      }} />
+  )
+  if (isSelectingShipping) return (
+    <AddressSelection
+      onClose={() => {
+        setIsSelectingAddress(false)
+      }
+      }
+    />
+  )
+
   return (
     <div className="checkout px-5 pb-1">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
@@ -127,31 +152,16 @@ const CheckoutPage = () => {
               </span>
             </div>
             <div className="w-5 h-5">
-              <Link to={"/ChooseShipping"}>
-                <button onClick={() => setIsSelectingShipping(true)}>
-                  <img src={chevronRight} className="w-5" />
-                </button>
-              </Link>
+              <button onClick={() => setIsSelectingShipping(true)}>
+                <img src={chevronRight} className="w-5" />
+              </button>
             </div>
           </div>
         )}
       </div>
-      {/* 
-     
-      {isSelectingShipping && (
-        <ShippingSelection
-          options={[
-            { id: 1, name: "Standard Shipping", cost: 20 },
-            { id: 2, name: "Express Shipping", cost: 50 },
-          ]}
-          onSelect={(method) => {
-            setShippingMethod(method);
-            setShippingCost(method.cost);
-            setIsSelectingShipping(false);
-          }}
-          onClose={() => setIsSelectingShipping(false)}
-        />
-      )} */}
+
+
+      {}
 
       {/* Discount Input */}
       <PromoCode />
