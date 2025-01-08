@@ -17,7 +17,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdate, onRemove }) => {
   console.log(item);
 
   return (
-    <div className="flex items-center justify-start space-x-2 shadow-sm mr-2 shadow-slate-300 bg-white border-b py-2 px-3 rounded-3xl">
+    <div className="flex items-start justify-start space-x-2 shadow-sm mr-2 shadow-slate-300 bg-white border-b py-2 px-3 rounded-3xl">
       <img
         src={item.images[0]}
         alt={item.name}
@@ -40,7 +40,9 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdate, onRemove }) => {
             <img src={stash} className="w-5" />
           </button>
         </div>
-        <div className="text-sm text-gray-500 font-semibold flex flex-row h-4 justify-item-start items-start ">
+        <div className="flex flex-col space-y-2 py-2 h-1/2">
+
+        <div className="text-sm text-gray-500  font-semibold flex flex-row h-4 justify-item-start items-start ">
           <div
             className="relative justify-items-center flex flex-row space-x-1"
           >
@@ -63,8 +65,9 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdate, onRemove }) => {
             value={item.count}
             onChange={handleQuantityChange}
             className="w-12 border-none text-center bg-transparent outline-none font-semibold text-base"
-          />
+            />
         </div>
+            </div>
       </div>
     </div>
   );
