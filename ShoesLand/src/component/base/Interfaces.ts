@@ -23,6 +23,7 @@ export interface CartItem {
   size: number;
   images: string[];
   productId: number;
+  total_price: number;
 }
 
 export interface AddToCartParams {

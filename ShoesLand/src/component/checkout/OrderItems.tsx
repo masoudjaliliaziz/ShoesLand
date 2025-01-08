@@ -38,13 +38,14 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                     <span className="text-base leading-none">{item.name}</span>
                     <div className="pt-1.5">
                       <div className="text-xs font-normal flex flex-row h-4 justify-item-start items-start my-2 ">
-                        <div className="relative 
-                          pr-1 mr-4 after:absolute flex  after:w-full after:h-3  after:left-1.5 after:border-r-2 after:border-r-solid after:border-r-slate-300 after:pointer-events-none justify-items-center">
+                        <div className="relative justify-items-center flex flex-row space-x-1">
                           <div
-                            className={`bg-${item.color}-500 h-3 w-3 mr-1 place-self-center inline-flex rounded-full items-center`}
+                            className={`bg-${item.color}-500 h-3 w-3  place-self-center inline-flex rounded-full items-center`}
                           ></div>
+
                           <span className=""> {item.color}</span>
                         </div>
+                        <span className="px-1">|</span>
                         <span>
                           size <small>=</small> {item.size}
                         </span>
@@ -53,9 +54,7 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                     </div>
                   </div>
                 </div>
-                <span
-                  className="bg-gray-100 px-3 py-1 rounded-full h-7 w-7 absolute bottom-3 right-3 font-semibold text-xs flex items-center justify-center"
-                >
+                <span className="bg-gray-100 px-3 py-1 rounded-full h-7 w-7 absolute bottom-3 right-3 font-semibold text-xs flex items-center justify-center">
                   {item.count}
                 </span>
               </li>
