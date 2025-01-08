@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { clearDiscount, selectDiscount } from "../config/slice";
+import { clearDiscount, selectDiscount, selectFinalTotal } from "../config/slice";
 import { cartHooks, orderHooks } from "../api/queryClinet";
 import { Link, useNavigate } from "react-router-dom";
 import Backward from "../assets/Backward.svg";
@@ -12,16 +12,17 @@ import apple from "../assets/apple-173-svgrepo-com.svg";
 import userpen from "../assets/user-pen-alt-svgrepo-com.svg"
 
 const paymentMethods = [
-  { id: 1, name: "My Wallet", icon: {wallet} },
-  { id: 2, name: "PayPal", icon: {paypal} },
-  { id: 3, name: "Google Pay", icon: {google} },
-  { id: 4, name: "Apple Pay", icon: {apple} },
-  { id: 5, name: ".... .... .... 4679", icon: {userpen} },
+  { id: 1, name: "My Wallet", icon: wallet },
+  { id: 2, name: "PayPal", icon: paypal },
+  { id: 3, name: "Google Pay", icon: google },
+  { id: 4, name: "Apple Pay", icon: apple },
+  { id: 5, name: ".... .... .... 4679", icon: userpen },
 
 ];
 
 const Payment: React.FC = () => {
   const navigate = useNavigate();
+  const finalTotal = useSelector(selectFinalTotal);
   const { mutate } = orderHooks.useCreateOrder();
   const { data, isLoading } = cartHooks.useFetchCart();
   const selectedDiscount = useSelector(selectDiscount);
@@ -30,6 +31,7 @@ const Payment: React.FC = () => {
     string | null
   >(null);
   if (isLoading) return <div>Loading...</div>;
+
   const handlePaymentMethodSelect = (method: string) => {
     setSelectedPaymentMethod(method);
   };
@@ -69,8 +71,10 @@ const Payment: React.FC = () => {
             key={method.id}
             onClick={() => handlePaymentMethodSelect(method.name)}
           >
-            <span>{method.icon}</span>
+            <img className='w-4' src={method.icon} />
             <span>{method.name}</span>
+            <br />
+            <span>final: {finalTotal}</span>
           </div>
         ))}
       </div>

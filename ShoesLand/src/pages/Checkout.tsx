@@ -6,8 +6,8 @@ import PromoCode from "../component/checkout/Promo";
 import ShippingSelection from "../component/checkout/Shipping";
 import OrderItems from "../component/checkout/OrderItems";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectDiscount } from "../config/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectDiscount, selectFinalTotal, setFinalTotal } from "../config/slice";
 import backward from "../assets/Backward.svg";
 import more from "../assets/more.svg";
 import { useNavigate } from "react-router-dom";
@@ -19,21 +19,22 @@ import nextCheckout from "../assets/nextCheckout.svg";
 import ChooseShipping from "../component/checkout/ChooseShipping";
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [shippingMethod, setShippingMethod] = useState(null);
   const selectedDiscount = useSelector(selectDiscount);
+  const finalTotal = useSelector(selectFinalTotal);
   const [isSelectingAddress, setIsSelectingAddress] = useState(false);
   const [isSelectingShipping, setIsSelectingShipping] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
-  const [finalTotal, setFinalTotal] = useState(0);
 
   const { data: selectedAddress, isLoading: selectedAddressLoading } =
     addressHooks.useFetchSelectedAddress();
-  console.log(selectedAddress)
   const { data: cartItems, isLoading: cartItemLoading } =
     cartHooks.useFetchCart();
+
 
   useEffect(() => {
     const amount =
@@ -43,11 +44,14 @@ const CheckoutPage = () => {
 
     setTotalAmount(amount);
     setDiscountAmount(discount);
-    setFinalTotal(total);
+    dispatch(setFinalTotal(total));
   }, [cartItems, shippingCost, selectedDiscount]);
+
   if (selectedAddressLoading || cartItemLoading) {
     return <div>loading...</div>;
   }
+
+  console.log(finalTotal)
   console.log(cartItems)
   if (isSelectingShipping) return (
     <ChooseShipping

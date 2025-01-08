@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage"; // Default storage (localStorage for web)
 import { persistReducer, persistStore } from "redux-persist";
-import { authSlice, discountSlice } from "./slice";
+import { authSlice, checkoutSlice, discountSlice } from "./slice";
 
 const authPersistConfig = {
   key: "auth",
@@ -9,10 +9,18 @@ const authPersistConfig = {
 };
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice.reducer);
 
+const totalPriceConfig = {
+  key: "checkout",
+  storage,
+};
+const persistedTotalPrice = persistReducer(totalPriceConfig, checkoutSlice.reducer);
+
+
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     discount: discountSlice.reducer,
+    checkout: persistedTotalPrice,
   },
 });
 

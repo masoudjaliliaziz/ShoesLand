@@ -5,7 +5,8 @@ import user from "../../assets/user.svg";
 import { Link } from "react-router-dom";
 
 function HeaderHome() {
-  const { data } = authHooks.useWhoAmI()
+  const { data, isLoading } = authHooks.useWhoAmI()
+  if (isLoading) return <div>loading ..</div>
   return (
     <div>
       <div className="flex justify-between py-2 px-2 items-center">
@@ -15,7 +16,7 @@ function HeaderHome() {
           </div>
           <div className="flex flex-col text-sm font-serif">
             <span className="text-slate-600">Good Morning 👋</span>
-            <span className="font-bold">{data.username}</span>
+            <span className="font-bold">{data.username && data.username}</span>
           </div>
         </div>
         <div>

@@ -81,6 +81,7 @@ export const usePut = (categoryKey: string, url: string, authRequired = false) =
   });
 };
 
+
 export const useDelete = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({

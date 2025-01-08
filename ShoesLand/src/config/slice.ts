@@ -8,6 +8,10 @@ export interface DiscountState {
   value: string | null;
 }
 
+interface CheckoutState {
+  finalTotal: number | null;
+}
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: { token: null } as AuthState,
@@ -45,5 +49,22 @@ export const discountSlice = createSlice({
     },
   },
 });
+
 export const selectDiscount = (state) => state.discount.value;
 export const { setDiscount, clearDiscount } = discountSlice.actions;
+
+export const checkoutSlice = createSlice({
+  name: "checkout",
+  initialState: {
+    finalTotal: null,
+  },
+  reducers: {
+    setFinalTotal: (state, action: PayloadAction<number>) => {
+      state.finalTotal = action.payload;
+    },
+  },
+});
+
+export const { setFinalTotal } = checkoutSlice.actions;
+export const selectFinalTotal = (state: { checkout: CheckoutState }) => state.checkout.finalTotal;
+
