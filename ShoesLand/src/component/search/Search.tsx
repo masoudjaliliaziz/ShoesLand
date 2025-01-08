@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { authHooks, deleteData, historySearchHooks, productHooks, useDelete } from "../../api/queryClinet";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import Backward from '../../assets/Backward.svg'
-import SearchIcon from '../../assets/SearchIcon.svg'
+import SearchIcon from '../../assets/SearchIcon.svg';
+import close from "../../assets/close.svg"
 interface FilteredProduct {
   title: string;
   id: number;
@@ -45,7 +46,7 @@ function Search() {
   };
 
   return (
-    <div>
+    <div className="h-screen">
       <div className="w-full flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
           <img src={Backward} alt='back' className='w-7' onClick={() => navigate(-1)} />
@@ -71,7 +72,7 @@ function Search() {
 
               handleSearchClick(search) && setShowProductList(false)
             }
-            className="absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"
+            className="absolute top-1/2  transform -translate-y-1/2 left-3 text-gray-500 hover:text-blue-500 focus:outline-none"
           ><img src={SearchIcon} alt='search' className='w-6 h-6' />
           </button>
 
@@ -81,9 +82,13 @@ function Search() {
           {showProductList && filteredProducts.length > 0 && !searchLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {searchData.map((data) => (
-                <div key={data.userId}>
-                  <p onClick={() => {
-
+                <div
+                className=" flex w-full flex-row justify-between px-3 py-2 items-center cursor-pointer"
+                key={data.userId}>
+                  <p 
+                  className="font-semibold text-base"
+                  onClick={() => {
+                    
                     setSearch(data.text)
                     handleSearchClick(data.text)
                     setShowProductList(false)
@@ -91,7 +96,9 @@ function Search() {
                   }>
                     {data.text}
                   </p>
-                  <button onClick={() => handleDelete(data.text)}>x</button>
+                  <button className="w-7 font-semibold text-xl " onClick={() => handleDelete(data.text)}>
+                    <img src={close} className="w-5"/>
+                  </button>
 
                 </div>
 
