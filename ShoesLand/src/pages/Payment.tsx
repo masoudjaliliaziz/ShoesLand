@@ -65,16 +65,16 @@ const Payment: React.FC = () => {
       <span>
         Select the payment method you want to use.
       </span>
-      <div>
+      <div className="bg-sky-200 space-y-2">
         {paymentMethods.map((method) => (
-          <div
+          <div className="bg-rose-300"
             key={method.id}
             onClick={() => handlePaymentMethodSelect(method.name)}
           >
-            <img className='w-4' src={method.icon} />
+            <img className='w-4 bg-green-300 ' src={method.icon} />
             <span>{method.name}</span>
             <br />
-            <span>final: {finalTotal}</span>
+            <span> {finalTotal}</span>
           </div>
         ))}
       </div>
