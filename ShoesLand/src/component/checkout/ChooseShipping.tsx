@@ -20,7 +20,7 @@ const ChooseShipping = ({ onSelect, onClose }: ShippingSelectionProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="ChooseShipping px-5">
+    <div className="ChooseShipping px-5 h-screen">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>

@@ -6,7 +6,7 @@ function WishList() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="w-full flex flex-row justify-between items-center text-start left-0">
+      <div className="w-full h-screen flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
           <img src={Backward} alt='back' className='w-7' onClick={() => navigate(-1)} />
           <span className="text-xl">Wishlist</span>

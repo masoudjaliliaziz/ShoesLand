@@ -48,7 +48,7 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
   };
   if (isLoading) return <div>Loading...</div>
   return (
-    <div className="address-selection">
+    <div className="address-selection h-screen">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>

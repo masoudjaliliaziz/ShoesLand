@@ -36,7 +36,7 @@ const Payment: React.FC = () => {
     );
   };
   return (
-    <div>
+    <div className="h-screen">
       <h2>Select Payment Method</h2>
 
       <div>
