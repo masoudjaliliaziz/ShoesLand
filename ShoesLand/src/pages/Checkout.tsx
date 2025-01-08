@@ -68,6 +68,7 @@ const CheckoutPage = () => {
         setIsSelectingAddress(false)
       }
       }
+      selectedAddressApi={selectedAddress}
     />
   )
 
