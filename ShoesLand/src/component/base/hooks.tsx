@@ -1,6 +1,8 @@
-import { authHooks, cartHooks, productHooks } from "../../api/queryClinet";
+import { authHooks, cartHooks, productHooks, usePut } from "../../api/queryClinet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CartItem, EditCartParams, AddToCartParams, RemoveFromCartParams } from './Interfaces.ts'
+import { authAxiosClient } from "../../api/axiosClient.tsx";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 type PersistedState<T> = [T, Dispatch<SetStateAction<T>>];
 
 function useLocalStorage<T>(defaultValue: T, key: string): PersistedState<T> {
@@ -19,11 +21,12 @@ export { useLocalStorage };
 
 function useCart() {
   const { mutate: addToCartMutate } = cartHooks.useAddToCartItem();
-  const { mutate: updateCartMutate } = cartHooks.useUpdateCartItemCount();
+  const updateCartItemCountMutate = cartHooks.useUpdateCartItemCount
   const { data: userData, isLoading: userLoading, isError, isSuccess } = authHooks.useWhoAmI();
   const { data: cartData, isLoading: cartLoading } = cartHooks.useFetchCart();
   const [value, setValue] = useLocalStorage<CartItem[]>([], "cart");
 
+  const queryClient = useQueryClient();
   const getCart = (): CartItem[] | null => {
     if (userLoading || cartLoading) return null;
     if (isError) {
@@ -83,31 +86,29 @@ function useCart() {
     }
   };
 
-  const removeFromCart = ({ productId }: RemoveFromCartParams): void => {
+  const removeFromCart = async ({ productId }: RemoveFromCartParams) => {
     if (userLoading || cartLoading) return;
     if (!userData) {
       setValue((prevCart) =>
         prevCart.filter((item) => item.productId !== productId)
       );
     } else {
-      updateCartMutate(
-        {
-          productId,
+
+      try {
+        const response = await authAxiosClient.put(`/api/cart/${productId}`, {
           count: 0,
-        },
-        {
-          onSuccess: () => {
-            console.log("Cart updated successfully");
-          },
-          onError: (err) => {
-            console.error("Failed to update cart", err);
-          },
-        }
-      );
+        });
+        console.log("Cart updated successfully", response.data);
+        queryClient.invalidateQueries({ queryKey: ['cart'] });
+      } catch (error) {
+        console.error("Failed to update cart", error);
+      }
     }
+
+
   };
 
-  const editCart = ({ productId, count }: EditCartParams): void => {
+  const editCart = async ({ productId, count }: EditCartParams) => {
     if (userLoading || cartLoading) return;
     if (!userData) {
       setValue((prevCart) =>
@@ -116,21 +117,19 @@ function useCart() {
         )
       );
     } else {
-      updateCartMutate(
-        {
-          productId,
+      try {
+        const response = await authAxiosClient.put(`/api/cart/${productId}`, {
           count,
-        },
-        {
-          onSuccess: () => {
-            console.log("Cart updated successfully");
-          },
-          onError: (err) => {
-            console.error("Failed to update cart", err);
-          },
-        }
-      );
+        });
+        console.log("Cart updated successfully", response.data);
+        queryClient.invalidateQueries({ queryKey: ['cart'] });
+      } catch (error) {
+        console.error("Failed to update cart", error);
+      }
+
     }
+
+
   };
   const mergeCartOnLogin = () => {
     if (!userData || !cartData) return;

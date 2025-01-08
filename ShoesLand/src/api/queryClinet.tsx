@@ -60,6 +60,7 @@ export const useFetch = ({
 export const usePost = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
+    retry: 1,
     mutationFn: async (body: any) =>
       await postData({ url, body }, authRequired),
     onSuccess: () => {
@@ -71,6 +72,7 @@ export const usePost = (categoryKey: string, url: string, authRequired = false) 
 export const usePut = (categoryKey: string, url: string, authRequired = false) => {
   const queryClient = useQueryClient();
   return useMutation({
+    retry: 1,
     mutationFn: async (body: any) =>
       await putData({ url, body }, authRequired),
     onSuccess: () => {
@@ -189,7 +191,7 @@ export const cartHooks = {
       authRequired: true,
     }),
   useAddToCartItem: () => usePost("cart", "/api/cart", true),
-  useUpdateCartItemCount: () => usePut("cart", "/api/cart", true),
+  useUpdateCartItemCount: (id: number) => usePut("cart", `/api/cart/${id}`, true),
   useRemoveCartItem: () => useDelete("cart", "/api/cart", true),
 };
 export const addressHooks = {
