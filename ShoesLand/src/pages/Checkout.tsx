@@ -62,7 +62,7 @@ const CheckoutPage = () => {
         setIsSelectingShipping(false)
       }} />
   )
-  if (isSelectingShipping) return (
+  if (isSelectingAddress) return (
     <AddressSelection
       onClose={() => {
         setIsSelectingAddress(false)
@@ -88,7 +88,10 @@ const CheckoutPage = () => {
       {/* Selected Address */}
       <div className="w-full flex flex-col relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
         <h2 className="font-semibold text-base leading-7">Shipping Address</h2>
-        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow">
+        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow"
+          onClick={() => setIsSelectingAddress(true)}
+        >
+
           <div className="flex flex-row items-center space-x-2">
             <div className="locationIcon">
               <div className="bg-gray-200 rounded-full w-9 p-1.5 items-center">
@@ -99,25 +102,26 @@ const CheckoutPage = () => {
                 />
               </div>
             </div>
-            <div className="felx flex-col space-y-0">
-              <h3 className="font-semibold text-base leading-none">Home</h3>
-              <span className="font-semibold text-xs leading-none text-gray-500">
-                61480 sunbrook pork, pc 5679
-              </span>
+            <div className="felx flex-col space-y-1 ml-2">
+
+              {selectedAddress ? (<>
+                <h3 className="font-semibold text-base leading-none">{selectedAddress.name}</h3>
+                <span className="font-semibold text-xs leading-none text-gray-500">
+                  {selectedAddress.address}
+                </span>
+              </>
+
+              ) : (
+                <span className="font-semibold text-sm text-black">
+                  Choose Shipping Type
+                </span>
+
+              )}
             </div>
           </div>
-          {selectedAddress ? (
-            <div onClick={() => setIsSelectingAddress(true)} className="">
-              <p>{selectedAddress.address}</p>
-              <p>
-                {selectedAddress.name}, {selectedAddress.address}
-              </p>
-            </div>
-          ) : (
-            <button>
-              <img src={EditePen} alt="EditLocation" className="size-6" />
-            </button>
-          )}
+          <button>
+            <img src={EditePen} alt="EditLocation" className="size-6" />
+          </button>
         </div>
       </div>
 
