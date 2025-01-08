@@ -63,7 +63,7 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
             key={index}
             className={`w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow ${selectedAddress?.address == address.address ? "border-2 border-black" : ""
               }`}
-            onClick={() => handleSelect(address)}
+            onClick={() => setSelectedAddress(address)}
           >
             <div className="flex flex-row items-center space-x-2">
               <div className="locationIcon">
@@ -104,7 +104,7 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
       <div className="mt-6 flex justify-center">
         <button
           className="px-6 py-2 bg-black text-white rounded-full font-semibold"
-          onClick={onClose}
+          onClick={() => selectedAddress && handleSelect(selectedAddress)}
         >
           Apply
         </button>
@@ -123,7 +123,9 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
             value={newAddress.name}
             onChange={(e) =>
               setNewAddress({ ...newAddress, name: e.target.value })
+
             }
+            readOnly
           />
           <input
             type="text"
