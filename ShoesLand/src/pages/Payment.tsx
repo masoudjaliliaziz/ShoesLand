@@ -2,14 +2,26 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { clearDiscount, selectDiscount } from "../config/slice";
 import { cartHooks, orderHooks } from "../api/queryClinet";
+import { Link, useNavigate } from "react-router-dom";
+import Backward from "../assets/Backward.svg";
+import plus from "../assets/plus.svg";
+import wallet from "../assets/wallet-svgrepo-com.svg";
+import paypal from "../assets/paypal-svgrepo-com.svg";
+import google from "../assets/google-color-svgrepo-com.svg";
+import apple from "../assets/apple-173-svgrepo-com.svg";
+import userpen from "../assets/user-pen-alt-svgrepo-com.svg"
 
 const paymentMethods = [
-  { id: 1, name: "Credit Card", icon: "💳" },
-  { id: 2, name: "PayPal", icon: "💰" },
-  { id: 3, name: "Bank Transfer", icon: "🏦" },
+  { id: 1, name: "My Wallet", icon: {wallet} },
+  { id: 2, name: "PayPal", icon: {paypal} },
+  { id: 3, name: "Google Pay", icon: {google} },
+  { id: 4, name: "Apple Pay", icon: {apple} },
+  { id: 5, name: ".... .... .... 4679", icon: {userpen} },
+
 ];
 
 const Payment: React.FC = () => {
+  const navigate = useNavigate();
   const { mutate } = orderHooks.useCreateOrder();
   const { data, isLoading } = cartHooks.useFetchCart();
   const selectedDiscount = useSelector(selectDiscount);
@@ -37,8 +49,20 @@ const Payment: React.FC = () => {
   };
   return (
     <div className="h-screen">
-      <h2>Select Payment Method</h2>
-
+      <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row  items-center">
+          <button onClick={() => navigate(-1)}>
+            <img src={Backward} alt="back" className="w-7" />
+          </button>
+          <h2>Select Payment Method</h2>
+        </div>
+        <button>
+          <img src={plus} className="w-5" />
+        </button>
+      </div>
+      <span>
+        Select the payment method you want to use.
+      </span>
       <div>
         {paymentMethods.map((method) => (
           <div
