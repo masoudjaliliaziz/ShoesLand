@@ -23,7 +23,7 @@ function Search() {
   const [search, setSearch] = useState("");
   const [showProductList, setShowProductList] = useState(false);
   const { data: searchData, isLoading: searchLoading, error } = historySearchHooks.useFetchHistorySearch()
-  const { mutate: addSearchMutate } = historySearchHooks.useAddHistorySearch()
+  const { mutate: addSearchMutate, isPending } = historySearchHooks.useAddHistorySearch()
   const { data: filteredProducts = [], isLoading: productLoading } = productHooks.useSearchProducts(search);
 
   const handleDelete = async (text: string) => {
@@ -77,8 +77,8 @@ function Search() {
           </button>
 
 
-          {searchLoading && <Loading />}
-          {error instanceof Error && <div>Error: {error.message}</div>}
+          {searchLoading || isPending && <Loading />}
+          {error instanceof Error && null}
           {showProductList && filteredProducts.length > 0 && !searchLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {searchData.map((data) => (

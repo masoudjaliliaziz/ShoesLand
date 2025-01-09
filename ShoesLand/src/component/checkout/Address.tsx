@@ -18,7 +18,7 @@ type AddressSelectionProps = {
 
 const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAddressApi }) => {
   const { data: addresses, isLoading } = addressHooks.useFetchAddress();
-  const { mutate } = addressHooks.useAddToAddress();
+  const { mutate, isPending } = addressHooks.useAddToAddress();
   const [newAddress, setNewAddress] = useState({ name: "", address: "" });
   const [isCreating, setIsCreating] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
@@ -48,9 +48,9 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
       },
     });
   };
-  if (isLoading) return <Loading />
+  if (isLoading || isPending) return <Loading />
   return (
-    <div className="address-selection h-screen p-3">
+    <div className="address-selection h-screen py-3 px-5">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>
@@ -63,7 +63,7 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
         {addresses.map((address: Address, index: number) => (
           <div
             key={index}
-            className={`w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow ${selectedAddress?.address == address.address ? "border-2 border-black" : ""
+            className={`w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-4 shadow-md shadow-slate-200 transition-shadow ${selectedAddress?.address == address.address ? "border-2 border-black" : ""
               }`}
             onClick={() => setSelectedAddress(address)}
           >
@@ -78,15 +78,15 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
                 </div>
               </div>
               <div className="flex flex-col space-y-1 ml-2">
-                <div className="flex">
-                  <h3 className="font-semibold text-base leading-none">
+                <div className="flex flex-row items-center">
+                  <h3 className="font-normal text-base leading-none ">
                     {address.name}
                   </h3>
                   {selectedAddress?.address == address.address &&
-                    <h3 className="bg-gray-300 p-2 rounded-xl text-[0.5rem] mx-2">Deafult</h3>
+                    <h3 className="bg-gray-300 text-gray-800 px-2 py-1 font-normal rounded-lg text-[0.6rem] mx-2">Deafult</h3>
                   }
                 </div>
-                <span className="font-semibold text-xs leading-none text-gray-500">
+                <span className="font-light text-xs leading-none text-gray-500">
                   {address.address}
                 </span>
               </div>
@@ -103,23 +103,19 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
           </div>
         ))}
       </ul>
-      <div className="mt-6 flex justify-center">
-        <button
-          className="px-6 py-2 bg-black text-white rounded-full font-semibold"
-          onClick={() => selectedAddress && handleSelect(selectedAddress)}
-        >
-          Apply
-        </button>
-      </div>
 
       {/* Button to open create address form */}
-      <button onClick={() => setIsCreating(true)}>Create Address</button>
+      <button className='
+w-full py-4 bg-gray-300 font-semibold rounded-full my-8
+        ' onClick={() => setIsCreating(true)}>Add New Address</button>
 
       {/* Conditional rendering for the create address form */}
       {isCreating && (
         <div className="create-address-form">
-          <h3>Create New Address</h3>
           <input
+            className='
+w-full py-3 bg-gray-200 font-semibold rounded-full my-2
+pl-4            '
             type="text"
             placeholder="Name"
             value={newAddress.name}
@@ -127,9 +123,12 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
               setNewAddress({ ...newAddress, name: e.target.value })
 
             }
-            readOnly
           />
           <input
+            className='
+w-full py-3 bg-gray-200 font-semibold rounded-full 
+pl-4            '
+
             type="text"
             placeholder="Address"
             value={newAddress.address}
@@ -137,12 +136,35 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
               setNewAddress({ ...newAddress, address: e.target.value })
             }
           />
-          <button onClick={handleCreateAddress}>Add Address</button>
-          <button onClick={() => setIsCreating(false)}>Cancel</button>
+          <div className='flex justify-around'>
+            <button className='my-4
+w-1/3 py-4 bg-black font-semibold rounded-full 
+    text-white'
+
+
+              onClick={handleCreateAddress}>Add Address</button>
+            <button
+              className='my-4 w-1/3
+ py-4 bg-gray-300 font-semibold rounded-full 
+        text-center    text-black'
+
+
+
+              onClick={() => setIsCreating(false)}>Cancel</button>
+
+          </div>
         </div>
       )}
 
-      <button onClick={onClose}>Close</button>
+      <div className="mt-6 flex justify-center ">
+        <button
+          className="buttom-0 px-6 py-4 bg-black text-white w-full rounded-full font-semibold"
+          onClick={() => selectedAddress && handleSelect(selectedAddress)}
+        >
+          Apply
+        </button>
+      </div>
+
     </div>
   );
 };

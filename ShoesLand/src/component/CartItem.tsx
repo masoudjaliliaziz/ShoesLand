@@ -84,7 +84,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdate, onRemove }) => {
           <div className="flex items-center flex-row justify-between">
             <p className="font-semibold text-base">${item.total_price}.00</p>
 
-            <div className="w-20 h-9 rounded-2xl bg-gray-200 flex justify-between items-center px-2 py-[5.5px]">
+            <div className="w-20 h-9 rounded-2xl bg-gray-100 flex justify-between items-center px-2 py-[5.5px]">
               <button
                 className="text-xs cursor-pointer"
                 onClick={decreaseCount}
@@ -93,10 +93,12 @@ const CartItem: React.FC<CartItemProps> = ({ item, onUpdate, onRemove }) => {
               </button>
               <input
                 type="text"
+                disabled
+                readOnly
                 value={count}
                 onChange={handleQuantityChange}
                 onBlur={handleBlur}
-                className="w-5 text-center font-bold bg-gray-200 focus:outline-none"
+                className="w-5 text-center font-bold bg-gray-100 focus:outline-none"
               />
               <button
                 className="text-xs cursor-pointer"

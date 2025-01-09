@@ -8,10 +8,10 @@ function Footer() {
       </div>
 
       <div
-        className="bg-slate-50 fixed m-auto bottom-0 
-     py-2 px-2 flex justify-around w-[400px]"
+        className="bg-slate-50 fixed bottom-0 
+     py-2 px-2 flex justify-center  w-[400px]"
       >
-        <div className="flex flex-row space-x-6 items-center justify-center text-sm">
+        <div className="flex flex-row space-x-9 text-gray-700 font-normal justify-center text-sm">
           <Link to={"/"}>
             <div className="flex-col place-items-center ">
               <svg
@@ -50,7 +50,7 @@ function Footer() {
               <span>Cart</span>
             </div>
           </Link>
-          <Link to={"#"}>
+          <Link to={"/orders"}>
             <div className="flex-col place-items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

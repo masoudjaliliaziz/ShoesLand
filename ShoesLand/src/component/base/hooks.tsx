@@ -81,8 +81,10 @@ function useCart() {
           onError: (err) => {
             console.error("Failed to update cart", err);
           },
+
         }
       );
+
     }
   };
 

@@ -103,7 +103,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
       <BrandNav filter={filter} dispatch={dispatch} />
       <div className="w-full grid grid-cols-2 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
-          <div className="col-span-2">
+          <div className="col-span-2 h-screen">
             <div className="col-span-2 w-full flex flex-col items-center justify-center mt-10">
               <div className="text-6xl font-bold text-slate-700">Oops!</div>
               <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
@@ -123,6 +123,9 @@ function ProductList({ dispatchCaller }: ProductListProps) {
                   d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
                 />
               </svg>
+              <p className='text-xl font-bold text-slate-700 py-7'>
+                MADE WITH ❤️ BY G-3
+              </p>
             </div>
           </div>
         )}

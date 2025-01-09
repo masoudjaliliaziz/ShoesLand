@@ -36,7 +36,7 @@ const Cart: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className='flex justify-items-center'>
       <div className="px-5 py-2 h-screen relative">
         <div className="header flex items-center justify-between py-2 font-semibold text-lg">
           <div className="flex items-center space-x-3">
@@ -58,7 +58,7 @@ const Cart: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="h-16 items-center bg-slate-50 fixed m-auto bottom-[56px] py-2 flex justify-around w-[370px] ">
+      <div className="ml-4 h-16 items-center bg-slate-50 fixed m-auto bottom-[56px] justify-self-center py-2 flex justify-around w-[370px] ">
         <div className="w-/3 flex flex-col justify-between itmes-start">
           <span className="font-semibold text-xs text-gray-400">
             Total price
