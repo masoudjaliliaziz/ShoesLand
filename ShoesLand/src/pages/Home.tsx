@@ -8,7 +8,7 @@ import HeaderHome from "../component/product/HeaderHome";
 
 function Home() {
   return (
-    <div className="w-full mb-10">
+    <div className="w-full mb-10 px-5">
       <HeaderHome />
       <Link to="search">
         <>

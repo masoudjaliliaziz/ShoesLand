@@ -50,7 +50,7 @@ const ProductCard = ({
           justify-center items-start"
         >
           <div
-            className="imageContainer relative w-36 h-36 
+            className="imageContainer relative w-40 h-44 
             rounded-3xl p-2 bg-[#ECEFF1] flex justify-center 
             items-center cursor-pointer hover:bg-slate-200"
           >{show_more &&

@@ -8,7 +8,7 @@ export function BrandNav({ filter, dispatch }) {
   const { data, isLoading } = productHooks.useFetchBrands();
 
   if (isLoading) return <Loading />
-  if (!filter.home && !filter.wishlist) return <><br /></>
+  if (!filter.home && !filter.wishlist && !filter.brand) return <><br /></>
   console.log(data);
   console.log(dispatch);
   console.log(filter);

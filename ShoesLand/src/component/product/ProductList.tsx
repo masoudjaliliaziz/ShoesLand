@@ -99,7 +99,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
     }
   };
   return (
-    <div className="flex w-full flex-col space-y-3 " key={11}>
+    <div className="flex w-full flex-col space-y-3 px-2 " key={11}>
       <BrandNav filter={filter} dispatch={dispatch} />
       <div className="w-full grid grid-cols-2 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (

@@ -11,6 +11,7 @@ import Increase from "../../assets/Increase.svg";
 import Backward from "../../assets/Backward.svg";
 import clsx from 'clsx'
 import Loading from '../../component/base/Loading'
+import ImageCarousel from "../base/Carousel";
 export function ProductDetail() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -62,21 +63,10 @@ export function ProductDetail() {
   return (
     <div className="w-full h-screen relative mb-10">
       {/* images && backward */}
-      <div className="mb-6 pt-20 w-full ">
-        <div className=''>
-          <img
-            src={product?.images[0]}
-            className="h-64 w-full object-cover"
-          ></img>
-          <button onClick={() => navigate(-1)}>
-            <img
-              src={Backward}
-              className="size-9 absolute top-1 left-3 font-bold"
-            />
-          </button>
-        </div>
+      <div className="mb-6 w-full ">
+        <ImageCarousel images={product.images} />
       </div>
-      <div className="px-5 w-full">
+      <div className="px-4 w-full">
         <div
           className=" h-1/4 relative after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
           after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none"
@@ -86,14 +76,14 @@ export function ProductDetail() {
               <h1 className="font-semibold text-3xl w-full ">{product?.name}</h1>
               <div className="flex flex-row space-x-3 w-full justify-start items-center">
                 <div className="w-1/4 h-7 bg-slate-200 rounded-lg flex justify-center items-center  py-1">
-                  <p className="font-bold text-xs text-slate-700">
+                  <p className="font-normal text-xs text-slate-700">
                     {product?.sold_quantity} sold
                   </p>
                 </div>
                 <div className=" flex flex-row justify-between items-center gap-1">
                   <img src={star} alt="star" className="size-5" />
-                  <p className="font-semibold text-[14px] text-slate-700">
-                    {product.rating}({product.sold_quantity})
+                  <p className="font-normal text-[14px] text-slate-600">
+                    {product.rating}({product.sold_quantity} reviews)
                   </p>
                 </div>
               </div>
@@ -107,10 +97,10 @@ export function ProductDetail() {
             </div>
           </div>
         </div>
-
+        <br />
         <div className="w-full h-1/4 relative mb-1 after:absolute pb-4 pt-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-col justify-between pb-3 h-2/4 ">
-            <h1 className="font-bold text-base">Description</h1>
+            <h1 className="font-bold text-base py-3">Description</h1>
             <p className="font-semibold text-xs text-slate-700">
               lorem ipsum dolor sit amet, consectatur adipiscing elit,sad do
               eiusmod tempor incididunt ut labore et
@@ -118,14 +108,14 @@ export function ProductDetail() {
             </p>
           </div>
           <div className="flex flex-row justify-between space-y-1 items-center">
-            <div className="flex space-x-1 justify-center items-center">
-              <h3 className="font-bold text-base">Size</h3>
-              <ul className="flex space-x-1">
+            <div className="flex-col justify-center items-center">
+              <h3 className="font-bold text-base my-1">Size</h3>
+              <ul className="flex space-x-2">
                 {product?.sizes.map((sizes, index) => (
                   <li
 
                     onClick={() => setSelectedSize(sizes)}
-                    className={clsx(selectedSize == sizes && 'text-white bg-black', "py-1.5 px-1.5 leading-none font-semibold text-xs rounded-full inline-flex border-2 border-slate-900 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500")}
+                    className={clsx(selectedSize == sizes && 'text-white bg-black', "py-2 px-2 leading-none font-semibold text-md rounded-full inline-flex border-2 border-slate-500 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500 text-slate-600")}
                     key={index}
                   >
                     {sizes}
@@ -133,14 +123,14 @@ export function ProductDetail() {
                 ))}
               </ul>
             </div>
-            <div className="flex space-x-1 justify-center items-center pb-1.5  ">
-              <h3 className="font-bold text-base">Color</h3>
-              <ul className="flex space-x-1">
+            <div className="flex-col justify-center items-center pb-1.5  ">
+              <h3 className="font-bold text-base my-1">Color</h3>
+              <ul className="flex space-x-2">
                 {product?.colors.map((colors, index) => (
                   <li
                     onClick={() => setSelectedColor(colors)}
                     className={clsx(
-                      "h-7 w-7 inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300",
+                      "h-9 w-9 inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300",
                       selectedColor == colors ? "bg-slate-300" : `bg-${colors}-500`,
                       "hover:bg-slate-300"
                     )}
@@ -171,9 +161,9 @@ export function ProductDetail() {
           </div>
           <div className=" flex flex-row space-x-2 justify-start items-center text-center mt-3">
             <div>
-              <h3 className="font-bold text-base text-center">Quantity</h3>
+              <h3 className="font-bold text-base text-center my-4">Quantity</h3>
             </div>
-            <div className="w-20 h-9 rounded-2xl bg-slate-300 flex justify-between items-center px-2 py-[5.5px]">
+            <div className="w-20 h-9 rounded-2xl bg-gray-200 flex justify-between items-center px-2 py-[5.5px]">
               <button
                 className="text-xs cursor-pointer"
                 onClick={() => setCount((c) => (c !== 1 ? c - 1 : 1))}
@@ -195,15 +185,15 @@ export function ProductDetail() {
           onClick={handleAddToCart}
         >
           <div className="flex flex-col justify-center w-1/3 h-full">
-            <h5 className="font-bold text-slate-500 text-xs">Total price</h5>
-            <h5 className="font-semibold text-xl">
+            <h5 className="font- text-slate-500 text-xs">Total price</h5>
+            <h5 className="font-semibold text-2xl">
               ${product?.price && product?.price * count}.00
             </h5>
           </div>
-          <div className="bg-black w-2/3 h-10 rounded-[40px] flex justify-center items-center shadow-md shadow-slate-500/50 cursor-pointer">
+          <div className="bg-black w-2/3 h-14 rounded-[40px] flex justify-center items-center shadow-md shadow-slate-500/50 cursor-pointer">
             <div className="text-white flex justify-center items-center gap-3">
               <AddToCart />
-              <p className="text-lg font-semibold">Add to Cart</p>
+              <p className="text-lg font-semibold py-2">Add to Cart</p>
             </div>
           </div>
         </div>
