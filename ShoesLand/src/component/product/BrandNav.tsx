@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import { productHooks } from "../../api/queryClinet";
 import clsx from "clsx";
 
+import Loading from '../../component/base/Loading'
+
 export function BrandNav({ filter, dispatch }) {
   const { data, isLoading } = productHooks.useFetchBrands();
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <Loading />
+  if (!filter.home && !filter.wishlist) return <><br /></>
   console.log(data);
   console.log(dispatch);
   console.log(filter);

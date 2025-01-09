@@ -9,9 +9,12 @@ import emptyIcon from "../assets/emptypage.png";
 import shoea from "../../public/img/Vector1.png";
 import nextCheckout from "../assets/nextCheckout.svg";
 
+import Loading from '../component/base/Loading'
+
 const Cart: React.FC = () => {
   const navigate = useNavigate();
-  const { getCart, editCart, removeFromCart } = useCart();
+  const { getCart, editCart, removeFromCart, isLoading } = useCart();
+  if (isLoading) return <Loading />
   const cartItems = getCart();
 
   const handleUpdate = (productId: number, count: number) => {
@@ -44,7 +47,7 @@ const Cart: React.FC = () => {
             <img src={search} className="w-6" />
           </button>
         </div>
-        <div className="space-y-4 h-[86%] overflow-y-scroll">
+        <div className="space-y-4 h-[86%] ">
           {cartItems.map((item: CartItemType) => (
             <CartItem
               key={item.productId}
@@ -55,7 +58,7 @@ const Cart: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className="h-16 items-center bg-slate-50 fixed m-auto bottom-[56px] right-[77px] py-2 px-2 flex justify-around w-[400px] ">
+      <div className="h-16 items-center bg-slate-50 fixed m-auto bottom-[56px] py-2 flex justify-around w-[370px] ">
         <div className="w-/3 flex flex-col justify-between itmes-start">
           <span className="font-semibold text-xs text-gray-400">
             Total price

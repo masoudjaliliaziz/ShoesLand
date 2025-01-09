@@ -156,7 +156,7 @@ export const productHooks = {
 export const wishlistHooks = {
   useFetchWishlist: () =>
     useFetch({
-      categoryKey: "wishlist",
+      categoryKey: "product",
       queryKey: "all",
       url: "/api/wishlist",
       authRequired: true,
@@ -164,7 +164,7 @@ export const wishlistHooks = {
   useAddRemoveWishlist: () => usePost("wishlist", "/api/wishlist", true),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
-      categoryKey: "wishlist",
+      categoryKey: "product",
       queryKey: `search-${searchTerm}`,
       url: `/api/wishlist?search=${searchTerm}`,
       authRequired: true,

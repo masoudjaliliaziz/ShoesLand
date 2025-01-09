@@ -5,7 +5,7 @@ import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import Loading from '../../component/base/Loading'
 interface FilterState {
   search?: any;
   brand?: any;
@@ -81,7 +81,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
   const { data, isLoading, error } = hookResult;
 
   let filteredProducts;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error instanceof Error) filteredProducts = [];
   else filteredProducts = data;
   const totalItems = filteredProducts && filteredProducts.length;
@@ -92,7 +92,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
     currentPage * itemsPerPage
   );
 
-  console.log(paginatedProducts);
+  console.log(hookResult);
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -132,7 +132,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
           </Link>
         ))}
       </div>
-      {paginatedProducts.length && (
+      {paginatedProducts.length ? (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
             className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
@@ -167,7 +167,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
             Next
           </button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -9,8 +9,8 @@ import AddToCart from "../../assets/AddToCart";
 import Decrease from "../../assets/Decrease.svg";
 import Increase from "../../assets/Increase.svg";
 import Backward from "../../assets/Backward.svg";
-import Heart from "../../assets/HeartNone.svg";
-
+import clsx from 'clsx'
+import Loading from '../../component/base/Loading'
 export function ProductDetail() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -30,11 +30,11 @@ export function ProductDetail() {
   const { data, isLoading, error } = productHooks.useFetchProductById(
     Number(id)
   );
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
   const product: ProductProps = data;
-
+  console.log(product.isFavorite)
   const handleAddToCart = () => {
     if (!selectedColor) {
       alert("Please select a color.");
@@ -58,11 +58,12 @@ export function ProductDetail() {
     });
     alert("Item added to cart!");
   };
+  console.log(selectedSize, selectedColor)
   return (
-    <div className="w-full h-[95%] relative mb-10">
+    <div className="w-full h-screen relative mb-10">
       {/* images && backward */}
-      <div className="h-64 mb-6 w-full ">
-        <div>
+      <div className="mb-6 pt-20 w-full ">
+        <div className=''>
           <img
             src={product?.images[0]}
             className="h-64 w-full object-cover"
@@ -82,7 +83,7 @@ export function ProductDetail() {
         >
           <div className="flex flex-row w-full justify-evently">
             <div className="flex flex-col space-y-3 w-full">
-              <h1 className="font-semibold text-2xl w-full ">{product?.name}</h1>
+              <h1 className="font-semibold text-3xl w-full ">{product?.name}</h1>
               <div className="flex flex-row space-x-3 w-full justify-start items-center">
                 <div className="w-1/4 h-7 bg-slate-200 rounded-lg flex justify-center items-center  py-1">
                   <p className="font-bold text-xs text-slate-700">
@@ -90,15 +91,15 @@ export function ProductDetail() {
                   </p>
                 </div>
                 <div className=" flex flex-row justify-between items-center gap-1">
-                  <img src={star} alt="star" className="size-5"/>
+                  <img src={star} alt="star" className="size-5" />
                   <p className="font-semibold text-[14px] text-slate-700">
                     {product.rating}({product.sold_quantity})
                   </p>
                 </div>
               </div>
             </div>
-            <div className="heart w-1/12 hover:fill-pink-500 active:text-pink-500 flex flex-row justify-start items-center h-2/3">
-            <img src={Heart} alt="star" className="border border-slate-800 size-6 hover:text-pink-500 active:text-pink-500"/>
+            <div className="heart hover:fill-pink-500 active:text-pink-500 flex flex-row justify-start items-center w-10 h-10">
+
               <WishlistIcon
                 productId={Number(id)}
                 isInWishlist={product.isFavorite}
@@ -122,8 +123,9 @@ export function ProductDetail() {
               <ul className="flex space-x-1">
                 {product?.sizes.map((sizes, index) => (
                   <li
+
                     onClick={() => setSelectedSize(sizes)}
-                    className="py-1 px-1 leading-none font-semibold text-xs rounded-full inline-flex border border-slate-700 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500"
+                    className={clsx(selectedSize == sizes && 'text-white bg-black', "py-1.5 px-1.5 leading-none font-semibold text-xs rounded-full inline-flex border-2 border-slate-900 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500")}
                     key={index}
                   >
                     {sizes}
@@ -131,15 +133,38 @@ export function ProductDetail() {
                 ))}
               </ul>
             </div>
-            <div className="flex space-x-1 justify-center items-center">
+            <div className="flex space-x-1 justify-center items-center pb-1.5  ">
               <h3 className="font-bold text-base">Color</h3>
               <ul className="flex space-x-1">
                 {product?.colors.map((colors, index) => (
                   <li
                     onClick={() => setSelectedColor(colors)}
-                    className={`bg-${colors}-500 py-3 px-3 inline-flex rounded-full cursor-pointer transition-all duration-300 hover:bg-slate-400`}
+                    className={clsx(
+                      "h-7 w-7 inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300",
+                      selectedColor == colors ? "bg-slate-300" : `bg-${colors}-500`,
+                      "hover:bg-slate-300"
+                    )}
                     key={index}
-                  ></li>
+                  >
+                    {selectedColor == colors && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="black"
+                        className="h-4 w-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                    )}
+                  </li>
+
+
                 ))}
               </ul>
             </div>
@@ -148,7 +173,7 @@ export function ProductDetail() {
             <div>
               <h3 className="font-bold text-base text-center">Quantity</h3>
             </div>
-            <div className="w-1/4 h-6 rounded-2xl bg-slate-300 flex justify-between items-center px-2 py-[4.5px]">
+            <div className="w-20 h-9 rounded-2xl bg-slate-300 flex justify-between items-center px-2 py-[5.5px]">
               <button
                 className="text-xs cursor-pointer"
                 onClick={() => setCount((c) => (c !== 1 ? c - 1 : 1))}
@@ -160,7 +185,7 @@ export function ProductDetail() {
                 className=" text-xs cursor-pointer"
                 onClick={() => setCount((c) => c + 1)}
               >
-                <img src={Increase} className="w-5 pl-1" /> 
+                <img src={Increase} className="w-5 pl-1" />
               </button>
             </div>
           </div>

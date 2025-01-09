@@ -3,6 +3,8 @@ import { addressHooks } from "../../api/queryClinet";
 import backward from "../../assets/Backward.svg";
 import Location from "../../assets/Location.svg";
 
+import Loading from '../../component/base/Loading'
+
 type Address = {
   name: string;
   address: string;
@@ -46,13 +48,13 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAd
       },
     });
   };
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loading />
   return (
-    <div className="address-selection h-screen">
+    <div className="address-selection h-screen p-3">
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>
-            <img src={backward} alt="backward" className="w-7" />
+            <img src={backward} alt="backward" className="w-6 mr-1" />
           </button>
           <h1 className="font-semibold">Choose Address</h1>
         </div>

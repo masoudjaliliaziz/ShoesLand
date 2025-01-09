@@ -7,6 +7,7 @@ import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import Backward from '../../assets/Backward.svg'
 import SearchIcon from '../../assets/SearchIcon.svg';
 import close from "../../assets/close.svg"
+import Loading from '../../component/base/Loading'
 interface FilteredProduct {
   title: string;
   id: number;
@@ -28,7 +29,6 @@ function Search() {
   const handleDelete = async (text: string) => {
     deleteData(`/api/search/${text}`, true).catch((e) => { addSearchMutate({ text }) })
     queryClient.invalidateQueries()
-    //console.log(responce) 
   }
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -46,7 +46,7 @@ function Search() {
   };
 
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <div className="w-full flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
           <img src={Backward} alt='back' className='w-7' onClick={() => navigate(-1)} />
@@ -77,27 +77,27 @@ function Search() {
           </button>
 
 
-          {searchLoading && <div>Loading...</div>}
+          {searchLoading && <Loading />}
           {error instanceof Error && <div>Error: {error.message}</div>}
           {showProductList && filteredProducts.length > 0 && !searchLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {searchData.map((data) => (
                 <div
-                className=" flex w-full flex-row justify-between px-3 py-2 items-center cursor-pointer"
-                key={data.userId}>
-                  <p 
-                  className="font-semibold text-base"
-                  onClick={() => {
-                    
-                    setSearch(data.text)
-                    handleSearchClick(data.text)
-                    setShowProductList(false)
-                  }
-                  }>
+                  className=" flex w-full flex-row justify-between px-3 py-2 items-center cursor-pointer"
+                  key={data.userId}>
+                  <p
+                    className="font-semibold text-base"
+                    onClick={() => {
+
+                      setSearch(data.text)
+                      handleSearchClick(data.text)
+                      setShowProductList(false)
+                    }
+                    }>
                     {data.text}
                   </p>
                   <button className="w-7 font-semibold text-xl " onClick={() => handleDelete(data.text)}>
-                    <img src={close} className="w-5"/>
+                    <img src={close} className="w-5" />
                   </button>
 
                 </div>

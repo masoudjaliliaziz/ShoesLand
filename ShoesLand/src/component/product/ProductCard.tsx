@@ -41,6 +41,7 @@ const ProductCard = ({
   isFavorite,
   show_more,
 }: ProductPropsWithPage): ReactElement => {
+  console.log(isFavorite)
   return (
     <div key={id} className="w-40 h-56 flex flex-row justify-start">
       <div className="w-full flex flex-col justify-center items-center gap-1">

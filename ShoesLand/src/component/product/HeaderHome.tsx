@@ -4,9 +4,11 @@ import heartwhite from "../../assets/HeartNone.svg";
 import user from "../../assets/user.svg";
 import { Link } from "react-router-dom";
 
+import Loading from '../../component/base/Loading'
+
 function HeaderHome() {
   const { data, isLoading } = authHooks.useWhoAmI()
-  if (isLoading) return <div>loading ..</div>
+  if (isLoading) return <Loading />
   return (
     <div>
       <div className="flex justify-between py-2 px-2 items-center">

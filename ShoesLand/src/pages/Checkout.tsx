@@ -13,6 +13,7 @@ import more from "../assets/more.svg";
 import { useNavigate } from "react-router-dom";
 import EditePen from "../assets/Edit.svg";
 import Location from "../assets/Location.svg";
+import Loading from '../component/base/Loading'
 import chevronRight from "../assets/chevronRight.svg";
 import Truck from "../assets/Truck.svg";
 import nextCheckout from "../assets/nextCheckout.svg";
@@ -48,7 +49,7 @@ const CheckoutPage = () => {
   }, [cartItems, shippingCost, selectedDiscount]);
 
   if (selectedAddressLoading || cartItemLoading) {
-    return <div>loading...</div>;
+    return <Loading />
   }
 
   console.log(finalTotal)
@@ -81,7 +82,7 @@ const CheckoutPage = () => {
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => navigate(-1)}>
-            <img src={backward} alt="backward" className="w-7" />
+            <img src={backward} alt="backward" className="w-6 mr-1" />
           </button>
           <h1 className="font-semibold">Checkout</h1>
         </div>
