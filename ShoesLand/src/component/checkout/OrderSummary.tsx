@@ -25,13 +25,18 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             <span className="text-zinc-500">Shipping:</span>
             <span className="text-zinc-700">${shippingCost.toFixed(2)}</span>
           </div>
+          <div className="flex flex-row justify-between items-center px-1 font-semibold text-sm">
+            <span className="text-zinc-500">Promo:</span>
+            <span className="text-zinc-700">-${discountAmount.toFixed(2)}</span>
+          </div>
+
         </div>
         <div className="flex flex-row py-3 justify-between items-center px-1 font-semibold text-sm">
-          
-            <span className="text-zinc-500">Total:</span>
-          
-            <span className="text-zinc-700">${finalTotal.toFixed(2)}</span>
-         
+
+          <span className="text-zinc-500">Total:</span>
+
+          <span className="text-zinc-700">${finalTotal.toFixed(2)}</span>
+
         </div>
       </div>
     </div>

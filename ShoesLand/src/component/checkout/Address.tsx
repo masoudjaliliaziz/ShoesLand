@@ -13,19 +13,14 @@ type Address = {
 
 type AddressSelectionProps = {
   onClose: () => void;
-  selectedAddressApi: Address
 };
 
-const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, selectedAddressApi }) => {
+const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, }) => {
   const { data: addresses, isLoading } = addressHooks.useFetchAddress();
   const { mutate, isPending } = addressHooks.useAddToAddress();
   const [newAddress, setNewAddress] = useState({ name: "", address: "" });
   const [isCreating, setIsCreating] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-
-  useEffect(() => {
-    setSelectedAddress(selectedAddressApi)
-  }, [selectedAddressApi])
 
   const handleSelect = (address: Address) => {
     setSelectedAddress(address)

@@ -64,6 +64,18 @@ export function ProductDetail() {
     <div className="w-full h-screen relative mb-10">
       {/* images && backward */}
       <div className="mb-6 w-full ">
+        <div className=''>
+          <img
+            src={product?.images[0]}
+            className="h-80 w-full object-cover"
+          ></img>
+          <button onClick={() => navigate(-1)}>
+            <img
+              src={Backward}
+              className="size-9 absolute top-1 left-3 font-bold"
+            />
+          </button>
+        </div>
         <ImageCarousel images={product.images} />
       </div>
       <div className="px-4 w-full">

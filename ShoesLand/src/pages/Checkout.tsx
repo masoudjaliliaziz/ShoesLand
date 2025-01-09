@@ -48,6 +48,7 @@ const CheckoutPage = () => {
     dispatch(setFinalTotal(total));
   }, [cartItems, shippingCost, selectedDiscount]);
 
+  console.log(discountAmount)
   if (selectedAddressLoading || cartItemLoading) {
     return <Loading />
   }
@@ -73,7 +74,6 @@ const CheckoutPage = () => {
         setIsSelectingAddress(false)
       }
       }
-      selectedAddressApi={selectedAddress}
     />
   )
 

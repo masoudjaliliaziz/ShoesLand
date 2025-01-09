@@ -31,12 +31,17 @@ const PromoCode = () => {
   };
 
   return (
-    <div className="promo-code py-2">
-      <h2 className="font-semibold text-base leading-7">Promo Code</h2>
+    <div className="promo-code py-2 mb-4">
+      <h2 className="font-semibold text-base leading-7 my-4 justify-items-center">Promo Code</h2>
       {selectedDiscount ? (
-        <div>
-          <p>Discount: {selectedDiscount}% off</p>
-          <button onClick={removeDiscount}>Remove Discount</button>
+        <div className='text-white bg-black rounded-full p-3 inline my-2' >
+          <p className='inline font-semibold' >Discount: {selectedDiscount}% Off</p>
+          <button onClick={removeDiscount} className='inline mx-3'>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="justify-center items-center size-4 inline mb-1">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       ) : (
         <div className="flex flex-col py-2 space-y-2">
