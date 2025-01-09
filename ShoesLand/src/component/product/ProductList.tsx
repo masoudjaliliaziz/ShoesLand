@@ -128,7 +128,11 @@ function ProductList({ dispatchCaller }: ProductListProps) {
         )}
         {paginatedProducts.map((item: ProductProps) => (
           <Link key={item.id} to={`/product/${item.id}`}>
-            <ProductCard {...item} />
+            {filter.wishList || filter.search ?
+              <ProductCard {...item} show_more={true} />
+              :
+              <ProductCard {...item} show_more={false} />
+            }
           </Link>
         ))}
       </div>

@@ -53,12 +53,12 @@ const ProductCard = ({
             className="imageContainer relative w-36 h-36 
             rounded-3xl p-2 bg-[#ECEFF1] flex justify-center 
             items-center cursor-pointer hover:bg-slate-200"
-          >
+          >{show_more &&
             <img
               src={Heart}
               className="w-6 h-6 transition-all duration-300 size-9 p-1 absolute 
               top-4 right-4 bg-slate-800 rounded-full hover:bg-rose-700"
-            />
+            />}
 
             <img src={images[0]} className="w-32 h-32 mx-auto" />
           </div>
@@ -68,7 +68,7 @@ const ProductCard = ({
             {name}
           </h1>
           <div className="w-full h-1/4 flex flex-row justify-start items-center">
-            {
+            {show_more &&
               <>
                 <div className="flex flex-row justify-center items-center">
                   <img src={star} className="w-4" />
@@ -78,11 +78,11 @@ const ProductCard = ({
                     4.3
                   </p>
                 </div>
+                <div className="w-1/2 bg-slate-200 rounded-lg flex justify-center items-centers py-1">
+                  <p className=" font-semibold text-xs text-slate-700">5254 sold</p>
+                </div>
               </>
             }
-            <div className="w-1/2 bg-slate-200 rounded-lg flex justify-center items-centers py-1">
-              <p className=" font-semibold text-xs text-slate-700">5254 sold</p>
-            </div>
           </div>
           <span className="productPrice font-semibold text-sm leading-5">
             ${price}.00
