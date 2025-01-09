@@ -25,7 +25,7 @@ function useCart() {
   const { data: userData, isLoading: userLoading, isError, isSuccess } = authHooks.useWhoAmI();
   const { data: cartData, isLoading: cartLoading } = cartHooks.useFetchCart();
   const [value, setValue] = useLocalStorage<CartItem[]>([], "cart");
-
+  const isLoading = cartLoading || userLoading
   const queryClient = useQueryClient();
   const getCart = (): CartItem[] | null => {
     if (userLoading || cartLoading) return null;
@@ -174,7 +174,7 @@ function useCart() {
     });
   };
 
-  return { getCart, addToCart, removeFromCart, editCart, mergeCartOnLogin };
+  return { getCart, addToCart, removeFromCart, editCart, mergeCartOnLogin, isLoading };
 }
 
 export default useCart;
