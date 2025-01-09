@@ -26,18 +26,18 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
       <div className="">
         <ul>
           {orderItems.map((item, index) => (
-            <div className="bg-white relative my-3 h-24 rounded-2xl px-4 py-2 flex flex-row shadow-sm shadow-slate-300">
+            <div className="bg-white relative my-3 h-34 rounded-2xl px-4 py-6 flex flex-row shadow-sm shadow-slate-300">
               <li key={index}>
                 <div className="order-item flex flex-row justify-start space-x-3">
                   <img
-                    className="w-1/4 h-[98%] rounded-xl bg "
+                    className="w-1/3 h-[98%] rounded-xl bg "
                     src={item.images[0]}
                     alt={item.name}
                   />
                   <div className=" flex flex-col text-sm font-semibold ">
                     <span className="text-base leading-none">{item.name}</span>
                     <div className="pt-1.5">
-                      <div className="text-xs font-normal flex flex-row h-4 justify-item-start items-start my-2 ">
+                      <div className="text-xs text-gray-600 font-normal flex flex-row h-4 justify-item-start items-start mt-3 mb-6">
                         <div className="relative justify-items-center flex flex-row space-x-1">
                           <div
                             className={`bg-${item.color}-500 h-3 w-3  place-self-center inline-flex rounded-full items-center`}
@@ -50,11 +50,11 @@ const OrderItems: React.FC<OrderItemsProps> = ({ orderItems }) => {
                           size <small>=</small> {item.size}
                         </span>
                       </div>
-                      <span>${item.total_price}.00</span>
+                      <span className='text-lg text-gray-800 font-semibold'>${item.total_price}.00</span>
                     </div>
                   </div>
                 </div>
-                <span className="bg-gray-100 px-3 py-1 rounded-full h-7 w-7 absolute bottom-3 right-3 font-semibold text-xs flex items-center justify-center">
+                <span className="bg-gray-100 px-3 py-1 rounded-full h-9 w-9 absolute bottom-3 right-3 font-semibold text-xs flex items-center justify-center">
                   {item.count}
                 </span>
               </li>

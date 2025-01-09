@@ -1,9 +1,7 @@
-import { useState } from "react";
 import ShippingSelection from "../../component/checkout/Shipping";
-import { useNavigate } from "react-router-dom";
 import backward from "../../assets/Backward.svg";
 
-type ShippingOption = {
+export type ShippingOption = {
   id: number;
   name: string;
   cost: number;
@@ -14,10 +12,10 @@ type ShippingOption = {
 type ShippingSelectionProps = {
   onSelect: (option: ShippingOption) => void;
   onClose: () => void
+  selectedMethod: ShippingOption | null
 };
 
-const ChooseShipping = ({ onSelect, onClose }: ShippingSelectionProps) => {
-  const navigate = useNavigate();
+const ChooseShipping = ({ onSelect, onClose, selectedMethod }: ShippingSelectionProps) => {
 
   return (
     <div className="ChooseShipping px-5 h-screen">
@@ -61,7 +59,8 @@ const ChooseShipping = ({ onSelect, onClose }: ShippingSelectionProps) => {
           onSelect={(method) => {
             onSelect(method)
           }}
-          onClose={() => navigate('/checkout')}
+          onClose={() => onClose()}
+          selectedMethod={selectedMethod}
         />
       )}
     </div>

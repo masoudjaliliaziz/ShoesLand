@@ -34,7 +34,7 @@ const PromoCode = () => {
     <div className="promo-code py-2 mb-4">
       <h2 className="font-semibold text-base leading-7 my-4 justify-items-center">Promo Code</h2>
       {selectedDiscount ? (
-        <div className='text-white bg-black rounded-full p-3 inline my-2' >
+        <div className='text-white bg-black rounded-full py-3 pl-5 pr-3 inline my-2' >
           <p className='inline font-semibold' >Discount: {selectedDiscount}% Off</p>
           <button onClick={removeDiscount} className='inline mx-3'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none"

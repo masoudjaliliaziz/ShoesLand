@@ -16,13 +16,14 @@ import Location from "../assets/Location.svg";
 import Loading from '../component/base/Loading'
 import chevronRight from "../assets/chevronRight.svg";
 import Truck from "../assets/Truck.svg";
+import Box from "../assets/Box.svg";
 import nextCheckout from "../assets/nextCheckout.svg";
-import ChooseShipping from "../component/checkout/ChooseShipping";
+import ChooseShipping, { ShippingOption } from "../component/checkout/ChooseShipping";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [shippingMethod, setShippingMethod] = useState(null);
+  const [shippingMethod, setShippingMethod] = useState<ShippingOption | null>(null);
   const selectedDiscount = useSelector(selectDiscount);
   const finalTotal = useSelector(selectFinalTotal);
   const [isSelectingAddress, setIsSelectingAddress] = useState(false);
@@ -62,11 +63,14 @@ const CheckoutPage = () => {
         setShippingCost(method.cost);
         setIsSelectingShipping(false);
 
+
       }
       }
       onClose={() => {
         setIsSelectingShipping(false)
-      }} />
+      }}
+      selectedMethod={shippingMethod}
+    />
   )
   if (isSelectingAddress) return (
     <AddressSelection
@@ -94,7 +98,7 @@ const CheckoutPage = () => {
       {/* Selected Address */}
       <div className="w-full flex flex-col relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
         <h2 className="font-semibold text-base leading-7">Shipping Address</h2>
-        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-2 shadow-md shadow-slate-200 transition-shadow"
+        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-4 shadow-md shadow-slate-200 transition-shadow"
           onClick={() => setIsSelectingAddress(true)}
         >
 
@@ -104,7 +108,7 @@ const CheckoutPage = () => {
                 <img
                   src={Location}
                   alt="location"
-                  className="size-6 rounded-full bg-slate-800 p-1"
+                  className="size-6 rounded-full bg-black p-1"
                 />
               </div>
             </div>
@@ -112,7 +116,7 @@ const CheckoutPage = () => {
 
               {selectedAddress ? (<>
                 <h3 className="font-semibold text-base leading-none">{selectedAddress.name}</h3>
-                <span className="font-semibold text-xs leading-none text-gray-500">
+                <span className="font-normal text-xs leading-none text-gray-500">
                   {selectedAddress.address}
                 </span>
               </>
@@ -131,45 +135,59 @@ const CheckoutPage = () => {
         </div>
       </div>
 
-      {/* Only render AddressSelection if needed */}
-      {isSelectingAddress && (
-        <AddressSelection onClose={() => setIsSelectingAddress(false)} />
-      )}
 
       {/* Cart Items */}
       <OrderItems orderItems={cartItems} />
 
       {/* Shipping Methods */}
-      <div className=" relative after:absolute pb-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
-        <h2 className="py-2 font-semibold text-base leading-7">
-          Choose Shipping
-        </h2>
-        {shippingMethod ? (
-          <div
-            onClick={() => setIsSelectingShipping(true)}
-            style={{ cursor: "pointer" }}
-          >
-            <p>
-              {shippingMethod.name} - ${shippingMethod.cost}
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-row items-center justify-between mb-2 bg-white shadow-sm shadow-slate-300 px-2 py-3 rounded-xl">
-            <div className="flex flex-row items-center space-x-2">
-              <img src={Truck} className="w-6" />
-              <span className="font-semibold text-sm text-black">
-                Choose Shipping Type
-              </span>
-            </div>
-            <div className="w-5 h-5">
-              <button onClick={() => setIsSelectingShipping(true)}>
-                <img src={chevronRight} className="w-5" />
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
 
+      <div className="w-full flex flex-col relative after:absolute pb-2  after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-gray-100 after:pointer-events-none">
+        <h2 className="font-semibold text-base leading-7">Choose Shipping</h2>
+        <div className="w-[95%] bg-white my-3 flex flex-row justify-between items-center mx-auto rounded-xl px-3 py-4 shadow-md shadow-slate-200 transition-shadow"
+          onClick={() => setIsSelectingShipping(true)}
+        >
+
+          <div className="flex flex-row items-center space-x-2">
+            <div className="locationIcon">
+              <img
+                src={Truck}
+                alt="location"
+                className="size-14 rounded-full bg-black p-4"
+              />
+            </div>
+            <div className="felx flex-col space-y-1 ml-2">
+
+              {shippingMethod ? (<>
+                <h3 className="font-semibold text-base leading-none">{shippingMethod.name}</h3>
+                <span className="font-normal text-xs leading-none text-gray-500">
+                  {shippingMethod.Description}
+                </span>
+              </>
+
+              ) : (
+                <span className="font-semibold text-sm text-black">
+                  Choose Shipping Type
+                </span>
+
+              )}
+            </div>
+          </div><div className='flex space-x-3'>
+            {shippingMethod ? <><span className='font-bold text-xl'>${shippingMethod?.cost}</span>
+              <button>
+                <img src={EditePen} alt="EditLocation" className="size-6" />
+              </button>
+            </>
+              :
+              <>
+                <button>
+                  <img src={EditePen} alt="EditLocation" className="size-6" />
+                </button>
+              </>
+
+            }
+          </div>
+        </div>
+      </div>
 
       {}
 
@@ -185,7 +203,7 @@ const CheckoutPage = () => {
       />
 
       {/* Continue to Payment Button */}
-      <div className="py-3 bg-slate-950 text-slate-50 shadow-sm shadow-slate-500 items-center justify-center rounded-3xl my-3">
+      <div className="py-4 bg-black text-slate-50 shadow-sm shadow-slate-500 items-center justify-center rounded-full my-3">
         <Link to={"/payment"}>
           <button className="flex flex-row space-x-3 justify-center items-center mx-auto">
             <span className="font-semibold text-base ">Continue to Payment</span>
