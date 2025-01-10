@@ -61,7 +61,7 @@ export function ProductDetail() {
   };
   console.log(selectedSize, selectedColor)
   return (
-    <div className="w-full h-screen relative mb-10">
+    <div className="w-full h-screen relative ">
       {/* images && backward */}
       <div className="mb-6 w-full ">
 
@@ -77,13 +77,13 @@ export function ProductDetail() {
               <h1 className="font-semibold text-3xl w-full ">{product?.name}</h1>
               <div className="flex flex-row space-x-3 w-full justify-start items-center">
                 <div className="w-1/4 h-7 bg-slate-200 rounded-lg flex justify-center items-center  py-1">
-                  <p className="font-normal text-xs text-slate-700">
+                  <p className="font-normal text-sm text-slate-700">
                     {product?.sold_quantity} sold
                   </p>
                 </div>
                 <div className=" flex flex-row justify-between items-center gap-1">
                   <img src={star} alt="star" className="size-5" />
-                  <p className="font-normal text-[14px] text-slate-600">
+                  <p className="font-normal text-sm text-slate-600">
                     {product.rating}({product.sold_quantity} reviews)
                   </p>
                 </div>
@@ -98,7 +98,7 @@ export function ProductDetail() {
             </div>
           </div>
         </div>
-        <br />
+      
         <div className="w-full h-1/4 relative mb-1 after:absolute pb-4 pt-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-col justify-between pb-3 h-2/4 ">
             <h1 className="font-bold text-base py-3">Description</h1>
