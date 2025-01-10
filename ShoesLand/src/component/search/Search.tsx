@@ -4,7 +4,7 @@ import ProductList from "../product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
 import { authHooks, deleteData, historySearchHooks, productHooks, useDelete } from "../../api/queryClinet";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import Backward from '../../assets/Backward.svg'
+import { IoMdArrowRoundBack } from "react-icons/io";
 import SearchIcon from '../../assets/SearchIcon.svg';
 import close from "../../assets/close.svg"
 import Loading from '../../component/base/Loading'
@@ -49,7 +49,7 @@ function Search() {
     <div className="h-full p-3">
       <div className="w-full flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
-          <img src={Backward} alt='back' className='w-7' onClick={() => navigate(-1)} />
+          <IoMdArrowRoundBack className='w-7' onClick={() => navigate(-1)} />
           <span className="text-xl">Search</span>
         </div>
         <Link to="/popular">

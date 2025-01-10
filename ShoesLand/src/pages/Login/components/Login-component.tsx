@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authHooks } from "../../../api/queryClinet";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../../config/slice";
-import backward from "../../../assets/Backward.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import Username from "../../../assets/Username.svg";
 import pass from "../../../assets/pass.svg";
 import eyeSlash from "../../../assets/EyeSlash.svg";
@@ -48,11 +48,10 @@ export const LoginForm: FC = (): ReactElement => {
   } = useForm<ILoginFormData>();
   return (
     <div className="flex flex-col h-screen px-5 w-full relative ">
-      {/* backward icon */}
+      {/* ArrowRoundBack icon */}
       <div>
         <button onClick={() => navigate(-1)}>
-          <img
-            src={backward}
+          <IoMdArrowRoundBack
             className="size-9 absolute top-1 left-3 font-bold"
           />
         </button>

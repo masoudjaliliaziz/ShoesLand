@@ -1,6 +1,7 @@
 import { wishlistHooks } from "../../api/queryClinet";
-import Heart from "../../assets/Heart.svg";
 import clsx from 'clsx';
+import { GoHeart } from "react-icons/go";
+
 
 
 export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; isInWishlist: boolean }) => {
@@ -24,11 +25,11 @@ export const WishlistIcon = ({ productId, isInWishlist }: { productId: number; i
 
 
   return (
-    <div className={clsx(isInWishlist && 'bg-red-500', 'w-5')}
+    <div className={clsx(isInWishlist && 'bg-red-500', )}
       onClick={handleToggle}
       style={{ cursor: "pointer" }}
     >
-      <img src={Heart} alt='heart' className={clsx(isInWishlist && 'bg-red-500')} />
+      <GoHeart className={clsx("size-9 mr-2",isInWishlist && 'fill-red-500 ')} />
     </div>
   );
 };

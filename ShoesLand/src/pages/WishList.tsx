@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
 import ProductList from "../component/product/ProductList";
 import { Link, useNavigate } from "react-router-dom";
-import Backward from "../assets/Backward.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
 function WishList() {
   const navigate = useNavigate();
   return (
@@ -9,7 +9,7 @@ function WishList() {
       <div className="w-full h-screen flex-col justify-between items-center p-3 text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
           <button onClick={() => navigate(-1)}>
-            <img src={Backward} alt="back" className="w-6 mr-1" />
+            <IoMdArrowRoundBack className="w-6 mr-1" />
           </button>
           <span className="text-xl">Wishlist</span>
         </div>

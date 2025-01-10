@@ -5,7 +5,9 @@ import { ProductProps } from "./ProductCard";
 import ProductCard from "./ProductCard";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Loading from '../../component/base/Loading'
+import Loading from "../../component/base/Loading";
+import { GoHeartFill } from "react-icons/go";
+
 interface FilterState {
   search?: any;
   brand?: any;
@@ -101,51 +103,57 @@ function ProductList({ dispatchCaller }: ProductListProps) {
   return (
     <div className="flex w-full flex-col space-y-3 px-2 " key={11}>
       <BrandNav filter={filter} dispatch={dispatch} />
-      <div className="w-full grid grid-cols-2 place-content-center justify-center items-center gap-4">
+      <div className="w-full  grid grid-cols-2 felx space-y-3 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
-          <div className="col-span-2 h-screen">
-            <div className="col-span-2 w-full flex flex-col items-center justify-center mt-10">
-              <div className="text-6xl font-bold text-slate-700">Oops!</div>
-              <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
-                We couldn’t find any products matching your search.
-              </p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-16 h-16 text-gray-300 mt-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
-                />
-              </svg>
-              <p className='text-xl font-bold text-slate-700 py-7'>
-                MADE WITH ❤️ BY G-3
-              </p>
+          <div className="col-span-2 flex flex-col justify-center content-center items-center">
+            <div className="col-span-2 space-y-80 w-full flex flex-col items-center justify-center mt-10 h-[98%]">
+              <div className="flex flex-col space-y-7 justify-center content-center items-center">
+                <div className="text-6xl  font-bold text-slate-700">Oops!</div>
+                <p className="text-lg text-gray-500 mt-2 mx-4 text-center">
+                  We couldn’t find any products matching your search.
+                </p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-16 h-16 text-gray-300 mt-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 8v4m0 4h.01M12 2.25a9.75 9.75 0 1 1-9.75 9.75A9.75 9.75 0 0 1 12 2.25Z"
+                  />
+                </svg>
+              </div>
+
+              <span className="flex flex-row items-center text-xl font-bold text-zinc-500 py-7">
+                MADE WITH  
+                <GoHeartFill className="mx-1 fill-rose-400"/>
+                BY G-3
+              </span>
             </div>
           </div>
         )}
         {paginatedProducts.map((item: ProductProps) => (
           <Link key={item.id} to={`/product/${item.id}`}>
-            {filter.wishList || filter.search ?
+            {filter.wishList || filter.search ? (
               <ProductCard {...item} show_more={true} />
-              :
+            ) : (
               <ProductCard {...item} show_more={false} />
-            }
+            )}
           </Link>
         ))}
       </div>
       {paginatedProducts.length ? (
         <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
+              currentPage === 1
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -154,20 +162,22 @@ function ProductList({ dispatchCaller }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${page === currentPage
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-                }`}
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
+                page === currentPage
+                  ? "text-gray-300 cursor-not-allowed "
+                  : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
               onClick={() => handlePageChange(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === totalPages || totalPages === 0
-              ? "text-gray-300 cursor-not-allowed "
-              : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
+              currentPage === totalPages || totalPages === 0
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+            }`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
           >

@@ -1,6 +1,6 @@
 import { authHooks } from "../../api/queryClinet";
 import bell from "../../assets/bell.svg";
-import heartwhite from "../../assets/HeartNone.svg";
+import { GoHeart } from "react-icons/go";
 import user from "../../assets/user.svg";
 import { Link } from "react-router-dom";
 
@@ -27,7 +27,7 @@ function HeaderHome() {
               <img src={bell} className="size-7 hover:stroke-orange-300" />
             </Link>
             <Link to={"/wishlist"}>
-              <img src={heartwhite} className="size-7 hover:bg-rose-300" />
+              <GoHeart className="size-7 hover:text-rose-300" />
             </Link>
           </button>
         </div>

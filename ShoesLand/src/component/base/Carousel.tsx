@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Backward from '../../assets/Backward.svg'
+import { IoMdArrowRoundBack } from "react-icons/io";
 import React, { useState } from "react";
 
 interface ImageCarouselProps {
@@ -24,9 +24,8 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   return (
     <div className="relative w-full mb-6">
       {/* Carousel Image */}
-      <img
+      <IoMdArrowRoundBack
         onClick={() => navigate(-1)}
-        src={Backward}
         className="size-9 absolute left-3 font-bold"
       />
 

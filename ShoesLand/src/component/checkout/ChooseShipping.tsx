@@ -1,5 +1,6 @@
 import ShippingSelection from "../../component/checkout/Shipping";
-import backward from "../../assets/Backward.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
 
 export type ShippingOption = {
   id: number;
@@ -22,7 +23,7 @@ const ChooseShipping = ({ onSelect, onClose, selectedMethod }: ShippingSelection
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>
-            <img src={backward} alt="backward" className="w-7" />
+            <IoMdArrowRoundBack className="w-7" />
           </button>
           <h1 className="font-semibold">Choose Shipping</h1>
         </div>

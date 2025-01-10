@@ -7,14 +7,14 @@ import {
 } from "../config/slice";
 import { cartHooks, orderHooks } from "../api/queryClinet";
 import { Link, useNavigate } from "react-router-dom";
-import Backward from "../assets/Backward.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import plus from "../assets/plus.svg";
 import wallet from "../assets/wallet-svgrepo-com.svg";
 import paypal from "../assets/paypal-svgrepo-com.svg";
 import google from "../assets/google-color-svgrepo-com.svg";
 import apple from "../assets/apple-173-svgrepo-com.svg";
 import MasterCard from "../assets/MasterCard.svg";
-import Loading from '../component/base/Loading'
+import Loading from "../component/base/Loading";
 
 const paymentMethods = [
   { id: 1, name: "My Wallet", icon: wallet },
@@ -31,10 +31,12 @@ const Payment: React.FC = () => {
   const { data, isLoading } = cartHooks.useFetchCart();
   const selectedDiscount = useSelector(selectDiscount);
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    string | null
+  >(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (isLoading || isPending) return <Loading />
+  if (isLoading || isPending) return <Loading />;
   const handlePaymentMethodSelect = (method: string) => {
     setSelectedPaymentMethod(method);
   };
@@ -57,7 +59,7 @@ const Payment: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    navigate('/orders')
+    navigate("/orders");
   };
 
   return (
@@ -65,7 +67,7 @@ const Payment: React.FC = () => {
       <div className="flex flex-row justify-between items-center py-3">
         <div className="flex flex-row items-center space-x-2">
           <button onClick={() => navigate(-1)}>
-            <img src={Backward} alt="back" className="w-7" />
+            <IoMdArrowRoundBack className="w-7" />
           </button>
           <h2 className="font-semibold text-base">Payment Method</h2>
         </div>
@@ -89,7 +91,9 @@ const Payment: React.FC = () => {
             </div>
             <div className="flex flex-row items-center space-x-2">
               {selectedPaymentMethod === method.name && (
-                <span className="font-semibold text-md text-gray-700">${finalTotal}</span>
+                <span className="font-semibold text-md text-gray-700">
+                  ${finalTotal}
+                </span>
               )}
               <input
                 type="radio"
@@ -106,7 +110,9 @@ const Payment: React.FC = () => {
       <button onClick={handleCreateOrder}>
         <div className="fixed bottom-4 w-[420px] mx-auto">
           <div className="h-1/2 bg-black font-semibold text-base py-4 text-center text-white w-[85%] rounded-full">
-            <span className="font-semibold text-sm text-white py-5">Confirm Payment</span>
+            <span className="font-semibold text-sm text-white py-5">
+              Confirm Payment
+            </span>
           </div>
         </div>
       </button>
@@ -115,9 +121,13 @@ const Payment: React.FC = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white px-10 rounded-3xl shadow-lg w-3/5 h-1/2 max-w-md flex-col items-center justify-center">
-            <img src='/img/PaymentConfirm.png' alt='img' className='scale-90' />
-            <h3 className="text-lg font-bold mb-4 text-center">Order Successful!</h3>
-            <p className="text-gray-600 mb-4 text-center">You have successfully made order</p>
+            <img src="/img/PaymentConfirm.png" alt="img" className="scale-90" />
+            <h3 className="text-lg font-bold mb-4 text-center">
+              Order Successful!
+            </h3>
+            <p className="text-gray-600 mb-4 text-center">
+              You have successfully made order
+            </p>
             <button
               className="bg-black text-white font-semibold w-full px-4 py-4 rounded-full hover:bg-gray-800"
               onClick={closeModal}
@@ -130,7 +140,6 @@ const Payment: React.FC = () => {
             >
               View E-Receipt
             </button>
-
           </div>
         </div>
       )}
@@ -139,4 +148,3 @@ const Payment: React.FC = () => {
 };
 
 export default Payment;
-
