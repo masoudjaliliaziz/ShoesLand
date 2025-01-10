@@ -106,7 +106,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
       <div className="w-full  grid grid-cols-2 felx space-y-3 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
           <div className="col-span-2 flex flex-col justify-center content-center items-center">
-            <div className="col-span-2 space-y-80 w-full flex flex-col items-center justify-center mt-10 h-[98%]">
+            <div className="col-span-2 space-y-80 w-full mt-10 h-[98%]">
               <div className="flex flex-col space-y-7 justify-center content-center items-center">
                 <div className="text-6xl  font-bold text-slate-700">Oops!</div>
                 <p className="text-lg text-gray-500 mt-2 mx-4 text-center">

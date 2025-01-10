@@ -9,6 +9,7 @@ import Username from "../../../assets/Username.svg";
 import pass from "../../../assets/pass.svg";
 import eyeSlash from "../../../assets/EyeSlash.svg";
 import Cookies from "js-cookie";
+import clsx from "clsx";
 
 interface ILoginFormData {
   username: string;
@@ -51,9 +52,7 @@ export const LoginForm: FC = (): ReactElement => {
       {/* ArrowRoundBack icon */}
       <div>
         <button onClick={() => navigate(-1)}>
-          <IoMdArrowRoundBack
-            className="size-9 absolute top-1 left-3 font-bold"
-          />
+          <IoMdArrowRoundBack className="size-9 absolute top-1 left-3 font-bold" />
         </button>
       </div>
       <div className="flex flex-col justify-center items-center gap-6 h-1/3 ">
@@ -63,7 +62,12 @@ export const LoginForm: FC = (): ReactElement => {
         Login to Your Account
       </span>
       <form onSubmit={handleSubmit(onSubmit)} className="">
-        <div className="flex gap-2 items-center w-full bg-gray-100 py-1 px-2 rounded flex-col">
+        <div
+          className={clsx(
+            "flex gap-2 items-center w-full bg-gray-100 py-1 px-2 rounded flex-col",
+            !errors.username?.message ? "mb-5" : "mb-0"
+          )}
+        >
           <div className="flex items-center space-x-1 w-full">
             <img
               src={Username}
@@ -73,9 +77,9 @@ export const LoginForm: FC = (): ReactElement => {
             <input
               className="bg-transparent w-[90%] outline-none focus:bg-transparent"
               style={{
-                WebkitBoxShadow: "0 0 0px 1000px transparent inset", 
+                WebkitBoxShadow: "0 0 0px 1000px transparent inset",
                 WebkitTextFillColor: "inherit",
-                transition: "background-color 5000s ease-in-out 0s", 
+                transition: "background-color 5000s ease-in-out 0s",
               }}
               placeholder="Username"
               type="text"
@@ -96,11 +100,21 @@ export const LoginForm: FC = (): ReactElement => {
         <p className="text-rose-500 font-semibold text-sm px-3">
           {errors.username?.message}
         </p>
-        <div className="flex gap-2 items-center bg-gray-100 py-1 px-2 rounded flex-col">
+        <div
+          className={clsx(
+            "flex gap-2 items-center bg-gray-100 py-1 px-2 rounded flex-col",
+            !errors.password?.message ? "mb-5" : "mb-0"
+          )}
+        >
           <div className="flex items-center space-x-1 w-full">
             <img src={pass} alt="pass" className="size-4 color-[#6C757D]" />
             <input
-              className="bg-transparent w-[90%] outline-none"
+              className="bg-transparent w-[90%] outline-none focus:bg-transparent"
+              style={{
+                WebkitBoxShadow: "0 0 0px 1000px transparent inset",
+                WebkitTextFillColor: "inherit",
+                transition: "background-color 5000s ease-in-out 0s",
+              }}
               placeholder="Password"
               type="password"
               id="password"
