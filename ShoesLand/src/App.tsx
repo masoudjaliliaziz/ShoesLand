@@ -21,7 +21,6 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./config/store";
 import Orders from "./pages/Orders";
 import { PersistGate } from "redux-persist/integration/react";
-import ChooseShipping from "./component/checkout/ChooseShipping";
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
-              <Route path="on" element={<Onboarding />} />
               <Route path="on" element={<Onboarding />} />
               <Route path="search" element={<Search />} />
               <Route path="popular" element={<MostPopular />} />
@@ -43,7 +41,6 @@ function App() {
               <Route path="product/:id" element={<ProductDetail />} />
             </Route>
             <Route path="payment/" element={<Payment />} />
-            <Route path="ChooseShipping" element={<ChooseShipping />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
             <Route path="signin" element={<SignInPage />} />

@@ -14,7 +14,7 @@ interface ISignInProps {
   phonenumber: string;
 }
 
-export default function SingIN() {
+export default function SingUp() {
   const schema = z.object({
     password: z
       .string()
@@ -76,7 +76,7 @@ export default function SingIN() {
     <div className="flex flex-col h-screen">
       <div>
         <svg
-          onClick={() => Navigate(-1)}
+          onClick={() => navigate(-1)}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -252,9 +252,8 @@ export default function SingIN() {
             <input
               type="checkbox"
               {...register("acceptTerms")}
-              className={`rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${
-                errors.acceptTerms ? "border-red-500" : ""
-              }`}
+              className={`rounded border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 ${errors.acceptTerms ? "border-red-500" : ""
+                }`}
             />
             <span className="text-base font-semibold">
               I have read and accept the User Agreement and Privacy Policy
@@ -262,7 +261,7 @@ export default function SingIN() {
           </div>
           <div className="flex justify-center items-center">
             <button
-              
+
               className="bg-black cursor-pointer text-xl w-[350px] py-2 text-white rounded-2xl"
             >
               Sign Up

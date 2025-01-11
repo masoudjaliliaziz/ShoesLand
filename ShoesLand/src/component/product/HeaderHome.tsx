@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import Loading from '../../component/base/Loading'
 
 function HeaderHome() {
-  const { data, isLoading } = authHooks.useWhoAmI()
+  const { data, isLoading, isError } = authHooks.useWhoAmI()
   if (isLoading) return <Loading />
   return (
     <div>
@@ -16,9 +16,12 @@ function HeaderHome() {
           <div>
             <img src={user} className="size-10 bg-slate-300 p-1 rounded-full" />
           </div>
-          <div className="flex flex-col text-sm font-serif">
+          <div className="flex flex-col text-sm ">
             <span className="text-slate-600">Good Morning 👋</span>
-            <span className="font-bold">{data.username && data.username}</span>
+            {isError ?
+              <span className="font-bold"></span> :
+              <span className="font-bold">{data.username && data.username}</span>
+            }
           </div>
         </div>
         <div>
