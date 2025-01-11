@@ -43,7 +43,7 @@ function App() {
             <Route path="payment/" element={<Payment />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
-            <Route path="signin" element={<SignInPage />} />
+            <Route path="signup" element={<SignInPage />} />
           </Routes>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

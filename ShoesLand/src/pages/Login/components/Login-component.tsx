@@ -31,7 +31,7 @@ export const LoginForm: FC = (): ReactElement => {
             dispatch(setToken(response.accessToken));
 
             console.log(Cookies.get());
-            // navigate("/");
+            navigate("/");
           } else {
             console.error("Failed to login, no accessToken in response");
           }
@@ -166,9 +166,9 @@ export const LoginForm: FC = (): ReactElement => {
             <p className="text-sm font-semibold text-gray-500">
               Don’t have an account?
             </p>
-            <a href="#" className="text-sm text-black font-semibold w-1/3">
+            <p onClick={() => navigate('/signup')} className="text-sm text-black font-semibold w-1/3 cursor-pointer ">
               Register Now
-            </a>
+            </p>
           </div>
         </div>
       </form>

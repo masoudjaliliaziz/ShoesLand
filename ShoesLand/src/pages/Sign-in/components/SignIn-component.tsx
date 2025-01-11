@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { IoMdArrowRoundBack } from "react-icons/io";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 interface ISignInProps {
   username: string;
@@ -15,6 +17,7 @@ interface ISignInProps {
 }
 
 export default function SingUp() {
+  const navigate = useNavigate()
   const schema = z.object({
     password: z
       .string()
@@ -72,38 +75,26 @@ export default function SingUp() {
     watch,
   } = useForm<ISignInProps>({ resolver: zodResolver(schema) });
 
+
   return (
     <div className="flex flex-col h-screen">
-      <div>
-        <svg
-          onClick={() => navigate(-1)}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2.5}
-          stroke="currentColor"
-          className="size-7 cursor-pointer"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h15"
-          />
-        </svg>
-      </div>
+      <button onClick={() => navigate(-1)}>
+
+        <IoMdArrowRoundBack className="w-9 h-9 ml-2 mt-2" />
+      </button>
       <div className="flex flex-col justify-center items-center gap-6 pt-16 mb-10">
         <img src="../img/Vector1.png" alt="" />
         <span className="text-3xl font-bold ">Let’s To Create Account</span>
       </div>
       <div>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit((data) => console.log(data))} className='px-8' >
           {/* usernamefiled */}
           <div className="flex gap-2 items-center mb-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="size-4"
+              className="size-4"
             >
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
             </svg>
@@ -119,7 +110,7 @@ export default function SingUp() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="size-4 color-[#6C757D]"
+              className="size-4 color-[#6C757D]"
             >
               <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
@@ -138,7 +129,7 @@ export default function SingUp() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                class="size-4"
+                className="size-4"
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
@@ -155,7 +146,7 @@ export default function SingUp() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                class="size-4"
+                className="size-4"
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
@@ -173,7 +164,7 @@ export default function SingUp() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="size-4"
+              className="size-4"
             >
               <path
                 fill-rule="evenodd"
@@ -193,7 +184,7 @@ export default function SingUp() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="size-4"
+              className="size-4"
             >
               <path
                 fill-rule="evenodd"
@@ -214,7 +205,7 @@ export default function SingUp() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-4"
+                className="size-4"
               >
                 <path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
               </svg>
@@ -231,7 +222,7 @@ export default function SingUp() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="size-4"
+                className="size-4"
               >
                 <path
                   fill-rule="evenodd"
@@ -270,7 +261,8 @@ export default function SingUp() {
         </form>
         <div className="flex mt-4 items-center gap-4 justify-center">
           <p className="text-base font-semibold text-gray-500">Already have an account?</p>
-          <a href="#" className="text-lg text-black font-semibold w-1/3">Log In</a>
+
+          <p onClick={() => navigate('/login')} className="text-lg text-black font-semibold w-1/3">Log In</p>
         </div>
       </div>
     </div>
