@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../../component/base/FormInput";
+import { authHooks } from "../../../api/queryClinet";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../../config/slice";
 
 interface ISignInProps {
   username: string;
@@ -63,8 +66,29 @@ export default function SignUp() {
     { value: "other", label: "Other" },
   ];
 
+  const { mutate } = authHooks.useSignup()
+  const dispatch = useDispatch()
+
   const onSubmit = (data: ISignInProps) => {
-    console.log(data);
+    try {
+      console.log(data);
+      mutate(data, {
+        onSuccess: (response) => {
+          console.log(response);
+          if (response?.accessToken) {
+            alert('Sign up successful!');
+            dispatch(setToken(response.accessToken));
+
+            navigate("/login");
+
+          } else {
+            console.error("Failed to login, no accessToken in response");
+          }
+        },
+      });
+    } catch (error) {
+      console.error("Login failed: ", error);
+    }
   };
 
   return (

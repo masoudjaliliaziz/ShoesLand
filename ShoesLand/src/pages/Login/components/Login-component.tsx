@@ -27,10 +27,9 @@ export const LoginForm: FC = (): ReactElement => {
         onSuccess: (response) => {
           console.log(response);
           if (response?.accessToken) {
-            console.log("ok");
             dispatch(setToken(response.accessToken));
 
-            console.log(Cookies.get());
+            alert('Loged in successful!');
             navigate("/");
           } else {
             console.error("Failed to login, no accessToken in response");
