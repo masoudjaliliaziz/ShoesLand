@@ -82,25 +82,29 @@ function Search() {
           {showProductList && filteredProducts.length > 0 && !searchLoading && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {searchData.map((data) => (
-                <div
-                  className=" flex w-full flex-row justify-between px-3 py-2 items-center cursor-pointer"
-                  key={data.userId}>
-                  <p
-                    className="font-semibold text-base"
-                    onClick={() => {
+                <>
+                  {
+                    data['text'].includes(search) ? (
+                      <div className=" flex w-full flex-row justify-between px-3  items-center cursor-pointer"
+                        key={data.userId}>
+                        <p
+                          className="font-semibold text-base py-5"
+                          onClick={() => {
 
-                      setSearch(data.text)
-                      handleSearchClick(data.text)
-                      setShowProductList(false)
-                    }
-                    }>
-                    {data.text}
-                  </p>
-                  <button className="w-7 font-semibold text-xl " onClick={() => handleDelete(data.text)}>
-                    <img src={close} className="w-5" />
-                  </button>
+                            setSearch(data.text)
+                            handleSearchClick(data.text)
+                            setShowProductList(false)
+                          }
+                          }>
+                          {data.text}
+                        </p>
+                        <button className="w-7 font-semibold text-xl " onClick={() => handleDelete(data.text)}>
+                          <img src={close} className="w-5" />
+                        </button>
 
-                </div>
+                      </div>
+                    ) : (null)}
+                </>
 
               ))}
             </ul>
@@ -109,9 +113,9 @@ function Search() {
       </div>
 
       {
-        !showProductList && (
+        !showProductList ? (
           <ProductList dispatchCaller={{ type: "search", value: search }} />
-        )
+        ) : <div className='h-screen'></div>
       }
     </div >
   );

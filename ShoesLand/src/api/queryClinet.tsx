@@ -161,7 +161,7 @@ export const wishlistHooks = {
       url: "/api/wishlist",
       authRequired: true,
     }),
-  useAddRemoveWishlist: () => usePost("wishlist", "/api/wishlist", true),
+  useAddRemoveWishlist: () => usePost("product", "/api/wishlist", true),
   useSearchWishlist: (searchTerm: string) =>
     useFetch({
       categoryKey: "product",

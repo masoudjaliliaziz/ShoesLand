@@ -120,7 +120,7 @@ const Payment: React.FC = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white px-10 rounded-3xl shadow-lg w-3/5 h-1/2 max-w-md flex-col items-center justify-center">
+          <div className="bg-white px-10 rounded-3xl shadow-lg max-w-2/5 h-1/2 flex-col items-center justify-center">
             <img src="/img/PaymentConfirm.png" alt="img" className="scale-90" />
             <h3 className="text-lg font-bold mb-4 text-center">
               Order Successful!
