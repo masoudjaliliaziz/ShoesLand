@@ -2,8 +2,7 @@ import React from "react";
 import { CartItem as CartItemType } from "./../component/base/Interfaces";
 import useCart from "./../component/base/hooks";
 import CartItem from "./../component/CartItem";
-import backward from "../assets/Backward.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import search from "../assets/SearchIcon.svg";
 import emptyIcon from "../assets/emptypage.png";
 import shoea from "../../public/img/Vector1.png";
@@ -12,7 +11,7 @@ import nextCheckout from "../assets/nextCheckout.svg";
 import Loading from '../component/base/Loading'
 
 const Cart: React.FC = () => {
-  const navigate = useNavigate();
+
   const { getCart, editCart, removeFromCart, isLoading } = useCart();
   if (isLoading) return <Loading />
   const cartItems = getCart();

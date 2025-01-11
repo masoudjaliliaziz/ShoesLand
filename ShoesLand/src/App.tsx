@@ -30,7 +30,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Header />}>
               <Route index element={<Home />} />
-              <Route path="on" element={<Onboarding />} />
               <Route path="search" element={<Search />} />
               <Route path="popular" element={<MostPopular />} />
               <Route path="wishlist" element={<WishList />} />
@@ -40,6 +39,7 @@ function App() {
               <Route path="orders/" element={<Orders />} />
               <Route path="product/:id" element={<ProductDetail />} />
             </Route>
+            <Route path="on" element={<Onboarding />} />
             <Route path="payment/" element={<Payment />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<CheckoutPage />} />

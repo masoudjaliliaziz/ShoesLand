@@ -8,9 +8,9 @@ import star from "../../assets/star.svg";
 import AddToCart from "../../assets/AddToCart";
 import Decrease from "../../assets/Decrease.svg";
 import Increase from "../../assets/Increase.svg";
-import Backward from "../../assets/Backward.svg";
-import clsx from 'clsx'
-import Loading from '../../component/base/Loading'
+import { IoMdArrowRoundBack } from "react-icons/io";
+import clsx from "clsx";
+import Loading from "../../component/base/Loading";
 import ImageCarousel from "../base/Carousel";
 export function ProductDetail() {
   const navigate = useNavigate();
@@ -31,11 +31,11 @@ export function ProductDetail() {
   const { data, isLoading, error } = productHooks.useFetchProductById(
     Number(id)
   );
-  if (isLoading) return <Loading />
+  if (isLoading) return <Loading />;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
   const product: ProductProps = data;
-  console.log(product.isFavorite)
+  console.log(product.isFavorite);
   const handleAddToCart = () => {
     if (!selectedColor) {
       alert("Please select a color.");
@@ -59,14 +59,13 @@ export function ProductDetail() {
     });
     alert("Item added to cart!");
   };
-  console.log(selectedSize, selectedColor)
+  console.log(selectedSize, selectedColor);
   return (
-    <div className="w-full h-screen relative mb-10">
-      {/* images && backward */}
-      <div className="mb-6 w-full ">
-
+    <div className="w-full h-screen relative">
+      {/* images */}
+      <button className="mb-6 w-full ">
         <ImageCarousel images={product.images} />
-      </div>
+      </button>
       <div className="px-4 w-full">
         <div
           className=" h-1/4 relative after:absolute pb-3 after:w-full after:h-full  after:top-0 after:left-0
@@ -74,37 +73,39 @@ export function ProductDetail() {
         >
           <div className="flex flex-row w-full justify-evently">
             <div className="flex flex-col space-y-3 w-full">
-              <h1 className="font-semibold text-3xl w-full ">{product?.name}</h1>
+              <div className="flex flex-row justify-between items-center">
+                <h1 className="font-semibold text-3xl w-full ">
+                  {product?.name}
+                </h1>
+                <div className="heart hover:text-pink-500 active:text-pink-500 transition-all duration-200 flex flex-row justify-start items-center">
+                  <WishlistIcon
+                    productId={Number(id)}
+                    isInWishlist={product.isFavorite}
+                  />
+                </div>
+              </div>
               <div className="flex flex-row space-x-3 w-full justify-start items-center">
-                <div className="w-1/4 h-7 bg-slate-200 rounded-lg flex justify-center items-center  py-1">
-                  <p className="font-normal text-xs text-slate-700">
+                <div className="w-1/4 h-7 bg-slate-200 rounded-lg flex justify-center items-center py-1">
+                  <p className="font-normal text-sm text-slate-700">
                     {product?.sold_quantity} sold
                   </p>
                 </div>
                 <div className=" flex flex-row justify-between items-center gap-1">
                   <img src={star} alt="star" className="size-5" />
-                  <p className="font-normal text-[14px] text-slate-600">
+                  <p className="font-normal text-base text-slate-600">
                     {product.rating}({product.sold_quantity} reviews)
                   </p>
                 </div>
               </div>
             </div>
-            <div className="heart hover:fill-pink-500 active:text-pink-500 flex flex-row justify-start items-center w-10 h-10">
-
-              <WishlistIcon
-                productId={Number(id)}
-                isInWishlist={product.isFavorite}
-              />
-            </div>
           </div>
         </div>
-        <br />
-        <div className="w-full h-1/4 relative mb-1 after:absolute pb-4 pt-2 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
+        <div className="w-full h-1/4 relative mb-1 after:absolute pb-4 after:w-full after:h-full  after:top-0 after:left-0 after:border-b-2 after:border-b-solid after:border-b-slate-100 after:pointer-events-none">
           <div className="flex flex-col justify-between pb-3 h-2/4 ">
             <h1 className="font-bold text-base py-3">Description</h1>
-            <p className="font-semibold text-xs text-slate-700">
+            <p className="font-semibold text-sm text-slate-700">
               lorem ipsum dolor sit amet, consectatur adipiscing elit,sad do
-              eiusmod tempor incididunt ut labore et
+              eiusmod tempor incididunt ut et
               <span className="font-bold text-sm"> view more...</span>
             </p>
           </div>
@@ -114,9 +115,11 @@ export function ProductDetail() {
               <ul className="flex space-x-2">
                 {product?.sizes.map((sizes, index) => (
                   <li
-
                     onClick={() => setSelectedSize(sizes)}
-                    className={clsx(selectedSize == sizes && 'text-white bg-black', "py-2 px-2 leading-none font-semibold text-md rounded-full inline-flex border-2 border-slate-500 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500 text-slate-600")}
+                    className={clsx(
+                      selectedSize == sizes && "text-white bg-black",
+                      "py-2 px-2 leading-none font-semibold text-md rounded-full inline-flex border-2 border-slate-500 transition-all duration-300 hover:bg-slate-300 hover:border-slate-500 text-slate-600"
+                    )}
                     key={index}
                   >
                     {sizes}
@@ -132,7 +135,9 @@ export function ProductDetail() {
                     onClick={() => setSelectedColor(colors)}
                     className={clsx(
                       "h-9 w-9 inline-flex items-center justify-center rounded-full cursor-pointer transition-all duration-300",
-                      selectedColor == colors ? "bg-slate-300" : `bg-${colors}-500`,
+                      selectedColor == colors
+                        ? "bg-slate-300"
+                        : `bg-${colors}-500`,
                       "hover:bg-slate-300"
                     )}
                     key={index}
@@ -154,8 +159,6 @@ export function ProductDetail() {
                       </svg>
                     )}
                   </li>
-
-
                 ))}
               </ul>
             </div>

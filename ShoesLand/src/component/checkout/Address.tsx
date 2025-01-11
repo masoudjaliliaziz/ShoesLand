@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addressHooks } from "../../api/queryClinet";
-import backward from "../../assets/Backward.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import Location from "../../assets/Location.svg";
 
 import Loading from '../../component/base/Loading'
@@ -49,7 +49,7 @@ const AddressSelection: React.FC<AddressSelectionProps> = ({ onClose, }) => {
       <div className="header flex items-center justify-between py-4 font-semibold text-lg">
         <div className="flex items-center">
           <button onClick={() => onClose()}>
-            <img src={backward} alt="backward" className="w-6 mr-1" />
+            <IoMdArrowRoundBack className="w-6 mr-1" />
           </button>
           <h1 className="font-semibold">Choose Address</h1>
         </div>
