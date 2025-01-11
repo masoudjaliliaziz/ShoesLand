@@ -24,9 +24,10 @@ function Home() {
               <img src={searchIcon} className="size-6" />
             </button>
             <input
+              readOnly
               type="text"
               placeholder="Search..."
-              className="bg-transparent"
+              className="bg-transparent border-0 focus:outline-none focus:ring-0 focus:ring-blue-500"
             />
           </div>
         </>

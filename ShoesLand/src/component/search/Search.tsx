@@ -49,8 +49,12 @@ function Search() {
     <div className="h-full p-3">
       <div className="w-full flex flex-row justify-between items-center text-start left-0">
         <div className="font-bold leading-5  flex justify-item-center space-x-1">
-          <IoMdArrowRoundBack className='w-7' onClick={() => navigate(-1)} />
-          <span className="text-xl">Search</span>
+          <IoMdArrowRoundBack
+            onClick={() => navigate(-1)}
+            className="size-9 left-3 font-bold"
+          />
+
+          <span className="text-2xl">Search</span>
         </div>
         <Link to="/popular">
           <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500"></h1>
