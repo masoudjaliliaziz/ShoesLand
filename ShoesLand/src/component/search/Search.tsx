@@ -25,7 +25,7 @@ function Search() {
   const { data: searchData, isLoading: searchLoading, error } = historySearchHooks.useFetchHistorySearch()
   const { mutate: addSearchMutate, isPending } = historySearchHooks.useAddHistorySearch()
   const { data: filteredProducts = [], isLoading: productLoading } = productHooks.useSearchProducts(search);
-
+  const { data: userLogedin, isLoading: userLogedinLoading, isError: userLogedinError } = authHooks.useWhoAmI()
   const handleDelete = async (text: string) => {
     deleteData(`/api/search/${text}`, true).catch((e) => { addSearchMutate({ text }) })
     queryClient.invalidateQueries()
@@ -54,7 +54,7 @@ function Search() {
             className="size-9 left-3 font-bold"
           />
 
-          <span className="text-2xl">Search</span>
+          <span className="text-">Search</span>
         </div>
         <Link to="/popular">
           <h1 className="font-semibold MostPopularpage cursor-pointer leading-5 text-lg hover:text-slate-500"></h1>
@@ -81,9 +81,9 @@ function Search() {
           </button>
 
 
-          {searchLoading || isPending && <Loading />}
+          {searchLoading || isPending || userLogedinLoading && <Loading />}
           {error instanceof Error && null}
-          {showProductList && filteredProducts.length > 0 && !searchLoading && (
+          {showProductList && filteredProducts.length > 0 && !searchLoading && !userLogedinError && (
             <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg shadow-md mt-2 w-full">
               {searchData.map((data) => (
                 <>

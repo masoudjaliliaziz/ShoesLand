@@ -101,7 +101,7 @@ function ProductList({ dispatchCaller }: ProductListProps) {
     }
   };
   return (
-    <div className="flex w-full flex-col space-y-3 px-2 " key={11}>
+    <div className="flex w-full flex-col space-y-3 px-2 pb-10" key={11}>
       <BrandNav filter={filter} dispatch={dispatch} />
       <div className="w-full  grid grid-cols-2 felx space-y-3 place-content-center justify-center items-center gap-4">
         {paginatedProducts.length == 0 && (
@@ -128,10 +128,16 @@ function ProductList({ dispatchCaller }: ProductListProps) {
                 </svg>
               </div>
 
-              <span className="flex flex-row items-center text-xl font-bold text-zinc-500 py-7">
-                MADE WITH  
-                <GoHeartFill className="mx-1 fill-rose-400"/>
-                BY G-3
+              <span className="text-center grid items-center text-xl font-bold text-zinc-600 py-7 justify-items-center">
+                <p>
+                  MADE WITH
+                </p>
+                <p>
+                  <GoHeartFill className="mx-1 fill-rose-400" />
+                </p>
+                <p>
+                  BY G-3
+                </p>
               </span>
             </div>
           </div>
@@ -147,13 +153,12 @@ function ProductList({ dispatchCaller }: ProductListProps) {
         ))}
       </div>
       {paginatedProducts.length ? (
-        <div className="flex justify-center items-center pb-2 pt-2 mb-[10rem]">
+        <div className="flex justify-center items-center pb-2 pt-2 mb-[20rem]">
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === 1
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === 1
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -162,22 +167,20 @@ function ProductList({ dispatchCaller }: ProductListProps) {
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
-              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${
-                page === currentPage
-                  ? "text-gray-300 cursor-not-allowed "
-                  : "text-gray-600 hover:bg-blue-100 font-bold"
-              }`}
+              className={`px-2 py-1 mx-1 border rounded-full  text-xs ${page === currentPage
+                ? "text-gray-300 cursor-not-allowed "
+                : "text-gray-600 hover:bg-blue-100 font-bold"
+                }`}
               onClick={() => handlePageChange(page)}
             >
               {page}
             </button>
           ))}
           <button
-            className={`px-2 py-1 mx-1 border rounded-full text-xs ${
-              currentPage === totalPages || totalPages === 0
-                ? "text-gray-300 cursor-not-allowed "
-                : "text-gray-600 hover:bg-blue-100 font-bold"
-            }`}
+            className={`px-2 py-1 mx-1 border rounded-full text-xs ${currentPage === totalPages || totalPages === 0
+              ? "text-gray-300 cursor-not-allowed "
+              : "text-gray-600 hover:bg-blue-100 font-bold"
+              }`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
           >
